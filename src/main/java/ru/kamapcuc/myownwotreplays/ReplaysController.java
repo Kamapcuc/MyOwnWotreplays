@@ -7,12 +7,25 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-public class Controller {
+@Controller
+public class ReplaysController {
 
-    public Controller() {
+    private final Indexer indexer;
+
+    @RequestMapping("/")
+    public String printWelcome(ModelMap model) {
+        model.addAttribute("message", "Hello world!");
+        model.addAttribute("indexer", indexer);
+        return "index";
+    }
+
+    public ReplaysController() {
         Client client = connect();
-        Indexer indexer = new Indexer(client);
+        indexer = new Indexer(client);
         new Thread(indexer).start();
         //client.close();
     }
