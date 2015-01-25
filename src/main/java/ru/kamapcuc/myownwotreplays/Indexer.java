@@ -2,6 +2,7 @@ package ru.kamapcuc.myownwotreplays;
 
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;
 
 import java.io.BufferedReader;
@@ -15,7 +16,7 @@ import java.util.stream.Stream;
 public class Indexer implements Runnable {
 
     private volatile long worked = -1;
-    private volatile long count = Long.MAX_VALUE;
+    private final long count;
 
     private final Parser parser = new Parser();
     private final Client client;
@@ -46,24 +47,27 @@ public class Indexer implements Runnable {
         filesToIndex.forEach((file) -> {
             if (!file.isDirectory() && file.getName().endsWith(".wotreplay")) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                    Map<String, Object> test;
+                    Map<String, Object> doc;
                     String data = reader.readLine();
                     if (data.length() == 8) {
                         data = reader.readLine();
-                        test = parser.parse(data.substring(3));
+                        doc = parser.parse(data.substring(3));
                     } else
-                        test = parser.parse(data.substring(12));
+                        doc = parser.parse(data.substring(12));
 
-                    if (test == null)
+                    if (doc != null) {
+                        doc.put("fileName", file.getName());
+                        IndexRequestBuilder indexRequest = client.prepareIndex("test", "battle");
+                        indexRequest.setSource(doc);
+                        indexRequest.execute();
+                    } else {
                         System.out.println(String.format("Failed to parse %s", file.getName()));
-
+                    }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.exit(0);
                 }
-
             }
             worked++;
-
         });
     }
 
