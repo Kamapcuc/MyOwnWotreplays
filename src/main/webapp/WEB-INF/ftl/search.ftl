@@ -5256,14 +5256,14 @@
                 <li class="clearfix">
 
                     <a class="r-map_85" href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40"
-                       title="Тихий берег" style="background-image: url('http://wotreplays.ru/media/img/maps/el_hallouf.jpg');">
+                       title="Тихий берег" style="background-image: url('/resources/maps/{{_source.mapName}}.jpg');">
                        
                     </a>
 
                     <div class="r-info">
                         <h3>
 						<a href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40">
-						Somua SAu 40, {{_source.mapDisplayName}}, Стандартный бой</a></h3>
+						{{_source.playerVehicle}}, {{_source.mapDisplayName}}, Стандартный бой</a></h3>
                         <ul class="r-info_ri">
                             <li><i class="i-16_frags"></i> 5</li>
                             <li><i class="i-16_exp"></i> 840</li>
