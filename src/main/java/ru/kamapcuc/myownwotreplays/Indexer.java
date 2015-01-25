@@ -15,18 +15,18 @@ import java.util.stream.Stream;
 
 public class Indexer implements Runnable {
 
-    private volatile long worked;
-    private final long count;
+    private volatile long completed;
+    private final long total;
 
-    private final Parser parser = new Parser();
+    public final Parser parser = new Parser();
     private final Client client;
     private final Stream<File> filesToIndex;
 
-    private final static String REPLAYS_INDEX_NAME = "replays";
-    private final static String BATTLE_TYPE_NAME = "replays";
+    public final static String REPLAYS_INDEX_NAME = "replays";
+    public final static String BATTLE_TYPE_NAME = "replays";
 
     private static String getPath() {
-        return "C:\\Games\\World_of_Tanks\\replays";
+        return System.getProperty("replaysPath");
     }
 
     public Indexer(Client client) {
@@ -34,12 +34,12 @@ public class Indexer implements Runnable {
         File[] allReplays = new File(getPath()).listFiles();
         if (allReplays == null) {
             filesToIndex = Stream.empty();
-            count = 0;
+            total = 0;
         } else {
             filesToIndex = Arrays.stream(allReplays);
-            count = allReplays.length;
+            total = allReplays.length;
         }
-        worked = 0;
+        completed = 0;
         init();
     }
 
@@ -71,18 +71,18 @@ public class Indexer implements Runnable {
                     System.exit(0);
                 }
             }
-            worked++;
+            completed++;
         });
     }
 
     @SuppressWarnings("unused")
-    public long getWorked() {
-        return worked;
+    public long getCompleted() {
+        return completed;
     }
 
     @SuppressWarnings("unused")
-    public long getCount() {
-        return count;
+    public long getTotal() {
+        return total;
     }
 
 }

@@ -5,23 +5,26 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/main.css" media="all">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta charset="UTF-8">
+    <script src="resources/js/Mustache.js"></script>
+    <script src="resources/js/jquery-2.1.3.min.js"></script>
+    <link rel="icon" type="image/png" href="/resources/img/favicon.ico" />
 </head>
 
 <body>
 
 
-<div class="main clearfix ng-scope" ng-app="wotreplays" id="baseCtrl" ng-controller="baseCtrl">
+<div class="main clearfix ng-scope" ng-app="wotreplays" id="baseCtrl" >
 
     <div class="main-menu clearfix" style="margin-bottom: 440px;">
 
         <div class="m-item">
             <a onclick="return popup.init('login-popup',{url:'/site/popupLogin'});" class="m-item_title orange"
-               style="width: 175px;">${indexer.getWorked()} / ${indexer.getCount()}</a>
+               style="width: 175px;">${indexer.getCompleted()} / ${indexer.getTotal()}</a>
         </div>
 
         <div class="m-item_dropdown expanded" id="helper-1">
 
-            <div class="m-item_title" style="width: 175px;" ng-click="filter.initTankSly()">Найти реплей</div>
+            <div class="m-item_title" style="width: 175px;" >Найти реплей</div>
 
             <div class="m-item_container" style="height: 410px;">
 
@@ -86,7 +89,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="01"
                                                    ng-model="cbx.checked">
                                             <label for="01"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>СССР</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -94,7 +97,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="02"
                                                    ng-model="cbx.checked">
                                             <label for="02"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>Германия</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -102,7 +105,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="03"
                                                    ng-model="cbx.checked">
                                             <label for="03"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>Америка</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -110,7 +113,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="04"
                                                    ng-model="cbx.checked">
                                             <label for="04"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>Китай</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -118,7 +121,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="05"
                                                    ng-model="cbx.checked">
                                             <label for="05"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>Франция</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -126,7 +129,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="06"
                                                    ng-model="cbx.checked">
                                             <label for="06"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>Англия</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -134,7 +137,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="07"
                                                    ng-model="cbx.checked">
                                             <label for="07"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>Япония</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -156,7 +159,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="11"
                                                    ng-model="cbx.checked">
                                             <label for="11"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>1</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -164,7 +167,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="12"
                                                    ng-model="cbx.checked">
                                             <label for="12"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>2</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -172,7 +175,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="13"
                                                    ng-model="cbx.checked">
                                             <label for="13"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>3</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -180,7 +183,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="14"
                                                    ng-model="cbx.checked">
                                             <label for="14"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>4</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -188,7 +191,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="15"
                                                    ng-model="cbx.checked">
                                             <label for="15"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>5</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -196,7 +199,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="16"
                                                    ng-model="cbx.checked">
                                             <label for="16"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>6</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -204,7 +207,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="17"
                                                    ng-model="cbx.checked">
                                             <label for="17"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>7</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -212,7 +215,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="18"
                                                    ng-model="cbx.checked">
                                             <label for="18"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>8</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -220,7 +223,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="19"
                                                    ng-model="cbx.checked">
                                             <label for="19"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>9</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -228,7 +231,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid"
                                                    id="110" ng-model="cbx.checked">
                                             <label for="110"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>10</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -250,7 +253,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="21"
                                                    ng-model="cbx.checked">
                                             <label for="21"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>ЛТ</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -258,7 +261,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="22"
                                                    ng-model="cbx.checked">
                                             <label for="22"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>СТ</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -266,7 +269,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="23"
                                                    ng-model="cbx.checked">
                                             <label for="23"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>ТТ</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -274,7 +277,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="24"
                                                    ng-model="cbx.checked">
                                             <label for="24"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>ПТ</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -282,7 +285,7 @@
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="25"
                                                    ng-model="cbx.checked">
                                             <label for="25"
-                                                   ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                   
                                                    class="ng-binding"><span></span>Арта</label>
                                         </li>
                                         <!-- end ngRepeat: cbx in filterType.checkboxes -->
@@ -301,7 +304,7 @@
                                     <!-- ngIf: (filter.getChecked(filter.data.tank)).length > 0 --><span
                                         class="tf_s__selectall ng-scope"
                                         ng-if="(filter.getChecked(filter.data.tank)).length > 0"
-                                        ng-click="$event.stopPropagation(); filter.select.all(filter.data.tank,'deselect')">Сбросить</span><!-- end ngIf: (filter.getChecked(filter.data.tank)).length > 0 -->
+                                        >Сбросить</span><!-- end ngIf: (filter.getChecked(filter.data.tank)).length > 0 -->
                                 </div>
 
                                 <div class="frame" style="overflow: hidden;">
@@ -4665,7 +4668,7 @@
                                     <li>
                                         <input type="checkbox" class="cbx" id="mastery"
                                                ng-checked="routing.compilation.link == 'aceTanker'"
-                                               ng-click="routing.compilation.change('aceTanker')">
+                                               >
                                         <label for="mastery"><span></span>Мастер</label>
                                     </li>
                                 </ul>
@@ -4690,30 +4693,30 @@
                                             <ul class="slider">
                                                 <!-- ngRepeat: (key, title) in filter.sort -->
                                                 <li ng-repeat="(key, title) in filter.sort"
-                                                    ng-click="filter.selected.sort = {type: key, direction: true}; filter.update();"
+                                                    
                                                     class="ng-scope">
                                                     <label class="ng-binding">по кредитам</label>
                                                 </li>
                                                 <li ng-repeat="(key, title) in filter.sort"
-                                                    ng-click="filter.selected.sort = {type: key, direction: true}; filter.update();"
+                                                    
                                                     class="ng-scope">
                                                     <label class="ng-binding">по фрагам</label>
                                                 </li>
                                                 <!-- end ngRepeat: (key, title) in filter.sort -->
                                                 <li ng-repeat="(key, title) in filter.sort"
-                                                    ng-click="filter.selected.sort = {type: key, direction: true}; filter.update();"
+                                                    
                                                     class="ng-scope">
                                                     <label class="ng-binding">по урону</label>
                                                 </li>
                                                 <!-- end ngRepeat: (key, title) in filter.sort -->
                                                 <li ng-repeat="(key, title) in filter.sort"
-                                                    ng-click="filter.selected.sort = {type: key, direction: true}; filter.update();"
+                                                    
                                                     class="ng-scope">
                                                     <label class="ng-binding">по дате</label>
                                                 </li>
                                                 <!-- end ngRepeat: (key, title) in filter.sort -->
                                                 <li ng-repeat="(key, title) in filter.sort"
-                                                    ng-click="filter.selected.sort = {type: key, direction: true}; filter.update();"
+                                                    
                                                     class="ng-scope">
                                                     <label class="ng-binding">по опыту</label>
                                                 </li>
@@ -4746,8 +4749,7 @@
                                             <ul class="slider" style="transform: translateZ(0px);">
                                                 <li>
                                                     <input type="checkbox" class="cbx">
-                                                    <label ng-click="$event.stopPropagation(); filter.select.all(filter.data.version, (filter.areAllSelected(filter.data.version) ? 'deselect' : 'select'));"
-                                                           class="ng-binding">
+                                                    <label class="ng-binding">
                                                         Выбрать все
                                                     </label>
                                                 </li>
@@ -4965,7 +4967,7 @@
 
                         <div class="selected-filters">
 
-                            <span class="tf_s__selectall" ng-click="filter.select.all('all','deselect');">Очистить все фильтры&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                            <span class="tf_s__selectall" >Очистить все фильтры&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
 
                             <!-- ngIf: routing.compilation.title -->
 
@@ -4979,7 +4981,7 @@
                                     ng-if="!filter.areAllSelected(filterType)" class="ng-scope">
                                     <!-- ngRepeat: cbx in filter.getChecked(filterType) --><a title="Удалить фильтр"
                                                                                               ng-repeat="cbx in filter.getChecked(filterType)"
-                                                                                              ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                                                              
                                                                                               class="ng-binding ng-scope">4</a><!-- end ngRepeat: cbx in filter.getChecked(filterType) -->
                                 </span><!-- end ngIf: !filter.areAllSelected(filterType) -->
 
@@ -4996,7 +4998,7 @@
                                     ng-if="!filter.areAllSelected(filterType)" class="ng-scope">
                                     <!-- ngRepeat: cbx in filter.getChecked(filterType) --><a title="Удалить фильтр"
                                                                                               ng-repeat="cbx in filter.getChecked(filterType)"
-                                                                                              ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                                                              
                                                                                               class="ng-binding ng-scope">Франция</a><!-- end ngRepeat: cbx in filter.getChecked(filterType) -->
                                 </span><!-- end ngIf: !filter.areAllSelected(filterType) -->
 
@@ -5013,7 +5015,7 @@
                                     ng-if="!filter.areAllSelected(filterType)" class="ng-scope">
                                     <!-- ngRepeat: cbx in filter.getChecked(filterType) --><a title="Удалить фильтр"
                                                                                               ng-repeat="cbx in filter.getChecked(filterType)"
-                                                                                              ng-click="$event.stopPropagation(); $event.preventDefault(); filter.filterTanks(cbx, filterType);"
+                                                                                              
                                                                                               class="ng-binding ng-scope">ПТ</a><!-- end ngRepeat: cbx in filter.getChecked(filterType) -->
                                 </span><!-- end ngIf: !filter.areAllSelected(filterType) -->
 
@@ -5035,7 +5037,7 @@
                                     ng-if="!filter.areAllSelected(filterType)" class="ng-scope">
                                     <!-- ngRepeat: cbx in filter.getChecked(filterType) --><a title="Удалить фильтр"
                                                                                               ng-repeat="cbx in filter.getChecked(filterType)"
-                                                                                              ng-click="$event.stopPropagation(); cbx.checked = false; filter.update();"
+                                                                                              
                                                                                               class="ng-binding ng-scope">Somua
                                 SAu 40</a><!-- end ngRepeat: cbx in filter.getChecked(filterType) -->
                                 </span><!-- end ngIf: !filter.areAllSelected(filterType) -->
@@ -5052,7 +5054,7 @@
                                     ng-if="!filter.areAllSelected(filterType)" class="ng-scope">
                                     <!-- ngRepeat: cbx in filter.getChecked(filterType) --><a title="Удалить фильтр"
                                                                                               ng-repeat="cbx in filter.getChecked(filterType)"
-                                                                                              ng-click="$event.stopPropagation(); cbx.checked = false; filter.update();"
+                                                                                              
                                                                                               class="ng-binding ng-scope">0.9.5</a><!-- end ngRepeat: cbx in filter.getChecked(filterType) -->
                                 </span><!-- end ngIf: !filter.areAllSelected(filterType) -->
 
@@ -5111,18 +5113,18 @@
 
             <div class="m-item_container" style="height: 351px;">
                 <div>
-                    <a ng-click="replays.get({compilation: 'vod'})">Реплеи с видео</a>
-                    <a ng-click="replays.get({compilation: 'aceTanker'})">Знак классности "Мастер"</a>
+                    <a >Реплеи с видео</a>
+                    <a </a>
                     <a href="/clans">Реплеи кланов</a>
-                    <a ng-click="replays.get({compilation: 'tag/weekly_popular'})">Популярные реплеи за неделю</a>
+                    <a >Популярные реплеи за неделю</a>
                     <a href="/site/master">График опыта мастеров</a>
-                    <a ng-click="filter.select.all('all', 'deselect'); replays.get({compilation: 'site/index', sort: 'inflicted_damage.desc'})">Максимум
+                    <a >Максимум
                         урона</a>
-                    <a ng-click="filter.select.all('all', 'deselect'); replays.get({compilation: 'site/index', sort: 'xp.desc'})">Максимум
+                    <a >Максимум
                         опыта</a>
-                    <a ng-click="filter.select.all('all', 'deselect'); replays.get({compilation: 'site/index', sort: 'credits.desc'})">Максимум
+                    <a >Максимум
                         кредитов</a>
-                    <a ng-click="filter.select.all('all', 'deselect'); replays.get({compilation: 'site/index', sort: 'frags.desc'})">Максимум
+                    <a >Максимум
                         фрагов</a>
                 </div>
             </div>
@@ -5150,14 +5152,14 @@
                 <ul class="b-sort__list b-list">
                     <!-- ngRepeat: (key, title) in filter.sort -->
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
-                        <a class="b-link" ng-click="replays.get({sort: key})"
+                        <a class="b-link" 
                            ng-class="{'b-link_active': selected.filter.sort.type == key}">
                             <span class="b-link__text ng-binding">по кредитам</span>
                             <!-- ngIf: selected.filter.sort.type == key -->
                         </a>
                     </li>
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
-                        <a class="b-link" ng-click="replays.get({sort: key})"
+                        <a class="b-link" 
                            ng-class="{'b-link_active': selected.filter.sort.type == key}">
                             <span class="b-link__text ng-binding">по фрагам</span>
                             <!-- ngIf: selected.filter.sort.type == key -->
@@ -5165,7 +5167,7 @@
                     </li>
                     <!-- end ngRepeat: (key, title) in filter.sort -->
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
-                        <a class="b-link" ng-click="replays.get({sort: key})"
+                        <a class="b-link" 
                            ng-class="{'b-link_active': selected.filter.sort.type == key}">
                             <span class="b-link__text ng-binding">по урону</span>
                             <!-- ngIf: selected.filter.sort.type == key -->
@@ -5173,7 +5175,7 @@
                     </li>
                     <!-- end ngRepeat: (key, title) in filter.sort -->
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
-                        <a class="b-link b-link_active" ng-click="replays.get({sort: key})"
+                        <a class="b-link b-link_active" 
                            ng-class="{'b-link_active': selected.filter.sort.type == key}">
                             <span class="b-link__text ng-binding">по дате</span>
                             <span ng-if="selected.filter.sort.type == key" class="ng-scope">
@@ -5185,7 +5187,7 @@
                     </li>
                     <!-- end ngRepeat: (key, title) in filter.sort -->
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
-                        <a class="b-link" ng-click="replays.get({sort: key})"
+                        <a class="b-link" 
                            ng-class="{'b-link_active': selected.filter.sort.type == key}">
                             <span class="b-link__text ng-binding">по опыту</span>
                             <!-- ngIf: selected.filter.sort.type == key -->
@@ -5197,375 +5199,9 @@
 
             <!-- ngIf: dataInitial -->
             <div ng-if="dataInitial" class="ng-scope">
-                <ul class="r_list initial">
-                    <li class="clearfix">
+                <ul class="r_list initial" id="battlesContainer">
 
-                        <a class="r-map_85" href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40"
-                           title="Тихий берег">
-                            <img src="http://wotreplays.ru/media/img/maps/canada_a.jpg"></img>
-                        </a>
 
-                        <div class="r-info">
-                            <h3><a href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40">Somua SAu 40, Тихий
-                                берег, Стандартный бой</a></h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 5</li>
-                                <li><i class="i-16_exp"></i> 840</li>
-                                <li><i class="i-16_cr"></i> 25399</li>
-                                <li><i class="i-16_dmg"></i> 1217</li>
-                                <li><i class="i-16_master"></i> Мастер</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Тихий берег</li>
-                                <li><b>Режим:</b> Стандартный бой</li>
-                                <li><b>Отправил:</b> <a href="/uploader/Ritterschvert/id/593642">Ritterschvert</a> <span
-                                        class="b-date">2015-01-25 в 02:16</span></li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4504448" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 1</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4504448">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-
-                        <a class="r-map_85" href="/site/4504445#l_zigfrida-sedantmb-somua_sau_40" title="Л. Зигфрида"
-                           style="background-image: url('/media/img/maps/siegfried_line.jpg');"></a>
-
-                        <div class="r-info">
-                            <h3><a href="/site/4504445#l_zigfrida-sedantmb-somua_sau_40">Somua SAu 40, Л. Зигфрида,
-                                Стандартный бой</a></h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 5</li>
-                                <li><i class="i-16_exp"></i> 1054</li>
-                                <li><i class="i-16_cr"></i> 34958</li>
-                                <li><i class="i-16_dmg"></i> 1514</li>
-                                <li><i class="i-16_master"></i> Мастер</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Л. Зигфрида</li>
-                                <li><b>Режим:</b> Стандартный бой</li>
-                                <li><b>Отправил:</b> <a href="/uploader/SeDaNTMB/id/483789">SeDaNTMB</a> <span
-                                        class="b-date">2015-01-25 в 02:15</span></li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4504445" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 1</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4504445">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4504445#l_zigfrida-sedantmb-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-
-                        <a class="r-map_85" href="/site/4500648#redshir-blacdaiv-somua_sau_40" title="Редшир"
-                           style="background-image: url('/media/img/maps/redshire.jpg');"></a>
-
-                        <div class="r-info">
-                            <h3><a href="/site/4500648#redshir-blacdaiv-somua_sau_40">Мастер на Somua S40</a></h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 6</li>
-                                <li><i class="i-16_exp"></i> 910</li>
-                                <li><i class="i-16_cr"></i> 30811</li>
-                                <li><i class="i-16_dmg"></i> 1316</li>
-                                <li><i class="i-16_master"></i> Мастер</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Редшир</li>
-                                <li><b>Режим:</b> Встречный бой</li>
-                                <li><b>Отправил:</b> <a href="/uploader/Blacdaiv/id/410471">Blacdaiv</a> <span
-                                        class="b-date">2015-01-24 в 17:14</span></li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4500648" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 1</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4500648">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4500648#redshir-blacdaiv-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-
-                        <a class="r-map_85" href="/site/4499735#redshir-sedantmb-somua_sau_40" title="Редшир"
-                           style="background-image: url('/media/img/maps/redshire.jpg');"></a>
-
-                        <div class="r-info">
-                            <h3><a href="/site/4499735#redshir-sedantmb-somua_sau_40">Somua SAu 40, Редшир, Стандартный
-                                бой</a></h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 5</li>
-                                <li><i class="i-16_exp"></i> 908</li>
-                                <li><i class="i-16_cr"></i> 25443</li>
-                                <li><i class="i-16_dmg"></i> 1270</li>
-                                <li><i class="i-16_master"></i> Мастер</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Редшир</li>
-                                <li><b>Режим:</b> Стандартный бой</li>
-                                <li><b>Отправил:</b> <a href="/uploader/SeDaNTMB/id/483789">SeDaNTMB</a> <span
-                                        class="b-date">2015-01-24 в 14:47</span></li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4499735" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 1</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4499735">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4499735#redshir-sedantmb-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-
-                        <a class="r-map_85" href="/site/4497631#top-sx82-somua_sau_40" title="Топь"
-                           style="background-image: url('/media/img/maps/slough.jpg');"></a>
-
-                        <div class="r-info">
-                            <h3><a href="/site/4497631#top-sx82-somua_sau_40">Somua SAu 40, Топь, Стандартный бой</a>
-                            </h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 5</li>
-                                <li><i class="i-16_exp"></i> 884</li>
-                                <li><i class="i-16_cr"></i> 17184</li>
-                                <li><i class="i-16_dmg"></i> 1031</li>
-                                <li><i class="i-16_master"></i> Мастер</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Топь</li>
-                                <li><b>Режим:</b> Стандартный бой</li>
-                                <li><b>Отправил:</b> <a href="/uploader/sx82/id/871173">sx82</a> <span class="b-date">2015-01-24 в 03:31</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4497631" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 1</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4497631">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4497631#top-sx82-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-
-                        <a class="r-map_85" href="/site/4483360#l_zigfrida-tarakanttt-somua_sau_40" title="Л. Зигфрида"
-                           style="background-image: url('/media/img/maps/siegfried_line.jpg');"></a>
-
-                        <div class="r-info">
-                            <h3><a href="/site/4483360#l_zigfrida-tarakanttt-somua_sau_40">Somua SAu 40, Л. Зигфрида,
-                                Штурм</a></h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 1</li>
-                                <li><i class="i-16_exp"></i> 569</li>
-                                <li><i class="i-16_cr"></i> 19374</li>
-                                <li><i class="i-16_dmg"></i> 426</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Л. Зигфрида</li>
-                                <li><b>Режим:</b> Штурм</li>
-                                <li><b>Отправил:</b> <a href="/uploader/TarakanTTT/id/931848">TarakanTTT</a> <span
-                                        class="b-date">2015-01-21 в 21:48</span></li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4483360" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 1</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4483360">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4483360#l_zigfrida-tarakanttt-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-
-                        <a class="r-map_85" href="/site/4480628#erlenberg-no_names-somua_sau_40" title="Эрленберг"
-                           style="background-image: url('/media/img/maps/erlenberg.jpg');"></a>
-
-                        <div class="r-info">
-                            <h3><a href="/site/4480628#erlenberg-no_names-somua_sau_40">Недотащил... Somua SAu 40,
-                                Эрленберг, Встречный бой</a></h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 10</li>
-                                <li><i class="i-16_exp"></i> 1455</li>
-                                <li><i class="i-16_cr"></i> 37698</li>
-                                <li><i class="i-16_dmg"></i> 2249</li>
-                                <li><i class="i-16_master"></i> Мастер</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Эрленберг</li>
-                                <li><b>Режим:</b> Встречный бой</li>
-                                <li><b>Отправил:</b> <a href="/uploader/No_NameS/id/294640">No_NameS</a> <span
-                                        class="b-date">2015-01-21 в 14:43</span></li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4480628" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 1</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4480628">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4480628#erlenberg-no_names-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-
-                        <a class="r-map_85" href="/site/4477425#yuzhnyy_bereg-eaglewhitehead-somua_sau_40"
-                           title="Южный берег" style="background-image: url('/media/img/maps/crimea.jpg');"></a>
-
-                        <div class="r-info">
-                            <h3><a href="/site/4477425#yuzhnyy_bereg-eaglewhitehead-somua_sau_40">Somua SAu 40, Южный
-                                берег, Стандартный бой</a></h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 5</li>
-                                <li><i class="i-16_exp"></i> 985</li>
-                                <li><i class="i-16_cr"></i> 20834</li>
-                                <li><i class="i-16_dmg"></i> 1569</li>
-                                <li><i class="i-16_master"></i> Мастер</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Южный берег</li>
-                                <li><b>Режим:</b> Стандартный бой</li>
-                                <li><b>Отправил:</b> <a href="/uploader/EagleWhiteHead/id/592169">EagleWhiteHead</a>
-                                    <span class="b-date">2015-01-20 в 21:57</span></li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4477425" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 2</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4477425">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4477425#yuzhnyy_bereg-eaglewhitehead-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-
-                        <a class="r-map_85" href="/site/4476753#l_zigfrida-galakt-somua_sau_40" title="Л. Зигфрида"
-                           style="background-image: url('/media/img/maps/siegfried_line.jpg');"></a>
-
-                        <div class="r-info">
-                            <h3><a href="/site/4476753#l_zigfrida-galakt-somua_sau_40">Somua SAu 40, Л. Зигфрида,
-                                Встречный бой</a></h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 2</li>
-                                <li><i class="i-16_exp"></i> 334</li>
-                                <li><i class="i-16_cr"></i> 9631</li>
-                                <li><i class="i-16_dmg"></i> 158</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Л. Зигфрида</li>
-                                <li><b>Режим:</b> Встречный бой</li>
-                                <li><b>Отправил:</b> <a href="/uploader/Galakt/id/262703">Galakt</a> <span
-                                        class="b-date">2015-01-20 в 20:26</span></li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4476753" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 1</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4476753">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4476753#l_zigfrida-galakt-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="clearfix">
-
-                        <a class="r-map_85" href="/site/4472223#murovanka-krisp-somua_sau_40" title="Мурованка"
-                           style="background-image: url('/media/img/maps/murovanka.jpg');"></a>
-
-                        <div class="r-info">
-                            <h3><a href="/site/4472223#murovanka-krisp-somua_sau_40">Тащил как мог)</a></h3>
-                            <ul class="r-info_ri">
-                                <li><i class="i-16_frags"></i> 7</li>
-                                <li><i class="i-16_exp"></i> 1162</li>
-                                <li><i class="i-16_cr"></i> 34261</li>
-                                <li><i class="i-16_dmg"></i> 1917</li>
-                                <li><i class="i-16_master"></i> Мастер</li>
-                            </ul>
-                            <ul class="r-info_ci">
-                                <li><b>Танк:</b> Somua SAu 40</li>
-                                <li><b>Карта:</b> Мурованка</li>
-                                <li><b>Режим:</b> Стандартный бой</li>
-                                <li><b>Отправил:</b> <a href="/uploader/Krisp/id/382059">Krisp</a> <span class="b-date">2015-01-19 в 23:41</span>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="r-act">
-                            <a href="/site/download/4472223" class="btn_l-grey">Скачать реплей</a>
-                            <span class="b-replay__download-stat">Скачиваний: 1</span>
-
-                            <div class="r-act_soc">
-                                <a class="r-act_soc-like" data-target="4472223">
-                                    <ins></ins>
-                                    <span>0</span></a>
-                                <a href="/site/4472223#murovanka-krisp-somua_sau_40" class="r-act_soc-com">
-                                    <ins></ins>
-                                    0</a>
-                            </div>
-                        </div>
-                    </li>
                 </ul>
             </div>
             <!-- end ngIf: dataInitial -->
@@ -5573,37 +5209,37 @@
             <!-- ngIf: !dataInitial -->
 
             <ul class="pagination replays-pagination" style="height: 29px; overflow: visible;">
-                <li ng-click="pages.prevPage ? replays.get({page: pages.current - 1}) : return"
+                <li 
                     ng-class="{disabled: !pages.prevPage}" class="disabled">
                     ← Назад
                 </li>
                 <!-- ngRepeat: page in pages.arr -->
-                <li ng-click="pages.current != page ? replays.get({page: page}) : return" ng-repeat="page in pages.arr"
+                <li 
                     ng-class="{active: page == pages.current}" class="ng-binding ng-scope active">
                     1
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
-                <li ng-click="pages.current != page ? replays.get({page: page}) : return" ng-repeat="page in pages.arr"
+                <li 
                     ng-class="{active: page == pages.current}" class="ng-binding ng-scope">
                     2
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
-                <li ng-click="pages.current != page ? replays.get({page: page}) : return" ng-repeat="page in pages.arr"
+                <li 
                     ng-class="{active: page == pages.current}" class="ng-binding ng-scope">
                     3
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
-                <li ng-click="pages.current != page ? replays.get({page: page}) : return" ng-repeat="page in pages.arr"
+                <li 
                     ng-class="{active: page == pages.current}" class="ng-binding ng-scope">
                     4
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
-                <li ng-click="pages.current != page ? replays.get({page: page}) : return" ng-repeat="page in pages.arr"
+                <li 
                     ng-class="{active: page == pages.current}" class="ng-binding ng-scope">
                     5
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
-                <li ng-click="pages.nextPage ? replays.get({page: pages.current + 1}) : return"
+                <li 
                     ng-class="{disabled: !pages.nextPage}" class="">
                     Вперёд →
                 </li>
@@ -5615,4 +5251,48 @@
 
 </div>
 </body>
+
+<script id="battleTableViewTemplate" type="x-tmpl-mustache">
+                <li class="clearfix">
+
+                    <a class="r-map_85" href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40"
+                       title="Тихий берег">
+                        <img src="http://wotreplays.ru/media/img/maps/canada_a.jpg"></img>
+                    </a>
+
+                    <div class="r-info">
+                        <h3>
+						<a href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40">
+						Somua SAu 40, {{_source.mapDisplayName}}, Стандартный бой</a></h3>
+                        <ul class="r-info_ri">
+                            <li><i class="i-16_frags"></i> 5</li>
+                            <li><i class="i-16_exp"></i> 840</li>
+                            <li><i class="i-16_cr"></i> 25399</li>
+                            <li><i class="i-16_dmg"></i> 1217</li>
+                            <li><i class="i-16_master"></i> Мастер</li>
+                        </ul>
+                        <ul class="r-info_ci">
+								<li><b>Танк:</b> {{_source.playerVehicle}}</li>
+								<li><b>Режим:</b> Встречный бой</li>
+								<li><b>Отправил:</b> {{_source.playerName}} <span class="b-date">2015-01-25 в 17:33</span></li>
+                        </ul>
+                    </div>
+                    <div class="r-act">
+                        <a href="{{_id}}" class="btn_l-grey">Запустить реплей</a>
+                    </div>
+                </li>
+</script>
+
+<script>
+    var battles = ${battles};
+    var battleTableViewTemplate = $('#battleTableViewTemplate').html();
+	
+    Mustache.parse(battleTableViewTemplate);
+	var battlesContainer = $('#battlesContainer');
+	for (var index in battles) {
+	var battle = battles[index];
+		battlesContainer.append(Mustache.render(battleTableViewTemplate, battle));
+	}
+	
+</script>
 </html>

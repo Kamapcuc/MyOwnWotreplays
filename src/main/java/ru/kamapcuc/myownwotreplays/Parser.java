@@ -1,8 +1,15 @@
 package ru.kamapcuc.myownwotreplays;
 
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.elasticsearch.common.xcontent.ToXContent;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
+import org.elasticsearch.search.SearchHit;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,5 +53,21 @@ public class Parser {
             return document;
         } else
             return null;
+    }
+
+    public String stringify(SearchHit[] hits) throws IOException {
+        XContentBuilder builder = XContentFactory.jsonBuilder();
+        builder.startArray();
+        Arrays.stream(hits).forEach((hit) -> {
+            try {
+                hit.toXContent(builder, ToXContent.EMPTY_PARAMS);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        builder.endArray();
+        builder.close();
+        return builder.string();
+            //return mapper.writeValueAsString(hit);
     }
 }
