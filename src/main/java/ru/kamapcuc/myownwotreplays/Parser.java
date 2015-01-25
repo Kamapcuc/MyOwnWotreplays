@@ -10,7 +10,6 @@ public class Parser {
 
     private final String RX = "\u0000\u0000";
     private final ObjectMapper mapper = new ObjectMapper();
-//    public int[] x = new int[]{0,0,0,0};
 
     public Map<String, Object> parse(String data) {
         Map<String, Object> result = null;
@@ -32,9 +31,6 @@ public class Parser {
                     } catch (IOException ignored) {
                     }
         }
-//        x[parts.length]++;
-//        if (result == null)
-//            System.out.println(String.format("Failed to parse %s", data));
         return result;
     }
 

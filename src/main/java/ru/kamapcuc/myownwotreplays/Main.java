@@ -13,7 +13,6 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -61,6 +60,5 @@ public class Main {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        System.out.println(Arrays.toString(parser.x));
     }
 }
