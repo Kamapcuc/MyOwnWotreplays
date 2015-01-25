@@ -83,7 +83,7 @@
                                         <div class="ng-binding">Нации</div>
                                     </div>
 
-                                    <ul ng-class="{'two-column': filterType.key == 'level'}">
+                                    <ul >
                                         <!-- ngRepeat: cbx in filterType.checkboxes -->
                                         <li ng-repeat="cbx in filterType.checkboxes" class="ng-scope">
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="01"
@@ -153,7 +153,7 @@
                                         <div class="ng-binding">Уровни</div>
                                     </div>
 
-                                    <ul ng-class="{'two-column': filterType.key == 'level'}" class="two-column">
+                                    <ul  class="two-column">
                                         <!-- ngRepeat: cbx in filterType.checkboxes -->
                                         <li ng-repeat="cbx in filterType.checkboxes" class="ng-scope">
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="11"
@@ -247,7 +247,7 @@
                                         <div class="ng-binding">Типы</div>
                                     </div>
 
-                                    <ul ng-class="{'two-column': filterType.key == 'level'}">
+                                    <ul >
                                         <!-- ngRepeat: cbx in filterType.checkboxes -->
                                         <li ng-repeat="cbx in filterType.checkboxes" class="ng-scope">
                                             <input type="checkbox" class="cbx ng-pristine ng-untouched ng-valid" id="21"
@@ -5075,7 +5075,7 @@
 
         <div class="m-item">
 
-            <a href="/streams" ng-class="{active: routing.active.item === 'streams'}" class="m-item_title"
+            <a href="/streams"  class="m-item_title"
                style="width: 162px;">Трансляции</a>
 
         </div>
@@ -5085,7 +5085,7 @@
             <!-- ngIf: competitions.count === 0 -->
 
             <!-- ngIf: competitions.count != 0 --><a ng-if="competitions.count != 0" ng-href="/competition/47"
-                                                     ng-class="{active: routing.active.item === 'competition'}"
+                                                     
                                                      class="m-item_title orange-href ng-binding ng-scope"
                                                      style="width: 171px;" href="/competition/47">Идут конкурсы</a><!-- end ngIf: competitions.count != 0 -->
 
@@ -5094,7 +5094,7 @@
 
         <div class="m-item_dropdown compilations wgl collapsed">
 
-            <div class="m-item_title" style="width: 153px;" ng-class="{active: routing.active.item === 'wgleague'}">WG
+            <div class="m-item_title" style="width: 153px;" >WG
                 League
             </div>
 
@@ -5107,7 +5107,7 @@
 
         <div class="m-item_dropdown compilations collapsed">
 
-            <div class="m-item_title" style="width: 162px;" ng-class="{active: routing.active.item === 'compilations'}">
+            <div class="m-item_title" style="width: 162px;" >
                 Подборки
             </div>
 
@@ -5153,14 +5153,14 @@
                     <!-- ngRepeat: (key, title) in filter.sort -->
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
                         <a class="b-link" 
-                           ng-class="{'b-link_active': selected.filter.sort.type == key}">
+                           >
                             <span class="b-link__text ng-binding">по кредитам</span>
                             <!-- ngIf: selected.filter.sort.type == key -->
                         </a>
                     </li>
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
                         <a class="b-link" 
-                           ng-class="{'b-link_active': selected.filter.sort.type == key}">
+                           >
                             <span class="b-link__text ng-binding">по фрагам</span>
                             <!-- ngIf: selected.filter.sort.type == key -->
                         </a>
@@ -5168,7 +5168,7 @@
                     <!-- end ngRepeat: (key, title) in filter.sort -->
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
                         <a class="b-link" 
-                           ng-class="{'b-link_active': selected.filter.sort.type == key}">
+                           >
                             <span class="b-link__text ng-binding">по урону</span>
                             <!-- ngIf: selected.filter.sort.type == key -->
                         </a>
@@ -5176,7 +5176,7 @@
                     <!-- end ngRepeat: (key, title) in filter.sort -->
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
                         <a class="b-link b-link_active" 
-                           ng-class="{'b-link_active': selected.filter.sort.type == key}">
+                           >
                             <span class="b-link__text ng-binding">по дате</span>
                             <span ng-if="selected.filter.sort.type == key" class="ng-scope">
                             <ins class="b-sort__dir ng-scope"
@@ -5188,7 +5188,7 @@
                     <!-- end ngRepeat: (key, title) in filter.sort -->
                     <li ng-repeat="(key, title) in filter.sort" class="b-list__item ng-scope">
                         <a class="b-link" 
-                           ng-class="{'b-link_active': selected.filter.sort.type == key}">
+                           >
                             <span class="b-link__text ng-binding">по опыту</span>
                             <!-- ngIf: selected.filter.sort.type == key -->
                         </a>
@@ -5210,37 +5210,37 @@
 
             <ul class="pagination replays-pagination" style="height: 29px; overflow: visible;">
                 <li 
-                    ng-class="{disabled: !pages.prevPage}" class="disabled">
+                     class="disabled">
                     ← Назад
                 </li>
                 <!-- ngRepeat: page in pages.arr -->
                 <li 
-                    ng-class="{active: page == pages.current}" class="ng-binding ng-scope active">
+                     class="ng-binding ng-scope active">
                     1
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
                 <li 
-                    ng-class="{active: page == pages.current}" class="ng-binding ng-scope">
+                     class="ng-binding ng-scope">
                     2
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
                 <li 
-                    ng-class="{active: page == pages.current}" class="ng-binding ng-scope">
+                     class="ng-binding ng-scope">
                     3
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
                 <li 
-                    ng-class="{active: page == pages.current}" class="ng-binding ng-scope">
+                     class="ng-binding ng-scope">
                     4
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
                 <li 
-                    ng-class="{active: page == pages.current}" class="ng-binding ng-scope">
+                     class="ng-binding ng-scope">
                     5
                 </li>
                 <!-- end ngRepeat: page in pages.arr -->
                 <li 
-                    ng-class="{disabled: !pages.nextPage}" class="">
+                     class="">
                     Вперёд →
                 </li>
             </ul>
@@ -5256,8 +5256,8 @@
                 <li class="clearfix">
 
                     <a class="r-map_85" href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40"
-                       title="Тихий берег">
-                        <img src="http://wotreplays.ru/media/img/maps/canada_a.jpg"></img>
+                       title="Тихий берег" style="background-image: url('http://wotreplays.ru/media/img/maps/el_hallouf.jpg');">
+                       
                     </a>
 
                     <div class="r-info">

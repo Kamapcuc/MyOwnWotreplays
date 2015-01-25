@@ -68,6 +68,5 @@ public class Parser {
         builder.endArray();
         builder.close();
         return builder.string();
-            //return mapper.writeValueAsString(hit);
     }
 }
