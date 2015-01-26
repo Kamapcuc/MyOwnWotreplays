@@ -23,7 +23,7 @@ public class Indexer implements Runnable {
     private final Stream<File> filesToIndex;
 
     public final static String REPLAYS_INDEX_NAME = "replays";
-    public final static String BATTLE_TYPE_NAME = "replays";
+    public final static String BATTLE_TYPE_NAME = "battle";
 
     private static String getPath() {
         return System.getProperty("replaysPath");

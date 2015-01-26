@@ -3,3 +3,6 @@ node.name: "SingleNode"
 index:
   number_of_shards: 1
   number_of_replicas: 0
+transport.tcp.port: 9300
+http.port: 9200
+path.data: "C:/Games/World_of_Tanks/MyOwnWotreplays/data/"

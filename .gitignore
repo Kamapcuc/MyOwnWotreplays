@@ -1,4 +1,5 @@
 .idea/**
-data/**
+data/MyOwnWotreplays/nodes/0/indices/.marvel-**
+data/MyOwnWotreplays/nodes/0/indices/replays/**
 target/**
 *.iml

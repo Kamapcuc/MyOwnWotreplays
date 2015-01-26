@@ -66,33 +66,19 @@
   <modified_date>2015&#x2f;01&#x2f;25 19&#x3a;20&#x3a;49.309</modified_date>
   </info>
   <notepads>
-    <notepad>
-      <note>http&#x3a;&#x2f;&#x2f;na.wargaming.net&#x2f;developers&#x2f;api_reference&#x2f;wot&#x2f;encyclopedia&#x2f;arenas&#x2f;</note>
-      <xloc>348</xloc>
-      <yloc>389</yloc>
-      <width>446</width>
-      <heigth>25</heigth>
-      <fontname>Arial</fontname>
-      <fontsize>10</fontsize>
-      <fontbold>N</fontbold>
-      <fontitalic>N</fontitalic>
-      <fontcolorred>0</fontcolorred>
-      <fontcolorgreen>0</fontcolorgreen>
-      <fontcolorblue>0</fontcolorblue>
-      <backgroundcolorred>255</backgroundcolorred>
-      <backgroundcolorgreen>165</backgroundcolorgreen>
-      <backgroundcolorblue>0</backgroundcolorblue>
-      <bordercolorred>100</bordercolorred>
-      <bordercolorgreen>100</bordercolorgreen>
-      <bordercolorblue>100</bordercolorblue>
-      <drawshadow>Y</drawshadow>
-    </notepad>
   </notepads>
   <order>
-  <hop> <from>Data Grid</from><to>REST Client</to><enabled>Y</enabled> </hop>
+  <hop> <from>Languages</from><to>Build urls</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build urls</from><to>Maps</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build urls</from><to>Tanks</to><enabled>N</enabled> </hop>
+  <hop> <from>Maps</from><to>Parse data</to><enabled>Y</enabled> </hop>
+  <hop> <from>Parse data</from><to>Sort rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Sort rows</from><to>Concat</to><enabled>Y</enabled> </hop>
+  <hop> <from>Concat</from><to>Build source</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build source</from><to>Save map</to><enabled>Y</enabled> </hop>
   </order>
   <step>
-    <name>Data Grid</name>
+    <name>Languages</name>
     <type>DataGrid</type>
     <description/>
     <distribute>Y</distribute>
@@ -112,20 +98,41 @@
         <length>-1</length>
         <precision>-1</precision>
       </field>
+      <field>
+        <name>num</name>
+        <type>Integer</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
     </fields>
     <data>
-      <line> <item/> </line>
+      <line> <item>en</item><item>1</item> </line>
+      <line> <item>ru</item><item>2</item> </line>
+      <line> <item>pl</item><item>3</item> </line>
+      <line> <item>de</item><item>4</item> </line>
+      <line> <item>fr</item><item>5</item> </line>
+      <line> <item>es</item><item>6</item> </line>
+      <line> <item>zh-cn</item><item>7</item> </line>
+      <line> <item>tr</item><item>8</item> </line>
+      <line> <item>cs</item><item>9</item> </line>
+      <line> <item>th</item><item>10</item> </line>
+      <line> <item>vi</item><item>11</item> </line>
+      <line> <item>ko</item><item>12</item> </line>
     </data>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>350</xloc>
-      <yloc>205</yloc>
+      <xloc>384</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>REST Client</name>
+    <name>Tanks</name>
     <type>Rest</type>
     <description/>
     <distribute>Y</distribute>
@@ -136,11 +143,11 @@
            </partitioning>
     <applicationType>TEXT PLAIN</applicationType>
     <method>GET</method>
-    <url>https&#x3a;&#x2f;&#x2f;api.worldoftanks.com&#x2f;wot&#x2f;encyclopedia&#x2f;tanks&#x2f;&#x3f;application_id&#x3d;demo&#x26;language&#x3d;ru</url>
-    <urlInField>N</urlInField>
+    <url/>
+    <urlInField>Y</urlInField>
     <dynamicMethod>N</dynamicMethod>
     <methodFieldName/>
-    <urlField/>
+    <urlField>tanksUrl</urlField>
     <bodyField/>
     <httpLogin/>
     <httpPassword>Encrypted </httpPassword>
@@ -160,8 +167,280 @@
       </result>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>549</xloc>
-      <yloc>210</yloc>
+      <xloc>608</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Maps</name>
+    <type>Rest</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <applicationType>TEXT PLAIN</applicationType>
+    <method>GET</method>
+    <url/>
+    <urlInField>Y</urlInField>
+    <dynamicMethod>N</dynamicMethod>
+    <methodFieldName/>
+    <urlField>mapsUrl</urlField>
+    <bodyField/>
+    <httpLogin/>
+    <httpPassword>Encrypted </httpPassword>
+    <proxyHost/>
+    <proxyPort/>
+    <preemptive>N</preemptive>
+    <trustStoreFile/>
+    <trustStorePassword>Encrypted </trustStorePassword>
+    <headers>
+      </headers>
+    <parameters>
+      </parameters>
+    <result>
+      <name>result</name>
+      <code/>
+      <response_time/>
+      </result>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>608</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Build urls</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var baseUrl &#x3d; &#x22;https&#x3a;&#x2f;&#x2f;api.worldoftanks.com&#x2f;wot&#x2f;encyclopedia&#x2f;&#x22;&#x3b;&#xd;&#xa;var params &#x3d; &#x22;&#x2f;&#x3f;application_id&#x3d;demo&#x26;language&#x3d;&#x22;&#x3b;&#xd;&#xa;var tanksUrl &#x3d; baseUrl &#x2b; &#x22;tanks&#x22; &#x2b; params &#x2b; lang&#x3b;&#xd;&#xa;var mapsUrl &#x3d; baseUrl &#x2b; &#x22;arenas&#x22; &#x2b; params &#x2b; lang&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>tanksUrl</name>
+        <rename>tanksUrl</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>mapsUrl</name>
+        <rename>mapsUrl</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>512</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Parse data</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>trans_Status &#x3d; SKIP_TRANSFORMATION&#x3b;&#xd;&#xa;&#xd;&#xa;var data &#x3d; JSON.parse&#x28;result&#x29;.data&#x3b;&#xd;&#xa;for &#x28;var key in data&#x29; &#x7b;&#xd;&#xa;	var map &#x3d; data&#x5b;key&#x5d;&#x3b;&#xd;&#xa;    var row &#x3d; createRowCopy&#x28;getOutputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x29;&#x3b;&#xd;&#xa;    var idx &#x3d; getInputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; map.arena_id&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; map.name_i18n&#x3b;&#xd;&#xa;    putRow&#x28;row&#x29;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>id</name>
+        <rename>id</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>name</name>
+        <rename>name</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>736</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>id</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+      </field>
+      <field>
+        <name>num</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>864</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Concat</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <all_rows>N</all_rows>
+      <ignore_aggregate>N</ignore_aggregate>
+      <field_ignore/>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>grp</prefix>
+      <add_linenr>N</add_linenr>
+      <linenr_fieldname/>
+      <give_back_row>N</give_back_row>
+      <group>
+        <field>
+          <name>id</name>
+        </field>
+      </group>
+      <fields>
+        <field>
+          <aggregate>lang</aggregate>
+          <subject>lang</subject>
+          <type>CONCAT_STRING</type>
+          <valuefield>&#x5e;</valuefield>
+        </field>
+        <field>
+          <aggregate>name</aggregate>
+          <subject>name</subject>
+          <type>CONCAT_STRING</type>
+          <valuefield>&#x5e;</valuefield>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>992</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Build source</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var mapObj &#x3d; &#x7b;&#xd;&#xa;	name &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	mapObj.name&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;mapObj&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
+        <rename>source</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1120</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Save map</name>
+    <type>ElasticSearchBulk</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <general>
+      <index>data</index>
+      <type>map</type>
+      <operationType>INSERT</operationType>
+      <script/>
+      <batchSize>50000</batchSize>
+      <timeout/>
+      <timeoutUnit>SECONDS</timeoutUnit>
+      <isJson>Y</isJson>
+      <jsonField>source</jsonField>
+      <idField>id</idField>
+      <parentInField/>
+      <overwriteIfExists>N</overwriteIfExists>
+      <useOutput>N</useOutput>
+      <stopOnError>Y</stopOnError>
+      <docAsUpsert>N</docAsUpsert>
+    </general>
+    <fields>
+    </fields>
+    <servers>
+      <server>
+        <address>localhost</address>
+        <port>9300</port>
+      </server>
+    </servers>
+    <settings>
+      <setting>
+        <name>client.transport.ignore_cluster_name</name>
+        <value>true</value>
+      </setting>
+    </settings>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1248</xloc>
+      <yloc>288</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
