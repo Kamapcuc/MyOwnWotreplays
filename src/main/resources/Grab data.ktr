@@ -1120,12 +1120,12 @@
     </general>
     <fields>
       <field>
-        <columnName>name</columnName>
-        <targetName>langName</targetName>
+        <columnName>lang</columnName>
+        <targetName>prefix</targetName>
       </field>
       <field>
-        <columnName>prefix</columnName>
-        <targetName>lang</targetName>
+        <columnName>langName</columnName>
+        <targetName>name</targetName>
       </field>
     </fields>
     <servers>
