@@ -2,6 +2,7 @@ package ru.kamapcuc.myownwotreplays.elastic;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
+import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 
@@ -21,7 +22,8 @@ public class RequestBuilder {
 
     public SearchRequestBuilder buildRequest(HttpServletRequest request) {
         SearchRequestBuilder searchRequest = client.getClient().prepareSearch(DataConfig.REPLAYS_INDEX_NAME);
-        searchRequest.setQuery(new MatchAllQueryBuilder());
+//        searchRequest.setQuery(new MatchAllQueryBuilder());
+        searchRequest.setQuery(new MatchQueryBuilder("version", "0.9.5.0"));
         searchRequest.setTypes(DataConfig.BATTLE_TYPE_NAME);
         Arrays.stream(facets).forEach(searchRequest::addAggregation);
         return searchRequest;

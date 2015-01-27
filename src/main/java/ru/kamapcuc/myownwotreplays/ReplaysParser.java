@@ -5,42 +5,16 @@ import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.search.SearchHit;
-import ru.kamapcuc.myownwotreplays.elastic.DataConfig;
-import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ReplaysParser {
 
-    private ElasticClient client = ElasticClient.getInstance();
-
     private final static String RX = "\u0000\u0000";
     private final ObjectMapper mapper = new ObjectMapper();
-
-    private Map<String, Doc> tanksData = null;
-
-    private Map<String, Doc> getTanksData() {
-        if (tanksData == null)
-            tanksData = client.getDataType(DataConfig.TANK_TYPE_NAME);
-        return tanksData;
-    }
-
-    private Map<String, Object> getTankSearchInfo(String tankId) {
-        Map<String, Object> result = new HashMap<>();
-        Doc tank = getTanksData().get(tankId);
-        if (tank != null) {
-            result.put("id", tank.getId());
-            result.put("level", tank.get("level"));
-            result.put("nation", tank.get("nation"));
-            result.put("class", tank.get("class"));
-        }
-        return result;
-    }
 
     public Map<String, Object> parse(String data) {
         Map startInfo = null;
@@ -61,20 +35,9 @@ public class ReplaysParser {
                     } catch (IOException ignored) {
                     }
         }
-        return createDoc(startInfo, endInfo);
-    }
-
-    private Map<String, Object> createDoc(Map startInfo, List endInfo) {
-        Map<String, Object> document = new HashMap<>();
         if (startInfo != null) {
-            document.put("playerName", startInfo.get("playerName"));
-            document.put("map", startInfo.get("mapName"));
-            String tankInfo = startInfo.get("playerVehicle").toString();
-            String tankId = tankInfo.split("-")[1];
-            document.put("tank", getTankSearchInfo(tankId));
-            if (endInfo != null)
-                document.put("test", endInfo.size());
-            return document;
+            InnerParser doc = new InnerParser(startInfo, endInfo);
+            return doc.buildDoc();
         } else
             return null;
     }

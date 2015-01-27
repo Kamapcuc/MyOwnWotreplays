@@ -5,7 +5,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/main.css" media="all">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta charset="UTF-8">
-    <script src="resources/js/Mustache.js"></script>
+    <script src="resources/js/handlebars-v2.0.0.js"></script>
     <script src="resources/js/jquery-2.1.3.min.js"></script>
     <link rel="icon" type="image/png" href="/resources/img/favicon.ico"/>
 </head>
@@ -1381,40 +1381,19 @@
                 </ul>
             </div>
             <ul class="pagination replays-pagination" style="height: 29px; overflow: visible;">
-                <li
-                        class="disabled">
-                    ← Назад
-                </li>
-                <li
-                        class="ng-binding ng-scope active">
-                    1
-                </li>
-                <li
-                        class="ng-binding ng-scope">
-                    2
-                </li>
-                <li
-                        class="ng-binding ng-scope">
-                    3
-                </li>
-                <li
-                        class="ng-binding ng-scope">
-                    4
-                </li>
-                <li
-                        class="ng-binding ng-scope">
-                    5
-                </li>
-                <li
-                        class="">
-                    Вперёд →
-                </li>
+                <li class="disabled">← Назад</li>
+                <li class="ng-binding ng-scope">1</li>
+                <li class="ng-binding ng-scope">2</li>
+                <li class="ng-binding ng-scope">3</li>
+                <li class="ng-binding ng-scope">4</li>
+                <li class="ng-binding ng-scope">5</li>
+                <li class="">Вперёд →</li>
             </ul>
         </div>
     </div>
 </div>
 </body>
-<script id="battleTableViewTemplate" type="x-tmpl-mustache">
+<script id="battlesTableTemplate" type="x-tmpl-mustache">
     <li class="clearfix">
         <a class="r-map_85" href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40"
            title="Тихий берег" style="background-image: url('/resources/img/maps/plan/{{_source.map}}.jpg');">
@@ -1425,17 +1404,27 @@
                     {{_source.map}}, Стандартный бой
                 </a>
             </h3>
-            <ul class="r-info_ri">
-                <li><i class="i-16_frags"></i> 5</li>
-                <li><i class="i-16_exp"></i> 840</li>
-                <li><i class="i-16_cr"></i> 25399</li>
-                <li><i class="i-16_dmg"></i> 1217</li>
-                <li><i class="i-16_master"></i> Мастер</li>
-            </ul>
+            {{#if _source.haveResults}}
+                <ul class="r-info_ri">
+                    <li><i class="i-16_frags"></i> {{_source.kills}}</li>
+                    <li><i class="i-16_exp"></i> {{_source.originalXP}}</li>
+                    <li><i class="i-16_cr"></i> {{_source.originalCredits}}</li>
+                    <li><i class="i-16_dmg"></i> {{_source.damageDealt}}</li>
+                    <li><i class="i-16_master"></i> Мастер</li>
+                </ul>
+            {{else}}
+                <ul class="r-info_ri">
+                    <li><i class="i-16_frags"></i> 0</li>
+                    <li><i class="i-16_exp"></i> 0</li>
+                    <li><i class="i-16_cr"></i> 0</li>
+                    <li><i class="i-16_dmg"></i> 0</li>
+                </ul>
+            {{/if}}
             <ul class="r-info_ci">
                 <li><b>Танк:</b> {{_source.tank.id}}</li>
                 <li><b>Играл:</b> {{_source.playerName}}</li>
-                <li><b>Дата:</b> 2015-01-25 в 17:33</li>
+                <li><b>Версия:</b> {{_source.version}}</li>
+                <li><b>Дата:</b> {{_source.battleDate}}</li>
             </ul>
         </div>
         <div class="r-act">
@@ -1445,13 +1434,13 @@
 </script>
 <script>
     var battles = ${battles};
-    var battleTableViewTemplate = $('#battleTableViewTemplate').html();
 
-    Mustache.parse(battleTableViewTemplate);
+    var battlesTableTemplate = Handlebars.compile( $('#battlesTableTemplate').html());
+
     var battlesContainer = $('#battlesContainer');
     for (var index in battles) {
         var battle = battles[index];
-        battlesContainer.append(Mustache.render(battleTableViewTemplate, battle));
+        battlesContainer.append(battlesTableTemplate(battle));
     }
 
 </script>
