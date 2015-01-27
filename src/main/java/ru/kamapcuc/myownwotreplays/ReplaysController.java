@@ -1,15 +1,10 @@
 package ru.kamapcuc.myownwotreplays;
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
-import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,12 +14,12 @@ import java.io.IOException;
 @Controller
 public class ReplaysController {
 
-    private final Client client = connect();
-    private final Indexer indexer = new Indexer(client);
-
-    public ReplaysController() {
-        new Thread(indexer).start();
-    }
+    @Autowired
+    private Client client;
+    @Autowired
+    private Indexer indexer;
+    @Autowired
+    private ReplaysParser parser;
 
     @RequestMapping("/")
     public String search(ModelMap model) {
@@ -35,32 +30,12 @@ public class ReplaysController {
         SearchResponse response = searchRequest.execute().actionGet();
 
         try {
-            model.put("battles", indexer.parser.stringify(response.getHits().getHits()));
+            model.put("battles", parser.stringify(response.getHits().getHits()));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return "search";
-    }
-
-    private Client createNode() {
-        ImmutableSettings.Builder settings = ImmutableSettings.settingsBuilder();
-        settings.loadFromClasspath("main/resources/elasticsearch.yml");
-        NodeBuilder nodebuilder = new NodeBuilder();
-        nodebuilder.settings(settings);
-        Node node = nodebuilder.node();
-        node.start();
-        Client client = node.client();
-        ClusterHealthRequest health = new ClusterHealthRequest();
-        health.waitForYellowStatus();
-        client.admin().cluster().health(health).actionGet();
-        return client;
-    }
-
-    private Client connect() {
-        TransportClient client = new TransportClient();
-        client.addTransportAddress(new InetSocketTransportAddress("localhost", 9300));
-        return client;
     }
 
 }

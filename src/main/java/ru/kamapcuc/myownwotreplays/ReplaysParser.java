@@ -1,20 +1,23 @@
 package ru.kamapcuc.myownwotreplays;
 
-import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.search.SearchHit;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Parser {
+public class ReplaysParser {
+
+    @Autowired
+    private Client client;
 
     private final static String RX = "\u0000\u0000";
     private final ObjectMapper mapper = new ObjectMapper();

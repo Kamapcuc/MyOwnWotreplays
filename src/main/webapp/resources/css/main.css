@@ -4205,7 +4205,7 @@ i.i-48_wotreplays {
 .m-item_container {
     position: absolute;
     z-index: 1000;
-    top: 42px;
+    top: 0;
     left: 0;
     font-size: 12px;
     width: 998px;
@@ -4240,11 +4240,11 @@ i.i-48_wotreplays {
 
 .first-letter {
     display: inline-block;
-    height: 32px;
-    width: 32px;
+    height: 29px;
+    width: 29px;
     margin-right: 10px;
     font-size: 24px;
-    line-height: 35px;
+    line-height: 33px;
     color: #000;
     text-shadow: 1px 1px 1px #4d4d4d;
     text-align: center;
@@ -4395,7 +4395,7 @@ i.i-48_wotreplays {
 }
 
 .tf_slider .frame {
-    height: 250px
+    height: 190px
 }
 
 .tf_slider ul.slider {

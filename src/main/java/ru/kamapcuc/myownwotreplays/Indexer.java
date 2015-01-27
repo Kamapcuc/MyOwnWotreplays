@@ -1,9 +1,9 @@
 package ru.kamapcuc.myownwotreplays;
 
 
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -18,19 +18,21 @@ public class Indexer implements Runnable {
     private volatile long completed;
     private final long total;
 
-    public final Parser parser = new Parser();
-    private final Client client;
     private final Stream<File> filesToIndex;
 
     public final static String REPLAYS_INDEX_NAME = "replays";
     public final static String BATTLE_TYPE_NAME = "battle";
 
+    @Autowired
+    private Client client;
+    @Autowired
+    private ReplaysParser parser;
+
     private static String getPath() {
         return System.getProperty("replaysPath");
     }
 
-    public Indexer(Client client) {
-        this.client = client;
+    public Indexer() {
         File[] allReplays = new File(getPath()).listFiles();
         if (allReplays == null) {
             filesToIndex = Stream.empty();
@@ -40,18 +42,11 @@ public class Indexer implements Runnable {
             total = allReplays.length;
         }
         completed = 0;
-        init();
-    }
-
-    private void init() {
-        ClusterHealthRequest health = new ClusterHealthRequest();
-        health.waitForYellowStatus();
-        client.admin().cluster().health(health).actionGet();
     }
 
     @Override
     public void run() {
-        filesToIndex.forEach((file) -> {
+        filesToIndex.forEach(file -> {
             if (!file.isDirectory() && file.getName().endsWith(".wotreplay")) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                     String data = reader.readLine();
