@@ -3,7 +3,8 @@ package ru.kamapcuc.myownwotreplays;
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;
-import org.springframework.beans.factory.annotation.Autowired;
+import ru.kamapcuc.myownwotreplays.elastic.DataConfig;
+import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,19 +21,14 @@ public class Indexer implements Runnable {
 
     private final Stream<File> filesToIndex;
 
-    public final static String REPLAYS_INDEX_NAME = "replays";
-    public final static String BATTLE_TYPE_NAME = "battle";
-
-    @Autowired
-    private Client client;
-    @Autowired
-    private ReplaysParser parser;
+    private Client client = ElasticClient.getInstance().getClient();
+    private ReplaysParser parser = ReplaysParser.getInstance();
 
     private static String getPath() {
         return System.getProperty("replaysPath");
     }
 
-    public Indexer() {
+    private Indexer() {
         File[] allReplays = new File(getPath()).listFiles();
         if (allReplays == null) {
             filesToIndex = Stream.empty();
@@ -42,6 +38,7 @@ public class Indexer implements Runnable {
             total = allReplays.length;
         }
         completed = 0;
+        new Thread(this).start();
     }
 
     @Override
@@ -56,7 +53,7 @@ public class Indexer implements Runnable {
                         data = data.substring(12);
                     Map<String, Object> doc = parser.parse(data);
                     if (doc != null) {
-                        IndexRequestBuilder indexRequest = client.prepareIndex(REPLAYS_INDEX_NAME, BATTLE_TYPE_NAME);
+                        IndexRequestBuilder indexRequest = client.prepareIndex(DataConfig.REPLAYS_INDEX_NAME, DataConfig.BATTLE_TYPE_NAME);
                         indexRequest.setId(file.getName());
                         indexRequest.setSource(doc);
                         indexRequest.execute();
@@ -78,6 +75,19 @@ public class Indexer implements Runnable {
     @SuppressWarnings("unused")
     public long getTotal() {
         return total;
+    }
+
+    private static volatile Indexer instance;
+
+    public static Indexer getInstance() {
+        Indexer localInstance = instance;
+        if (localInstance == null)
+            synchronized (Indexer.class) {
+                localInstance = instance;
+                if (localInstance == null)
+                    instance = localInstance = new Indexer();
+            }
+        return localInstance;
     }
 
 }
