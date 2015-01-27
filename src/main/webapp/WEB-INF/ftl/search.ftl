@@ -1417,14 +1417,14 @@
 <script id="battleTableViewTemplate" type="x-tmpl-mustache">
     <li class="clearfix">
         <a class="r-map_85" href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40"
-           title="Тихий берег" style="background-image: url('/resources/plan/{{_source.map}}.jpg');">
-
+           title="Тихий берег" style="background-image: url('/resources/img/maps/plan/{{_source.map}}.jpg');">
         </a>
-
         <div class="r-info">
             <h3>
-    <a href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40">
-    {{_source.tank.id}}, {{_source.map}}, Стандартный бой</a></h3>
+                <a href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40">
+                    {{_source.map}}, Стандартный бой
+                </a>
+            </h3>
             <ul class="r-info_ri">
                 <li><i class="i-16_frags"></i> 5</li>
                 <li><i class="i-16_exp"></i> 840</li>
@@ -1433,9 +1433,9 @@
                 <li><i class="i-16_master"></i> Мастер</li>
             </ul>
             <ul class="r-info_ci">
-    <li><b>Танк:</b> {{_source.playerVehicle}}</li>
-    <li><b>Режим:</b> Встречный бой</li>
-    <li><b>Отправил:</b> {{_source.playerName}} <span class="b-date">2015-01-25 в 17:33</span></li>
+                <li><b>Танк:</b> {{_source.tank.id}}</li>
+                <li><b>Играл:</b> {{_source.playerName}}</li>
+                <li><b>Дата:</b> 2015-01-25 в 17:33</li>
             </ul>
         </div>
         <div class="r-act">

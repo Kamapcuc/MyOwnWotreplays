@@ -511,20 +511,30 @@
         <length>-1</length>
         <precision>-1</precision>
       </field>
+      <field>
+        <name>flag</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
     </fields>
     <data>
-      <line> <item>en</item><item>1</item><item>English</item> </line>
-      <line> <item>ru</item><item>2</item><item>&#x420;&#x443;&#x441;&#x441;&#x43a;&#x438;&#x439;</item> </line>
-      <line> <item>pl</item><item>3</item><item>Polski</item> </line>
-      <line> <item>de</item><item>4</item><item>Deutsch</item> </line>
-      <line> <item>fr</item><item>5</item><item>Fran&#xe7;ais</item> </line>
-      <line> <item>es</item><item>6</item><item>Espa&#xf1;ol</item> </line>
-      <line> <item>zh-cn</item><item>7</item><item>&#x7b80;&#x4f53;&#x4e2d;&#x6587;</item> </line>
-      <line> <item>tr</item><item>8</item><item>T&#xfc;rk&#xe7;e</item> </line>
-      <line> <item>cs</item><item>9</item><item>&#x10c;e&#x161;tina</item> </line>
-      <line> <item>th</item><item>10</item><item>&#xe44;&#xe17;&#xe22;</item> </line>
-      <line> <item>vi</item><item>11</item><item>Ti&#x1ebf;ng Vi&#x1ec7;t</item> </line>
-      <line> <item>ko</item><item>12</item><item>&#xd55c;&#xad6d;&#xc5b4;</item> </line>
+      <line> <item>en</item><item>1</item><item>English</item><item>lang-en.jpg</item> </line>
+      <line> <item>ru</item><item>2</item><item>&#x420;&#x443;&#x441;&#x441;&#x43a;&#x438;&#x439;</item><item>lang-ru.gif</item> </line>
+      <line> <item>pl</item><item>3</item><item>Polski</item><item>lang-pl.jpg</item> </line>
+      <line> <item>de</item><item>4</item><item>Deutsch</item><item>lang-de.jpg</item> </line>
+      <line> <item>fr</item><item>5</item><item>Fran&#xe7;ais</item><item>lang-fr.jpg</item> </line>
+      <line> <item>es</item><item>6</item><item>Espa&#xf1;ol</item><item>lang-pt-br.jpg</item> </line>
+      <line> <item>zh-cn</item><item>7</item><item>&#x7b80;&#x4f53;&#x4e2d;&#x6587;</item><item>lang-zh-cn.gif</item> </line>
+      <line> <item>tr</item><item>8</item><item>T&#xfc;rk&#xe7;e</item><item>lang-tr.jpg</item> </line>
+      <line> <item>cs</item><item>9</item><item>&#x10c;e&#x161;tina</item><item>lang-cs.jpg</item> </line>
+      <line> <item>th</item><item>10</item><item>&#xe44;&#xe17;&#xe22;</item><item>lang-th.jpg</item> </line>
+      <line> <item>vi</item><item>11</item><item>Ti&#x1ebf;ng Vi&#x1ec7;t</item><item>lang-vi.jpg</item> </line>
+      <line> <item>ko</item><item>12</item><item>&#xd55c;&#xad6d;&#xc5b4;</item><item>lang-ko.gif</item> </line>
     </data>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
@@ -707,6 +717,114 @@
     </step>
 
   <step>
+    <name>Save class</name>
+    <type>ElasticSearchBulk</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <general>
+      <index>data</index>
+      <type>class</type>
+      <operationType>INSERT</operationType>
+      <script/>
+      <batchSize>50000</batchSize>
+      <timeout/>
+      <timeoutUnit>SECONDS</timeoutUnit>
+      <isJson>Y</isJson>
+      <jsonField>source</jsonField>
+      <idField>classId</idField>
+      <overwriteIfExists>N</overwriteIfExists>
+      <useOutput>N</useOutput>
+      <stopOnError>Y</stopOnError>
+      <docAsUpsert>N</docAsUpsert>
+    </general>
+    <fields>
+    </fields>
+    <servers>
+      <server>
+        <address>localhost</address>
+        <port>9300</port>
+      </server>
+    </servers>
+    <settings>
+      <setting>
+        <name>client.transport.ignore_cluster_name</name>
+        <value>true</value>
+      </setting>
+    </settings>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>832</xloc>
+      <yloc>704</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Save language</name>
+    <type>ElasticSearchBulk</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <general>
+      <index>data</index>
+      <type>language</type>
+      <operationType>INSERT</operationType>
+      <script/>
+      <batchSize>50000</batchSize>
+      <timeout/>
+      <timeoutUnit>SECONDS</timeoutUnit>
+      <isJson>N</isJson>
+      <idField>num</idField>
+      <parentInField/>
+      <overwriteIfExists>N</overwriteIfExists>
+      <useOutput>N</useOutput>
+      <stopOnError>Y</stopOnError>
+      <docAsUpsert>N</docAsUpsert>
+    </general>
+    <fields>
+      <field>
+        <columnName>flag</columnName>
+        <targetName>flag</targetName>
+      </field>
+      <field>
+        <columnName>lang</columnName>
+        <targetName>prefix</targetName>
+      </field>
+      <field>
+        <columnName>langName</columnName>
+        <targetName>name</targetName>
+      </field>
+    </fields>
+    <servers>
+      <server>
+        <address>localhost</address>
+        <port>9300</port>
+      </server>
+    </servers>
+    <settings>
+      <setting>
+        <name>client.transport.ignore_cluster_name</name>
+        <value>true</value>
+      </setting>
+    </settings>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>256</xloc>
+      <yloc>320</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Save map</name>
     <type>ElasticSearchBulk</type>
     <description/>
@@ -727,7 +845,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>id</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -776,7 +893,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>nationId</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -825,7 +941,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>id</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -849,55 +964,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>832</xloc>
       <yloc>608</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Save class</name>
-    <type>ElasticSearchBulk</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <general>
-      <index>data</index>
-      <type>class</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>50000</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>Y</isJson>
-      <jsonField>source</jsonField>
-      <idField>classId</idField>
-      <parentInField/>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>832</xloc>
-      <yloc>704</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1088,62 +1154,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>352</xloc>
       <yloc>608</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Save language</name>
-    <type>ElasticSearchBulk</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <general>
-      <index>data</index>
-      <type>language</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>50000</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>N</isJson>
-      <idField>num</idField>
-      <parentInField/>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-      <field>
-        <columnName>lang</columnName>
-        <targetName>prefix</targetName>
-      </field>
-      <field>
-        <columnName>langName</columnName>
-        <targetName>name</targetName>
-      </field>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>256</xloc>
-      <yloc>320</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
