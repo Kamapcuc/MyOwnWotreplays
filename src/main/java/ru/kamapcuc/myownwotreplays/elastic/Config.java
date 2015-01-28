@@ -13,4 +13,12 @@ public class Config {
     public final static String CLASS_TYPE_NAME = "class";
     public final static String NATION_TYPE_NAME = "nation";
 
+    public static String getReplaysPath() {
+        return System.getProperty("wotPath") + "replays/";
+    }
+
+    public static String getEsDataPath() {
+        return System.getProperty("wotPath") + "MyOwnWotreplays/data/";
+    }
+
 }

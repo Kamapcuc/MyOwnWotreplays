@@ -21,12 +21,8 @@ public class Indexer implements Runnable {
     private Client client = ElasticClient.getInstance().getClient();
     private FileParser parser = new FileParser();
 
-    private static String getPath() {
-        return System.getProperty("replaysPath");
-    }
-
     private Indexer() {
-        File[] allReplays = new File(getPath()).listFiles();
+        File[] allReplays = new File(Config.getReplaysPath()).listFiles();
         if (allReplays == null) {
             filesToIndex = Stream.empty();
             total = 0;
