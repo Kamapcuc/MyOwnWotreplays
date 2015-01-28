@@ -1,4 +1,4 @@
-package ru.kamapcuc.myownwotreplays.elastic;
+package ru.kamapcuc.myownwotreplays.search;
 
 import org.apache.lucene.search.TermQuery;
 import org.elasticsearch.index.query.FilterBuilder;

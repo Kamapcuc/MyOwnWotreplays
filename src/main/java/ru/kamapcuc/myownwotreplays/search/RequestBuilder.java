@@ -6,7 +6,6 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import ru.kamapcuc.myownwotreplays.elastic.Config;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
-import ru.kamapcuc.myownwotreplays.elastic.FieldFacet;
 
 import java.util.Map;
 

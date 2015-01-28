@@ -6,10 +6,7 @@ import org.elasticsearch.client.Client;
 import ru.kamapcuc.myownwotreplays.elastic.Config;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -22,7 +19,7 @@ public class Indexer implements Runnable {
     private final Stream<File> filesToIndex;
 
     private Client client = ElasticClient.getInstance().getClient();
-    private ReplaysParser parser = ReplaysParser.getInstance();
+    private FileParser parser = new FileParser();
 
     private static String getPath() {
         return System.getProperty("replaysPath");
@@ -45,27 +42,18 @@ public class Indexer implements Runnable {
     public void run() {
         filesToIndex.forEach(file -> {
             if (!file.isDirectory() && file.getName().endsWith(".wotreplay")) {
-                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-                    String data = reader.readLine();
-                    if (data.length() == 8) {
-                        data = reader.readLine().substring(3);
-                    } else
-                        data = data.substring(12);
-                    Map<String, Object> doc = parser.parse(data);
-                    if (doc != null) {
-                        IndexRequestBuilder indexRequest = client.prepareIndex(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME);
-                        indexRequest.setId(file.getName());
-                        indexRequest.setSource(doc);
-                        indexRequest.execute();
-                    } else
-                        System.out.println(String.format("Failed to parse %s", file.getName()));
-                } catch (IOException e) {
-                    System.exit(0);
-                }
+                Map<String, Object> doc = parser.parse(file);
+                if (doc != null) {
+                    IndexRequestBuilder indexRequest = client.prepareIndex(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME);
+                    indexRequest.setId(file.getName());
+                    indexRequest.setSource(doc);
+                    indexRequest.execute();
+                } else
+                    System.out.println(String.format("Failed to parse %s", file.getName()));
             }
             completed++;
         });
-        System.out.print(InnerParser.wrong.toString());
+        System.out.print(ReplaysParser.wrong.toString());
     }
 
     @SuppressWarnings("unused")
