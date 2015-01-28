@@ -3,7 +3,7 @@ package ru.kamapcuc.myownwotreplays;
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.client.Client;
-import ru.kamapcuc.myownwotreplays.elastic.DataConfig;
+import ru.kamapcuc.myownwotreplays.elastic.Config;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
 import java.io.BufferedReader;
@@ -53,7 +53,7 @@ public class Indexer implements Runnable {
                         data = data.substring(12);
                     Map<String, Object> doc = parser.parse(data);
                     if (doc != null) {
-                        IndexRequestBuilder indexRequest = client.prepareIndex(DataConfig.REPLAYS_INDEX_NAME, DataConfig.BATTLE_TYPE_NAME);
+                        IndexRequestBuilder indexRequest = client.prepareIndex(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME);
                         indexRequest.setId(file.getName());
                         indexRequest.setSource(doc);
                         indexRequest.execute();

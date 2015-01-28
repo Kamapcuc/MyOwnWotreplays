@@ -15,23 +15,24 @@ public class Doc {
         localizedFields.add("name");
     }
 
-    private final SearchHit hit;
-    private final String lang;
+    private final String id;
+    private final Map<String, Object> source;
 
-    public Doc(SearchHit hit, String lang) {
-        this.hit = hit;
-        this.lang = lang;
+
+    public Doc(SearchHit hit) {
+        this.id = hit.getId();
+        this.source = hit.getSource();
     }
 
     public String getId() {
-        return hit.getId();
+        return id;
     }
 
     public Object get(String paramName) {
         if (localizedFields.contains(paramName))
-            return ((Map) hit.getSource().get(paramName)).get(lang);
+            return ((Map) source.get(paramName)).get(Config.lang);
         else
-            return hit.getSource().get(paramName);
+            return source.get(paramName);
     }
 
 }

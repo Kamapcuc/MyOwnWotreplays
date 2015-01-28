@@ -1,6 +1,8 @@
 package ru.kamapcuc.myownwotreplays.elastic;
 
-public class DataConfig {
+public class Config {
+
+    public volatile static String lang = "en";
 
     public final static String REPLAYS_INDEX_NAME = "replays";
     public final static String BATTLE_TYPE_NAME = "battle";

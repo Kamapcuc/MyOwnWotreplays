@@ -1,16 +1,13 @@
 package ru.kamapcuc.myownwotreplays;
 
 import org.elasticsearch.common.base.Joiner;
-import ru.kamapcuc.myownwotreplays.elastic.DataConfig;
+import ru.kamapcuc.myownwotreplays.elastic.Config;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class InnerParser {
 
@@ -58,7 +55,7 @@ public class InnerParser {
         document.put("playerName", startInfo.get("playerName"));
         document.put("map", startInfo.get("mapName"));
         String tankInfo = startInfo.get("playerVehicle").toString();
-        String tankId = tankInfo.split("-")[1];
+        String tankId = tankInfo.substring(tankInfo.indexOf('-') + 1);
         document.put("tank", getTankSearchInfo(tankId));
     }
 
@@ -66,7 +63,7 @@ public class InnerParser {
 
     private Map<String, Doc> getTanksData() {
         if (tanksData == null)
-            tanksData = client.getDataType(DataConfig.TANK_TYPE_NAME);
+            tanksData = client.getDataType(Config.TANK_TYPE_NAME);
         return tanksData;
     }
 
@@ -93,11 +90,21 @@ public class InnerParser {
     }
 
     private void parsePersonal(Map personalResults) {
+        if (version > 81100){
+            Integer originalCredits = (Integer) personalResults.get("originalCredits");
+            Integer originalXP = (Integer) personalResults.get("originalXP");
+            Integer credits = (Integer) personalResults.get("credits");
+            Integer xp = (Integer) personalResults.get("xp");
+            if (originalCredits == null)
+                originalCredits = (int) (credits / 1.5);
+            if (originalXP == null)
+                originalXP = (int) (xp / 1.5);
+            document.put("originalCredits", originalCredits);
+            document.put("originalXP", originalXP);
+            document.put("credits", credits);
+            document.put("xp", xp);
+        }
         document.put("damageDealt", personalResults.get("damageDealt"));
-        document.put("credits", personalResults.get("credits"));
-        document.put("originalCredits", personalResults.get("originalCredits"));
-        document.put("xp", personalResults.get("xp"));
-        document.put("originalXP", personalResults.get("originalXP"));
         document.put("kills", personalResults.get("kills"));
     }
 

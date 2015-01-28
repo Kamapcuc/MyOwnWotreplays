@@ -5,7 +5,8 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kamapcuc.myownwotreplays.elastic.RequestBuilder;
+import ru.kamapcuc.myownwotreplays.search.RequestBuilder;
+import ru.kamapcuc.myownwotreplays.search.SortType;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -20,7 +21,8 @@ public class ReplaysController {
     @RequestMapping("/")
     public String search(HttpServletRequest httpRequest, ModelMap model) {
         model.addAttribute("indexer", indexer);
-        SearchRequestBuilder searchRequest = requestBuilder.buildRequest(httpRequest);
+        model.addAttribute("sortTypes", SortType.toXContent());
+        SearchRequestBuilder searchRequest = requestBuilder.buildRequest(httpRequest.getParameterMap());
         SearchResponse response = searchRequest.execute().actionGet();
 
         try {

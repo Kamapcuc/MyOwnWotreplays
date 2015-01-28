@@ -28,25 +28,20 @@ public class ElasticClient {
         return client;
     }
 
-    public Map<String, Doc> getDataType(String typeName, String lang){
+    public Map<String, Doc> getDataType(String typeName){
         Map<String, Doc> result = new HashMap<>();
 
-        SearchRequestBuilder searchRequest = client.prepareSearch(DataConfig.DATA_INDEX_NAME);
+        SearchRequestBuilder searchRequest = client.prepareSearch(Config.DATA_INDEX_NAME);
         searchRequest.setQuery(new MatchAllQueryBuilder());
         searchRequest.setSize(10_000);
         searchRequest.setTypes(typeName);
         SearchResponse response = searchRequest.execute().actionGet();
         SearchHit[] hits =  response.getHits().getHits();
-        Arrays.stream(hits).forEach(hit -> result.put(hit.getId(), new Doc(hit, lang)));
+        Arrays.stream(hits).forEach(hit -> result.put(hit.getId(), new Doc(hit)));
 
         return result;
     }
 
-    public Map<String, Doc> getDataType(String typeName){
-        return getDataType(typeName, null);
-    }
-
-    /* for production */
     @SuppressWarnings("unused")
     private static Client createNode() {
         ImmutableSettings.Builder settings = ImmutableSettings.settingsBuilder();
