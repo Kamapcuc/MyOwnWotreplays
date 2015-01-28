@@ -65,6 +65,7 @@ public class Indexer implements Runnable {
             }
             completed++;
         });
+        System.out.print(InnerParser.wrong.toString());
     }
 
     @SuppressWarnings("unused")

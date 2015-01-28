@@ -89,6 +89,8 @@ public class InnerParser {
             parsePersonal(personalResults);
     }
 
+    public final static Set<Long> wrong = new HashSet<>();
+
     private void parsePersonal(Map personalResults) {
         if (version > 81100){
             Integer originalCredits = (Integer) personalResults.get("originalCredits");
@@ -99,11 +101,15 @@ public class InnerParser {
                 originalCredits = (int) (credits / 1.5);
             if (originalXP == null)
                 originalXP = (int) (xp / 1.5);
+            if (originalCredits == null || originalXP == null)
+                wrong.add(version);
             document.put("originalCredits", originalCredits);
             document.put("originalXP", originalXP);
             document.put("credits", credits);
             document.put("xp", xp);
         }
+        document.put("damageBlockedByArmor", personalResults.get("damageBlockedByArmor"));
+        document.put("damageAssistedRadio", personalResults.get("damageAssistedRadio"));
         document.put("damageDealt", personalResults.get("damageDealt"));
         document.put("kills", personalResults.get("kills"));
     }

@@ -5008,7 +5008,7 @@ i.i-48_wotreplays {
     top: 0;
     right: 0;
     bottom: 0;
-    background: url("/img/results/Maps/overlay.png?version=17122014") 100% 100% no-repeat
+    background: url("/resources/img/overlay.png") 100% 100% no-repeat
 }
 
 .mrr_tank {
@@ -5030,7 +5030,7 @@ i.i-48_wotreplays {
 .mrr_ribbon {
     text-align: center;
     height: 85px;
-    background: url("/media/img/base/rc_ribbon.jpg?version=17122014") -999px -999px no-repeat
+    background: url("/resources/img/rc_ribbon.jpg") -999px -999px no-repeat
 }
 
 .mrr_ribbon.win {
@@ -5596,7 +5596,7 @@ html[lang="en"] .r_list .btn_l-grey {
     right: -20px;
     left: -20px;
     z-index: -1;
-    background: url("/img/results/yellow-ribbon.png?version=17122014") 0 center no-repeat
+    background: url("/resources/img/yellow-ribbon.png") 0 center no-repeat
 }
 
 .medal-title {
@@ -6060,7 +6060,7 @@ i.icon-wgl_bronze {
     right: 0;
     bottom: 0;
     left: 0;
-    background: url("/img/results/Maps/overlay.png") no-repeat 100% 100%;
+    background: url("/resources/img/overlay.png") no-repeat 100% 100%;
     background-size: 100% 100%
 }
 

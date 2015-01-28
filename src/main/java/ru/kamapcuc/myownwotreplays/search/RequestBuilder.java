@@ -12,6 +12,7 @@ import java.util.Map;
 
 public class RequestBuilder {
 
+    private final static int PAGINATION_SIZE = 12;
     private ElasticClient client = ElasticClient.getInstance();
 
     private AggregationBuilder[] facets = new AggregationBuilder[]{
@@ -27,6 +28,7 @@ public class RequestBuilder {
         searchRequest.setQuery(new MatchQueryBuilder("haveResults", true));
 //        params.entrySet();
         searchRequest.setTypes(Config.BATTLE_TYPE_NAME);
+        searchRequest.setSize(PAGINATION_SIZE);
         SortType sort = SortType.DATE;
         SortOrder order = SortOrder.DESC;
         if (params.containsKey("sortType")) {
