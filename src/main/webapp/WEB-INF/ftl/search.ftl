@@ -1420,8 +1420,9 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 
 <script id="battlesTileTemplate" type="text/x-handlebars-template">
     {{#list array}}
+    <a href="view.do?id={{_id}}">
     <div class="mr_replay">
-        <div class="mrr_head" style="background-image: url(/resources/img/maps/thumb/{{map._id}}.png)">
+        <div class="mrr_head" style="background-image: url(/resources/img/maps/thumb/{{map._id}}.png)" title="{{map.name}}">
             <div class="mrr_tank">
                 <div style="background-image: url({{tank.image}})"></div>
             </div>
@@ -1467,6 +1468,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             </div>
         </div>
     </div>
+    </a>
     {{/list}}
 </script>
 

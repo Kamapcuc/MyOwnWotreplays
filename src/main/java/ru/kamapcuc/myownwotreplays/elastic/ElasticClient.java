@@ -8,13 +8,10 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.SearchHit;
 import ru.kamapcuc.myownwotreplays.search.Config;
-
-import java.util.Map;
 
 public class ElasticClient {
 
@@ -25,14 +22,6 @@ public class ElasticClient {
         ClusterHealthRequest health = new ClusterHealthRequest();
         health.waitForYellowStatus();
         client.admin().cluster().health(health).actionGet();
-    }
-
-    public Map<String, Doc> loadDataType(String typeName) {
-        SearchRequestBuilder searchRequest = prepareSearch(Config.DATA_INDEX_NAME);
-        searchRequest.setQuery(new MatchAllQueryBuilder());
-        searchRequest.setSize(10_000);
-        searchRequest.setTypes(typeName);
-        return search(searchRequest);
     }
 
     public SearchRequestBuilder prepareSearch(String index) {

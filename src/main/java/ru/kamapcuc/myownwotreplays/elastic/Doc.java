@@ -4,6 +4,7 @@ import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.search.SearchHit;
 import ru.kamapcuc.myownwotreplays.search.Config;
+import ru.kamapcuc.stuff.Utils;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -39,26 +40,24 @@ public class Doc implements ToXContent {
         return id;
     }
 
+    public Object getStraight(String paramName) {
+        return source.get(paramName);
+    }
+
     public Object get(String paramName) {
-        if (localizedFields.contains(paramName))
-            return ((Map) source.get(paramName)).get(Config.lang);
-        else {
+        if (localizedFields.contains(paramName)) {
+            Map langMap = (Map) source.get(paramName);
+            return Utils.coalesce(langMap.get(Config.lang), langMap.get(Config.defaultLang));
+        } else {
             if (REPOSITORIES.containsKey(paramName)) {
                 Map<String, Doc> repository = REPOSITORIES.get(paramName);
-                Object paramValue = source.get(paramName);
-                if (paramValue instanceof String) {
-                    String docId = (String) paramValue;
-                    Doc doc = repository.get(docId);
-                    if (doc == null) {
-                        System.out.println(String.format("Missing doc with \"%s\" id in \"%s\" repository", docId, paramName));
-                        return new Doc(docId, new HashMap<>());
-                    } else
-                        return doc;
-                } else {
-                    Map obj = (Map) paramValue;
-                    String id = (String) obj.get("id");
-                    return repository.get(id);
-                }
+                String docId = (String) source.get(paramName);
+                Doc doc = repository.get(docId);
+                if (doc == null) {
+                    System.out.println(String.format("Missing doc with \"%s\" id in \"%s\" repository", docId, paramName));
+                    return new Doc(docId, new HashMap<>());
+                } else
+                    return doc;
             } else
                 return source.get(paramName);
         }

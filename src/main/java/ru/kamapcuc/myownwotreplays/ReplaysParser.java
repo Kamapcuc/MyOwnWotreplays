@@ -1,8 +1,8 @@
 package ru.kamapcuc.myownwotreplays;
 
 import org.elasticsearch.common.base.Joiner;
-import ru.kamapcuc.myownwotreplays.search.Config;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
+import ru.kamapcuc.myownwotreplays.search.Config;
 import ru.kamapcuc.myownwotreplays.search.TypesMeta;
 
 import java.text.ParseException;
@@ -54,21 +54,20 @@ public class ReplaysParser {
         document.put("battleDate", parseDate(battleDate));
         document.put("playerName", startInfo.get("playerName"));
         document.put("map", startInfo.get("mapName"));
-        String tankInfo = startInfo.get("playerVehicle").toString();
+        String tankInfo = (String) startInfo.get("playerVehicle");
         String tankId = tankInfo.substring(tankInfo.indexOf('-') + 1);
-        document.put("tank", getTankSearchInfo(tankId));
+        addTankSearchInfo(tankId);
     }
 
-    private Map<String, Object> getTankSearchInfo(String tankId) {
-        Map<String, Object> result = new HashMap<>();
+    private void addTankSearchInfo(String tankId) {
+        document.put("tank", tankId);
         Doc tank = tanksData.get(tankId);
         if (tank != null) {
-            result.put("id", tank.getId());
-            result.put("level", tank.get("level"));
-            result.put("nation", tank.get("nation"));
-            result.put("class", tank.get("class"));
-        }
-        return result;
+            document.put("tankLevel", tank.getStraight("level"));
+            document.put("tankNation", tank.getStraight("nation"));
+            document.put("tankClass", tank.getStraight("class"));
+        } else
+            System.out.println(String.format("Don't found tank with \"%s\" id", tankId));
     }
 
 

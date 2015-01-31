@@ -1,5 +1,7 @@
 package ru.kamapcuc.myownwotreplays.search;
 
+import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
@@ -20,8 +22,11 @@ public class TypesMeta {
     static {
         ElasticClient client = ElasticClient.getInstance();
         for (String repositoryType : repositoryTypes) {
-            Map<String, Doc> x = client.loadDataType(repositoryType);
-            REPOSITORIES.put(repositoryType, x);
+            SearchRequestBuilder searchRequest = client.prepareSearch(Config.DATA_INDEX_NAME);
+            searchRequest.setQuery(new MatchAllQueryBuilder());
+            searchRequest.setSize(10_000);
+            searchRequest.setTypes(repositoryType);
+            REPOSITORIES.put(repositoryType, client.search(searchRequest));
         }
     }
 

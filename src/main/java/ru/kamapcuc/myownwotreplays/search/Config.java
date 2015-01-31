@@ -3,8 +3,9 @@ package ru.kamapcuc.myownwotreplays.search;
 public class Config {
 
     public volatile static String lang = "ru";
+    public volatile static String defaultLang = "ru";
 
-    public final static int PAGINATION_SIZE = 12;
+    public final static int PAGINATION_SIZE = 9;
 
     public final static String REPLAYS_INDEX_NAME = "replays";
     public final static String BATTLE_TYPE_NAME = "battle";
