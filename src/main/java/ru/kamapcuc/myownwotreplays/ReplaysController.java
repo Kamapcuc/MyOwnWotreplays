@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class ReplaysController {
 
-    private RequestBuilder requestBuilder = new RequestBuilder();
     private Indexer indexer = Indexer.getInstance();
     private ElasticClient client = ElasticClient.getInstance();
 
@@ -22,9 +21,10 @@ public class ReplaysController {
     public String search(HttpServletRequest httpRequest, ModelMap model) {
         model.addAttribute("indexer", indexer);
         model.addAttribute("sortTypes", SortType.toXContent());
-        SearchRequestBuilder searchRequest = requestBuilder.buildRequest(httpRequest.getParameterMap());
-        DocMap searchResponce = client.search(searchRequest);
-        model.put("battles", searchResponce.stringify());
+        RequestBuilder requestBuilder = new RequestBuilder(httpRequest.getParameterMap());
+        SearchRequestBuilder searchRequest = requestBuilder.buildRequest();
+        DocMap searchResponse = client.search(searchRequest);
+        model.put("battles", searchResponse.stringify());
         return "search";
     }
 

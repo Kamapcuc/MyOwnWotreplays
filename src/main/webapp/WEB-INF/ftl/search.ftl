@@ -1384,7 +1384,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             <div class="r-info">
                 <h3>
                     <a href="view.do?id={{_id}}">
-                        {{tank.name}}, {{map.name}}, Стандартный бой
+                        {{tank.shortName}}, {{map.name}}, Стандартный бой
                     </a>
                 </h3>
                 {{#if haveResults}}
@@ -1487,7 +1487,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     var battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
     var battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
     var sortTypeTemplate = Handlebars.compile($('#sortTypeTemplate').html());
-    var battlesTemplate = battlesTileTemplate;
+    var battlesTemplate = battlesTableTemplate;
 
     var battlesContainer = $('#battlesContainer');
     var sortTypesContainer = $('#sortTypesContainer');

@@ -67,7 +67,7 @@ public class ReplaysParser {
             document.put("tankNation", tank.getStraight("nation"));
             document.put("tankClass", tank.getStraight("class"));
         } else
-            System.out.println(String.format("Don't found tank with \"%s\" id", tankId));
+            System.out.println(String.format("Don't found tank with id=\"%s\"", tankId));
     }
 
 
