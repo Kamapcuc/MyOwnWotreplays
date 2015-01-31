@@ -1377,22 +1377,22 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     <ul class="r_list initial">
         {{#list array}}
         <li class="clearfix">
-            <a class="r-map_85" href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40"
-               title="Тихий берег" style="background-image: url('/resources/img/maps/plan/{{_source.map}}.jpg');">
+            <a class="r-map_85" href="view.do?id={{_id}}"
+               title="{{map.name}}" style="background-image: url('/resources/img/maps/plan/{{map._id}}.jpg');">
             </a>
 
             <div class="r-info">
                 <h3>
-                    <a href="/site/4504448#tihiy_bereg-ritterschvert-somua_sau_40">
-                        {{_source.tank.id}} {{_source.map}}, Стандартный бой
+                    <a href="view.do?id={{_id}}">
+                        {{tank.name}}, {{map.name}}, Стандартный бой
                     </a>
                 </h3>
-                {{#if _source.haveResults}}
+                {{#if haveResults}}
                 <ul class="r-info_ri">
-                    <li><i class="i-16_frags"></i> {{_source.kills}}</li>
-                    <li><i class="i-16_exp"></i> {{_source.originalXP}}</li>
-                    <li><i class="i-16_cr"></i> {{_source.originalCredits}}</li>
-                    <li><i class="i-16_dmg"></i> {{_source.damageDealt}}</li>
+                    <li><i class="i-16_frags"></i> {{kills}}</li>
+                    <li><i class="i-16_exp"></i> {{originalXP}}</li>
+                    <li><i class="i-16_cr"></i> {{originalCredits}}</li>
+                    <li><i class="i-16_dmg"></i> {{damageDealt}}</li>
                     <li><i class="i-16_master"></i> Мастер</li>
                 </ul>
                 {{else}}
@@ -1404,14 +1404,14 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                 </ul>
                 {{/if}}
                 <ul class="r-info_ci">
-                    <li><b>Танк:</b> {{_source.tank.id}}</li>
-                    <li><b>Играл:</b> {{_source.playerName}}</li>
-                    <li><b>Версия:</b> {{_source.version}}</li>
-                    <li><b>Дата:</b> {{_source.battleDate}}</li>
+                    <li><b>Танк:</b> {{tank.shortName}}</li>
+                    <li><b>Играл:</b> {{playerName}}</li>
+                    <li><b>Версия:</b> {{version}}</li>
+                    <li><b>Дата:</b> {{battleDate}}</li>
                 </ul>
             </div>
             <div class="r-act">
-                <a href="{{_id}}" class="btn_l-grey">Запустить реплей</a>
+                <a href="view.do?id={{_id}}" class="btn_l-grey">Запустить реплей</a>
             </div>
         </li>
         {{/list}}
@@ -1421,14 +1421,14 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 <script id="battlesTileTemplate" type="text/x-handlebars-template">
     {{#list array}}
     <div class="mr_replay">
-        <div class="mrr_head" style="background-image: url(/resources/img/maps/thumb/{{_source.map}}.png)">
+        <div class="mrr_head" style="background-image: url(/resources/img/maps/thumb/{{map._id}}.png)">
             <div class="mrr_tank">
-                <div style="background-image: url(http://worldoftanks.com/static/2.18.1/encyclopedia/tankopedia/vehicle/uk-gb21_cromwell.png)"></div>
+                <div style="background-image: url({{tank.image}})"></div>
             </div>
         </div>
         <div class="mrr_ribbon win">
             <div class="mrr_earnings">
-                <div class="mrr_exp"><span>{{_source.originalXP}}</span><i class="i-24_exp"></i></div>
+                <div class="mrr_exp"><span>{{originalXP}}</span><i class="i-24_exp"></i></div>
                 <div class="mrr_medals"><span>1</span><i class="i-24_medal"></i></div>
             </div>
             <div class="medal">
@@ -1438,10 +1438,10 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             </div>
         </div>
         <div class="mrr_info">
-            <div class="mrr_title">{{_source.playerName}} на {{_source.tank.id}}</div>
+            <div class="mrr_title">{{playerName}} на {{tank.shortName}}</div>
             <div style="text-align: center;">
                 <div class="mrr_damage">
-                    <span>{{_source.damageDealt}}</span>
+                    <span>{{damageDealt}}</span>
                     <i class="i-24_dmg tooltip">
                         <span class="tooltip-container">Урон</span>
                     </i>
@@ -1450,10 +1450,10 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                     <i class="i-24_assist tooltip">
                         <span class="tooltip-container">Урон по засвету</span>
                     </i>
-                    <span>{{_source.damageAssistedRadio}}</span>
+                    <span>{{damageAssistedRadio}}</span>
                 </div>
                 <div class="mrr_frags">
-                    <span>{{_source.kills}}</span>
+                    <span>{{kills}}</span>
                     <i class="i-24_frags tooltip">
                         <span class="tooltip-container">Фраги</span>
                     </i>
@@ -1462,7 +1462,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                     <i class="i-24_dmg-blocked tooltip">
                         <span class="tooltip-container">Заблокированный урон</span>
                     </i>
-                    <span>{{_source.damageBlockedByArmor}}</span>
+                    <span>{{damageBlockedByArmor}}</span>
                 </div>
             </div>
         </div>
@@ -1485,6 +1485,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     var battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
     var battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
     var sortTypeTemplate = Handlebars.compile($('#sortTypeTemplate').html());
+    var battlesTemplate = battlesTileTemplate;
 
     var battlesContainer = $('#battlesContainer');
     var sortTypesContainer = $('#sortTypesContainer');
@@ -1524,7 +1525,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         if (queryParams.sortOrder)
             this.asc = "ASC" == queryParams.sortOrder[0];
         this.html = $(sortTypeTemplate(this));
-        this.html.click($.proxy(this.select, this))
+        this.html.click($.proxy(this.select, this));
         sortTypesContainer.append(this.html);
     }
 
@@ -1538,7 +1539,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 
     sortTypes.forEach(function (a) {new SortType(a);});
 
-    battlesContainer.append(battlesTileTemplate(battles));
+    battlesContainer.append(battlesTemplate(battles));
 
 </script>
 </html>

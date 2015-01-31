@@ -1,8 +1,10 @@
-package ru.kamapcuc.myownwotreplays.elastic;
+package ru.kamapcuc.myownwotreplays.search;
 
 public class Config {
 
-    public volatile static String lang = "en";
+    public volatile static String lang = "ru";
+
+    public final static int PAGINATION_SIZE = 12;
 
     public final static String REPLAYS_INDEX_NAME = "replays";
     public final static String BATTLE_TYPE_NAME = "battle";
@@ -17,7 +19,7 @@ public class Config {
         return System.getProperty("wotPath") + "replays/";
     }
 
-    public static String getEsDataPath() {
+    public static String getElasticDataPath() {
         return System.getProperty("wotPath") + "MyOwnWotreplays/data/";
     }
 

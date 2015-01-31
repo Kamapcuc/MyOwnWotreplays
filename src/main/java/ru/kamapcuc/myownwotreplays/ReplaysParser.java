@@ -1,9 +1,9 @@
 package ru.kamapcuc.myownwotreplays;
 
 import org.elasticsearch.common.base.Joiner;
-import ru.kamapcuc.myownwotreplays.elastic.Config;
+import ru.kamapcuc.myownwotreplays.search.Config;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
+import ru.kamapcuc.myownwotreplays.search.TypesMeta;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +15,7 @@ public class ReplaysParser {
     private final Map startInfo;
     private final List endInfo;
     private Map<String, Object> document = new HashMap<>();
-    private ElasticClient client = ElasticClient.getInstance();
+    private final static Map<String, Doc> tanksData = TypesMeta.REPOSITORIES.get(Config.TANK_TYPE_NAME);
 
     private final static Joiner JOINER = Joiner.on(".").skipNulls();
     private final static SimpleDateFormat DATE_PARSER = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
@@ -59,17 +59,9 @@ public class ReplaysParser {
         document.put("tank", getTankSearchInfo(tankId));
     }
 
-    private Map<String, Doc> tanksData = null;
-
-    private Map<String, Doc> getTanksData() {
-        if (tanksData == null)
-            tanksData = client.getDataType(Config.TANK_TYPE_NAME);
-        return tanksData;
-    }
-
     private Map<String, Object> getTankSearchInfo(String tankId) {
         Map<String, Object> result = new HashMap<>();
-        Doc tank = getTanksData().get(tankId);
+        Doc tank = tanksData.get(tankId);
         if (tank != null) {
             result.put("id", tank.getId());
             result.put("level", tank.get("level"));
@@ -89,24 +81,22 @@ public class ReplaysParser {
             parsePersonal(personalResults);
     }
 
-    public final static Set<Long> wrong = new HashSet<>();
+    public final static Set<Long> wrong1 = new HashSet<>();
+    public final static Set<Long> wrong2 = new HashSet<>();
 
     private void parsePersonal(Map personalResults) {
-        if (version > 81100){
+        Integer credits = (Integer) personalResults.get("credits");
+        Integer xp = (Integer) personalResults.get("xp");
+        document.put("credits", credits);
+        document.put("xp", xp);
+        if (version > 8_11_00) {
             Integer originalCredits = (Integer) personalResults.get("originalCredits");
             Integer originalXP = (Integer) personalResults.get("originalXP");
-            Integer credits = (Integer) personalResults.get("credits");
-            Integer xp = (Integer) personalResults.get("xp");
-            if (originalCredits == null)
-                originalCredits = (int) (credits / 1.5);
-            if (originalXP == null)
-                originalXP = (int) (xp / 1.5);
-            if (originalCredits == null || originalXP == null)
-                wrong.add(version);
             document.put("originalCredits", originalCredits);
             document.put("originalXP", originalXP);
-            document.put("credits", credits);
-            document.put("xp", xp);
+        } else if (version != 8_11_00) {
+            document.put("originalCredits", (int) (credits / 1.5));
+            document.put("originalXP", (int) (xp / 1.5));
         }
         document.put("damageBlockedByArmor", personalResults.get("damageBlockedByArmor"));
         document.put("damageAssistedRadio", personalResults.get("damageAssistedRadio"));

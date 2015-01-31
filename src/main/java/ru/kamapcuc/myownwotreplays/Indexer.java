@@ -2,8 +2,7 @@ package ru.kamapcuc.myownwotreplays;
 
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.client.Client;
-import ru.kamapcuc.myownwotreplays.elastic.Config;
+import ru.kamapcuc.myownwotreplays.search.Config;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
 import java.io.File;
@@ -18,7 +17,7 @@ public class Indexer implements Runnable {
 
     private final Stream<File> filesToIndex;
 
-    private Client client = ElasticClient.getInstance().getClient();
+    private ElasticClient client = ElasticClient.getInstance();
     private FileParser parser = new FileParser();
 
     private Indexer() {
@@ -49,7 +48,6 @@ public class Indexer implements Runnable {
             }
             completed++;
         });
-        System.out.print(ReplaysParser.wrong.toString());
     }
 
     @SuppressWarnings("unused")

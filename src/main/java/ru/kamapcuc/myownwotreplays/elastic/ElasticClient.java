@@ -1,6 +1,7 @@
 package ru.kamapcuc.myownwotreplays.elastic;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
@@ -11,9 +12,8 @@ import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.SearchHit;
+import ru.kamapcuc.myownwotreplays.search.Config;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ElasticClient {
@@ -22,23 +22,32 @@ public class ElasticClient {
 
     private ElasticClient() {
         client = connect();
+        ClusterHealthRequest health = new ClusterHealthRequest();
+        health.waitForYellowStatus();
+        client.admin().cluster().health(health).actionGet();
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public Map<String, Doc> getDataType(String typeName) {
-        Map<String, Doc> result = new HashMap<>();
-
-        SearchRequestBuilder searchRequest = client.prepareSearch(Config.DATA_INDEX_NAME);
+    public Map<String, Doc> loadDataType(String typeName) {
+        SearchRequestBuilder searchRequest = prepareSearch(Config.DATA_INDEX_NAME);
         searchRequest.setQuery(new MatchAllQueryBuilder());
         searchRequest.setSize(10_000);
         searchRequest.setTypes(typeName);
-        SearchResponse response = searchRequest.execute().actionGet();
-        SearchHit[] hits = response.getHits().getHits();
-        Arrays.stream(hits).forEach(hit -> result.put(hit.getId(), new Doc(hit)));
+        return search(searchRequest);
+    }
 
+    public SearchRequestBuilder prepareSearch(String index) {
+        return client.prepareSearch(index);
+    }
+
+    public IndexRequestBuilder prepareIndex(String index, String type) {
+        return client.prepareIndex(index, type);
+    }
+
+    public DocMap search(SearchRequestBuilder searchRequest) {
+        DocMap result = new DocMap();
+        SearchResponse response = searchRequest.execute().actionGet();
+        for (SearchHit hit : response.getHits().getHits())
+            result.put(hit.getId(), new Doc(hit));
         return result;
     }
 
@@ -46,16 +55,12 @@ public class ElasticClient {
     private static Client createNode() {
         ImmutableSettings.Builder settings = ImmutableSettings.settingsBuilder();
         settings.loadFromClasspath("main/resources/elasticsearch.yml");
-        settings.put("path.data", Config.getEsDataPath());
+        settings.put("path.data", Config.getElasticDataPath());
         NodeBuilder nodebuilder = new NodeBuilder();
         nodebuilder.settings(settings);
         Node node = nodebuilder.node();
         node.start();
-        Client client = node.client();
-        ClusterHealthRequest health = new ClusterHealthRequest();
-        health.waitForYellowStatus();
-        client.admin().cluster().health(health).actionGet();
-        return client;
+        return node.client();
     }
 
     /* for debug */

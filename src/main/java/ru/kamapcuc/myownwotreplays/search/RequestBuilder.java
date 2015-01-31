@@ -1,17 +1,15 @@
 package ru.kamapcuc.myownwotreplays.search;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
-import ru.kamapcuc.myownwotreplays.elastic.Config;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
 import java.util.Map;
 
 public class RequestBuilder {
 
-    private final static int PAGINATION_SIZE = 12;
     private ElasticClient client = ElasticClient.getInstance();
 
     private AggregationBuilder[] facets = new AggregationBuilder[]{
@@ -22,12 +20,12 @@ public class RequestBuilder {
     };
 
     public SearchRequestBuilder buildRequest(Map params) {
-        SearchRequestBuilder searchRequest = client.getClient().prepareSearch(Config.REPLAYS_INDEX_NAME);
-//        searchRequest.setQuery(new MatchAllQueryBuilder());
-        searchRequest.setQuery(new MatchQueryBuilder("haveResults", true));
+        SearchRequestBuilder searchRequest = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
+        searchRequest.setQuery(new MatchAllQueryBuilder());
+//        searchRequest.setQuery(new MatchQueryBuilder("haveResults", true));
 //        params.entrySet();
         searchRequest.setTypes(Config.BATTLE_TYPE_NAME);
-        searchRequest.setSize(PAGINATION_SIZE);
+        searchRequest.setSize(Config.PAGINATION_SIZE);
         SortType sort = SortType.DATE;
         SortOrder order = SortOrder.DESC;
         if (params.containsKey("sortType")) {
@@ -40,19 +38,4 @@ public class RequestBuilder {
         return searchRequest;
     }
 
-    private static volatile RequestBuilder instance;
-
-    private RequestBuilder() {
-    }
-
-    public static RequestBuilder getInstance() {
-        RequestBuilder localInstance = instance;
-        if (localInstance == null)
-            synchronized (RequestBuilder.class) {
-                localInstance = instance;
-                if (localInstance == null)
-                    instance = localInstance = new RequestBuilder();
-            }
-        return localInstance;
-    }
 }
