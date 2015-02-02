@@ -14,6 +14,19 @@ public class FileParser {
     private final static String RX = "\u0000\u0000";
     private final ObjectMapper mapper = new ObjectMapper();
 
+    public Map<String, Object> parse(File file) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String data = reader.readLine();
+            if (data.length() == 8) {
+                data = reader.readLine().substring(3);
+            } else
+                data = data.substring(12);
+            return parse(data);
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
     private Map<String, Object> parse(String data) {
         Map startInfo = null;
         List endInfo = null;
@@ -38,19 +51,6 @@ public class FileParser {
             return doc.buildDoc();
         } else
             return null;
-    }
-
-    public Map<String, Object> parse(File file) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-            String data = reader.readLine();
-            if (data.length() == 8) {
-                data = reader.readLine().substring(3);
-            } else
-                data = data.substring(12);
-            return parse(data);
-        } catch (IOException e) {
-            return null;
-        }
     }
 
 }

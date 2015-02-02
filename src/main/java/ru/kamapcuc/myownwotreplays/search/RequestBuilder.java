@@ -4,7 +4,6 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.AndFilterBuilder;
 import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 import ru.kamapcuc.myownwotreplays.search.facets.Facet;
@@ -33,7 +32,6 @@ public class RequestBuilder {
         searchRequest = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
         searchRequest.setTypes(Config.BATTLE_TYPE_NAME);
         searchRequest.setSize(Config.PAGINATION_SIZE);
-//        searchRequest.setQuery(new MatchAllQueryBuilder());
         searchRequest.setQuery(new MatchQueryBuilder("haveResults", true));
         this.params = params;
     }
@@ -84,11 +82,7 @@ public class RequestBuilder {
     }
 
     private void buildFacets() {
-        for (Facet facet : facets) {
-            AggregationBuilder x = facet.getFacet(facets);
-            searchRequest.addAggregation(x);
-        }
-        // facets.stream().forEach(facet -> searchRequest.addAggregation(facet.getFacet(facets)));
+        facets.stream().forEach(facet -> searchRequest.addAggregation(facet.getFacet(facets)));
     }
 
 }
