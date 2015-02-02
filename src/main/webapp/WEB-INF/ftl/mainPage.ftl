@@ -1141,7 +1141,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 
 <script id="battlesTableTemplate" type="text/x-handlebars-template">
     <ul class="r_list initial">
-        {{#list array}}
+        {{#list this}}
         <li class="clearfix">
             <a class="r-map_85" href="view.do?id={{_id}}"
                title="{{map.name}}" style="background-image: url('/resources/img/maps/plan/{{map._id}}.jpg');">
@@ -1258,9 +1258,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     var battlesContainer = $('#battlesContainer');
     var sortTypesContainer = $('#sortTypesContainer');
 
-    var battles = {
-        array : ${battles}
-    };
+    var battles = ${battlesData};
     var sortTypes = ${sortTypes};
 
     var getQueryParams = function () {
