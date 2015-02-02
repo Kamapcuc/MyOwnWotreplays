@@ -1141,7 +1141,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 
 <script id="battlesTableTemplate" type="text/x-handlebars-template">
     <ul class="r_list initial">
-        {{#list this}}
+        {{#list docs}}
         <li class="clearfix">
             <a class="r-map_85" href="view.do?id={{_id}}"
                title="{{map.name}}" style="background-image: url('/resources/img/maps/plan/{{map._id}}.jpg');">
@@ -1185,7 +1185,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 </script>
 
 <script id="battlesTileTemplate" type="text/x-handlebars-template">
-    {{#list array}}
+    {{#list docs}}
     <a href="view.do?id={{_id}}">
     <div class="mr_replay">
         <div class="mrr_head" style="background-image: url(/resources/img/maps/thumb/{{map._id}}.png)" title="{{map.name}}">

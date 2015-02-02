@@ -6,6 +6,7 @@ import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
+import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.search.facets.Facet;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
 import ru.kamapcuc.myownwotreplays.search.facets.FieldFacetBuilder;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class RequestBuilder {
+public class BattlesRequest {
 
     private final static ElasticClient client = ElasticClient.getInstance();
 
@@ -28,7 +29,7 @@ public class RequestBuilder {
     private final Map params;
     private final List<Facet> facets = new ArrayList<>();
 
-    public RequestBuilder(Map params) {
+    public BattlesRequest(Map params) {
         searchRequest = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
         searchRequest.setTypes(Config.BATTLE_TYPE_NAME);
         searchRequest.setSize(Config.PAGINATION_SIZE);
@@ -36,11 +37,11 @@ public class RequestBuilder {
         this.params = params;
     }
 
-    public SearchRequestBuilder buildRequest() {
+    public SearchResult execute() {
         parseLang();
         parseSort();
         parseFacets();
-        return searchRequest;
+        return client.search(searchRequest);
     }
 
     private void parseLang() {

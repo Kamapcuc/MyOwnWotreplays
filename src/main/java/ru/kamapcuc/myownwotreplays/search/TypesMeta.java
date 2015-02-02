@@ -2,11 +2,11 @@ package ru.kamapcuc.myownwotreplays.search;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
-import ru.kamapcuc.myownwotreplays.elastic.Doc;
+import ru.kamapcuc.myownwotreplays.elastic.DocMap;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
+import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class TypesMeta {
 
@@ -17,7 +17,7 @@ public class TypesMeta {
             Config.NATION_TYPE_NAME
     };
 
-    public final static HashMap<String, Map<String, Doc>> REPOSITORIES = new HashMap<>();
+    public final static HashMap<String, DocMap> REPOSITORIES = new HashMap<>();
 
     static {
         ElasticClient client = ElasticClient.getInstance();
@@ -26,7 +26,8 @@ public class TypesMeta {
             searchRequest.setQuery(new MatchAllQueryBuilder());
             searchRequest.setSize(10_000);
             searchRequest.setTypes(repositoryType);
-            REPOSITORIES.put(repositoryType, client.search(searchRequest));
+            SearchResult searchResult = client.search(searchRequest);
+            REPOSITORIES.put(repositoryType, searchResult.getDocs());
         }
     }
 

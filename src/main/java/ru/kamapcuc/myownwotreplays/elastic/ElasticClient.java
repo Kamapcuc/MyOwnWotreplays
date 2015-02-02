@@ -11,7 +11,12 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.Aggregation;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import ru.kamapcuc.myownwotreplays.search.Config;
+
+import java.util.List;
 
 public class ElasticClient {
 
@@ -32,12 +37,16 @@ public class ElasticClient {
         return client.prepareIndex(index, type);
     }
 
-    public DocMap search(SearchRequestBuilder searchRequest) {
-        DocMap result = new DocMap();
+    public SearchResult search(SearchRequestBuilder searchRequest) {
         SearchResponse response = searchRequest.execute().actionGet();
+
+        DocMap result = new DocMap();
         for (SearchHit hit : response.getHits().getHits())
             result.put(hit.getId(), new Doc(hit));
-        return result;
+
+        Facets facets = new Facets(response.getAggregations());
+
+        return new SearchResult(result, facets);
     }
 
     @SuppressWarnings("unused")

@@ -33,7 +33,7 @@ public class ReplaysParser {
             try {
                 version += Integer.valueOf(digits[i]) * Math.pow(100, 3 - i);
             } catch (NumberFormatException e) {
-                System.out.println(clientVersion);
+                System.out.println(String.format("Failed to parse client version \"%s\"", clientVersion));
             }
         }
     }
@@ -47,7 +47,6 @@ public class ReplaysParser {
             document.put("haveResults", false);
         return document;
     }
-
 
     private void parseStartInfo(Map startInfo) {
         String battleDate = startInfo.get("dateTime").toString();
