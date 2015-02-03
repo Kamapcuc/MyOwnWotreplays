@@ -1190,7 +1190,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     <div class="mr_replay">
         <div class="mrr_head" style="background-image: url(/resources/img/maps/thumb/{{map._id}}.png)" title="{{map.name}}">
             <div class="mrr_tank">
-                <div style="background-image: url({{tank.image}})"></div>
+                <div style="background-image: url({{tank.image.big}})"></div>
             </div>
         </div>
         <div class="mrr_ribbon win">

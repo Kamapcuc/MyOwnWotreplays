@@ -2,13 +2,12 @@ PUT data/tank/_mapping
 {
 	"tank" : {
 		"properties" : {
-			"class" : {
+		"class" : {
 				"type" : "string",
 				"index" : "not_analyzed"
 			},
 			"level" : {
-				"type" : "long",
-				"index" : "not_analyzed"
+				"type" : "byte"
 			},
 			"nation" : {
 				"type" : "string",

@@ -165,7 +165,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var tankObj &#x3d; &#x7b;&#xd;&#xa;	level &#x3a; level,&#xd;&#xa;	nation &#x3a; nationId,&#xd;&#xa;	class &#x3a; classId,&#xd;&#xa;	premium &#x3a; premium,&#xd;&#xa;	image &#x3a; image,&#xd;&#xa;	imageContour &#x3a; imageContour,&#xd;&#xa;	name &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	shortName &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var shortNameArr &#x3d; shortName.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	tankObj.name&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	tankObj.shortName&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; shortNameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;tankObj&#x29;&#x3b;</jsScript_script>
+        <jsScript_script>var tankObj &#x3d; &#x7b;&#xd;&#xa;	level &#x3a; level,&#xd;&#xa;	nation &#x3a; nationId,&#xd;&#xa;	class &#x3a; classId,&#xd;&#xa;	premium &#x3a; premium,&#xd;&#xa;	image &#x3a; &#x7b;&#xd;&#xa;		big &#x3a; image,&#xd;&#xa;		small &#x3a; imageSmall,&#xd;&#xa;		contour &#x3a; imageContour&#xd;&#xa;	&#x7d;,&#xd;&#xa;	name &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	shortName &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var shortNameArr &#x3d; shortName.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	tankObj.name&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	tankObj.shortName&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; shortNameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;tankObj&#x29;&#x3b;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
         <rename>source</rename>
         <type>String</type>
@@ -389,6 +389,12 @@
           <valuefield/>
         </field>
         <field>
+          <aggregate>imageSmall</aggregate>
+          <subject>imageSmall</subject>
+          <type>FIRST_INCL_NULL</type>
+          <valuefield/>
+        </field>
+        <field>
           <aggregate>imageContour</aggregate>
           <subject>imageContour</subject>
           <type>FIRST_INCL_NULL</type>
@@ -462,50 +468,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>640</xloc>
       <yloc>704</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Missing maps</name>
-    <type>DataGrid</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>id</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-      <field>
-        <name>source</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-      </field>
-    </fields>
-    <data>
-      <line> <item>42_north_america</item><item>&#x7b;&#x22;name&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Port&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x41f;&#x43e;&#x440;&#x442;&#x22;,&#x22;pl&#x22;&#x3a;&#x22;Port&#x22;,&#x22;de&#x22;&#x3a;&#x22;Port&#x22;,&#x22;fr&#x22;&#x3a;&#x22;Port&#x22;,&#x22;es&#x22;&#x3a;&#x22;Puerto&#x22;,&#x22;zh-cn&#x22;&#x3a;&#x22;&#x6e2f;&#x22;,&#x22;tr&#x22;&#x3a;&#x22;Liman&#x22;,&#x22;cs&#x22;&#x3a;&#x22;P&#x159;&#xed;stav&#x22;,&#x22;th&#x22;&#x3a;&#x22;&#xe1e;&#xe2d;&#xe23;&#xe4c;&#xe15;&#xe35;&#xe22;&#x22;,&#x22;vi&#x22;&#x3a;&#x22;H&#x1ea3;i c&#x1ea3;ng&#x22;,&#x22;ko&#x22;&#x3a;&#x22;&#xd3ec;&#xd2b8;&#x22;&#x7d;&#x7d;</item> </line>
-      <line> <item>85_winter</item><item>&#x7b;&#x22;name&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Severogorsk&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x421;&#x435;&#x432;&#x435;&#x440;&#x43e;&#x433;&#x43e;&#x440;&#x441;&#x43a;&#x22;&#x7d;&#x7d;</item> </line>
-    </data>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1056</xloc>
-      <yloc>416</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -627,6 +589,50 @@
     </step>
 
   <step>
+    <name>Missing maps</name>
+    <type>DataGrid</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>id</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>source</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <data>
+      <line> <item>42_north_america</item><item>&#x7b;&#x22;name&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Port&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x41f;&#x43e;&#x440;&#x442;&#x22;,&#x22;pl&#x22;&#x3a;&#x22;Port&#x22;,&#x22;de&#x22;&#x3a;&#x22;Port&#x22;,&#x22;fr&#x22;&#x3a;&#x22;Port&#x22;,&#x22;es&#x22;&#x3a;&#x22;Puerto&#x22;,&#x22;zh-cn&#x22;&#x3a;&#x22;&#x6e2f;&#x22;,&#x22;tr&#x22;&#x3a;&#x22;Liman&#x22;,&#x22;cs&#x22;&#x3a;&#x22;P&#x159;&#xed;stav&#x22;,&#x22;th&#x22;&#x3a;&#x22;&#xe1e;&#xe2d;&#xe23;&#xe4c;&#xe15;&#xe35;&#xe22;&#x22;,&#x22;vi&#x22;&#x3a;&#x22;H&#x1ea3;i c&#x1ea3;ng&#x22;,&#x22;ko&#x22;&#x3a;&#x22;&#xd3ec;&#xd2b8;&#x22;&#x7d;&#x7d;</item> </line>
+      <line> <item>85_winter</item><item>&#x7b;&#x22;name&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Severogorsk&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x421;&#x435;&#x432;&#x435;&#x440;&#x43e;&#x433;&#x43e;&#x440;&#x441;&#x43a;&#x22;&#x7d;&#x7d;</item> </line>
+    </data>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1056</xloc>
+      <yloc>416</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Parse data</name>
     <type>ScriptValueMod</type>
     <description/>
@@ -675,7 +681,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>trans_Status &#x3d; SKIP_TRANSFORMATION&#x3b;&#xd;&#xa;&#xd;&#xa;var data &#x3d; JSON.parse&#x28;result&#x29;.data&#x3b;&#xd;&#xa;for &#x28;var key in data&#x29; &#x7b;&#xd;&#xa;	var tank &#x3d; data&#x5b;key&#x5d;&#x3b;&#xd;&#xa;    var row &#x3d; createRowCopy&#x28;getOutputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x29;&#x3b;&#xd;&#xa;    var idx &#x3d; getInputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; new RegExp&#x28;&#x27;&#x5e;&#x23;.&#x2b;_vehicles&#x3a;&#x28;.&#x2b;&#x29;&#x24;&#x27;&#x29;.exec&#x28;tank.name&#x29;&#x5b;1&#x5d;&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.level&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.nation&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.nation_i18n&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.is_premium&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.image&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.contour_image&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.name_i18n&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.short_name_i18n&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.type&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.type_i18n&#x3b;&#xd;&#xa;    putRow&#x28;row&#x29;&#x3b;&#xd;&#xa;&#x7d;</jsScript_script>
+        <jsScript_script>trans_Status &#x3d; SKIP_TRANSFORMATION&#x3b;&#xd;&#xa;&#xd;&#xa;var data &#x3d; JSON.parse&#x28;result&#x29;.data&#x3b;&#xd;&#xa;for &#x28;var key in data&#x29; &#x7b;&#xd;&#xa;	var tank &#x3d; data&#x5b;key&#x5d;&#x3b;&#xd;&#xa;    var row &#x3d; createRowCopy&#x28;getOutputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x29;&#x3b;&#xd;&#xa;    var idx &#x3d; getInputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; new RegExp&#x28;&#x27;&#x5e;&#x23;.&#x2b;_vehicles&#x3a;&#x28;.&#x2b;&#x29;&#x24;&#x27;&#x29;.exec&#x28;tank.name&#x29;&#x5b;1&#x5d;&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.level&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.nation&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.nation_i18n&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.is_premium&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.image&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.image_small&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.contour_image&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.name_i18n&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.short_name_i18n&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.type&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; tank.type_i18n&#x3b;&#xd;&#xa;    putRow&#x28;row&#x29;&#x3b;&#xd;&#xa;&#x7d;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>id</name>
         <rename>id</rename>
         <type>String</type>
@@ -708,6 +714,12 @@
         <replace>N</replace>
       </field>      <field>        <name>image</name>
         <rename>image</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>imageSmall</name>
+        <rename>imageSmall</rename>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -771,7 +783,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>classId</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -879,7 +890,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>id</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -928,7 +938,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>nationId</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -977,7 +986,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>id</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
