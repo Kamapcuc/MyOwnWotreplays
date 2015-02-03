@@ -17,7 +17,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 <div class="main clearfix" id="baseCtrl">
     <div class="main-menu clearfix" style="margin-bottom: 319px;">
         <div class="m-item_dropdown expanded" id="helper-1">
-            <div class="m-item_container" style="height: 410px;">
+            <div class="m-item_container">
                 <div class="tabs clearfix">
                     <div class="t_labels">
                         <div class="t_label active" data-target="tab_0">

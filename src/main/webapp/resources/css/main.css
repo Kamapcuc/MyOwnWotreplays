@@ -4337,8 +4337,8 @@ i.i-48_wotreplays {
 }
 
 .tank-filter {
-    padding: 20px 10px 20px 30px;
-    width: 512px;
+    padding: 20px 10px 10px 20px;
+    width: 570px;
     float: left
 }
 
@@ -4350,7 +4350,7 @@ i.i-48_wotreplays {
     display: inline-block;
     vertical-align: top;
     margin-right: 20px;
-    margin-left: -10px
+    margin-left: 0px
 }
 
 .tf_filters small {
@@ -4371,7 +4371,7 @@ i.i-48_wotreplays {
 }
 
 .tf_title {
-    margin-bottom: 10px
+    margin-bottom: 5px
 }
 
 .tf_title .first-letter, .tf_title div {
@@ -4380,7 +4380,7 @@ i.i-48_wotreplays {
 }
 
 .tf_title div {
-    margin: 4px 0 0 4px;
+    margin: 0;
     font-size: 18px;
     font-weight: bold;
     color: #626667;
@@ -4389,9 +4389,9 @@ i.i-48_wotreplays {
 }
 
 .tf_slider {
-    width: 296px;
+    width: 235px;
     border-left: 1px solid #2b2b2b;
-    float: left;
+    float: right;
     position: relative;
     overflow: hidden;
     -webkit-box-shadow: inset 0 0 26px #111;
