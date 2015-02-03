@@ -1,18 +1,22 @@
 package ru.kamapcuc.myownwotreplays;
 
+import org.elasticsearch.common.xcontent.ToXContent;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
+import ru.kamapcuc.myownwotreplays.search.Config;
 import ru.kamapcuc.myownwotreplays.search.ReplaysRequest;
 import ru.kamapcuc.myownwotreplays.search.SortType;
+import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
+import ru.kamapcuc.stuff.Utils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Stream;
 
 @Controller
 public class ReplaysController {
@@ -21,9 +25,10 @@ public class ReplaysController {
 
     @RequestMapping({"/", "/search.do"})
     public String search(HttpServletRequest httpRequest, ModelMap model) {
+        model.put("battlesData", searchInternal(httpRequest));
         model.put("indexer", indexer);
         model.put("sortTypes", SortType.stringify());
-        model.put("battlesData", searchInternal(httpRequest));
+        model.put("facetsData", getFacetsData());
         return "mainPage";
     }
 
@@ -34,27 +39,23 @@ public class ReplaysController {
     }
 
     private String searchInternal(HttpServletRequest httpRequest) {
-        Map<String, String> params = castParams(httpRequest.getParameterMap());
+        Map<String, String> params = Utils.castParams(httpRequest.getParameterMap());
         ReplaysRequest requestBuilder = new ReplaysRequest(params);
         SearchResult searchResult = requestBuilder.execute();
         return searchResult.stringify();
     }
 
-    private Map<String, String> castParams(Map params) {
-        Map<String, String> result = new HashMap<>();
-        Stream<?> entrySet = params.entrySet().stream();
-        entrySet.filter(obj -> obj instanceof Map.Entry).forEach(obj -> {
-            Map.Entry entry = (Map.Entry) obj;
-            Object key = entry.getKey();
-            Object value = entry.getValue();
-            if (key instanceof String && value instanceof String[]) {
-                String keySting = (String) key;
-                String[] valueString = (String[]) value;
-                if (valueString.length > 0)
-                    result.put(keySting, valueString[0]);
-            }
-        });
-        return result;
+    private String getFacetsData() {
+        try {
+            XContentBuilder builder = XContentFactory.jsonBuilder();
+            builder.startObject();
+            for (FacetBuilder facet : Config.FACET_BUILDERS)
+                facet.toXContent(builder, ToXContent.EMPTY_PARAMS);
+            builder.close();
+            return builder.string();
+        } catch (IOException e) {
+            return null;
+        }
     }
 
 }

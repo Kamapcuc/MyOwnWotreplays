@@ -1,7 +1,3 @@
-[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
-    display: none !important
-}
-
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
     margin: 0;
     padding: 0
@@ -4113,7 +4109,6 @@ i.i-48_wotreplays {
     display: none;
     padding: 20px 30px;
     min-height: 240px;
-    color: #8e9496
 }
 
 .main-menu .t_container.active {
@@ -4354,33 +4349,38 @@ i.i-48_wotreplays {
 .tf_filters {
     display: inline-block;
     vertical-align: top;
-    margin-right: 60px
+    margin-right: 20px;
+    margin-left: -10px
+}
+
+.tf_filters small {
+    color: #505050
 }
 
 .tf_filters ul {
     padding-left: 9px
 }
 
-.tf_filters ul.two-column {
+.two-column ul {
     -webkit-column-count: 2;
     -moz-column-count: 2;
     column-count: 2;
-    -webkit-column-gap: 20px;
-    -moz-column-gap: 20px;
-    column-gap: 20px
+    -webkit-column-gap: 10px;
+    -moz-column-gap: 10px;
+    column-gap: 10px
 }
 
 .tf_title {
     margin-bottom: 10px
 }
 
-.tf_title .first-letter, .tf_title .first-letter + div {
+.tf_title .first-letter, .tf_title div {
     display: inline-block;
     vertical-align: middle
 }
 
-.tf_title .first-letter + div {
-    margin: 4px 0 0 -17px;
+.tf_title div {
+    margin: 4px 0 0 4px;
     font-size: 18px;
     font-weight: bold;
     color: #626667;

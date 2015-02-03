@@ -11,11 +11,11 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-public class Facets implements ToXContent {
+public class FacetResult implements ToXContent {
 
     private final List<Aggregation> list;
 
-    public Facets(Aggregations aggregations) {
+    public FacetResult(Aggregations aggregations) {
         if (aggregations == null)
             list = Collections.emptyList();
         else

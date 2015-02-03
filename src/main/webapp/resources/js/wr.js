@@ -24,4 +24,22 @@ $(document)
                 left: e.clientX + 15
             });
         });
+    })
+    .on('click', '.t_label', function (e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.hasClass('active'))
+            return false;
+        else {
+            var $prevActive = $this.closest('.t_labels').find('.active');
+            $prevActive.removeClass('active');
+            $('#' + $prevActive.attr('data-target')).removeClass('active');
+
+            $this.addClass('active');
+            $('#' + $this.attr('data-target')).addClass('active');
+
+            var height = $('.m-item_container').height();
+            $('.main-menu').css('margin-bottom', height + 25);
+            return true;
+        }
     });

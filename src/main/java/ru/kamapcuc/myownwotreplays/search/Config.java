@@ -1,7 +1,8 @@
 package ru.kamapcuc.myownwotreplays.search;
 
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
-import ru.kamapcuc.myownwotreplays.search.facets.FieldFacetBuilder;
+import ru.kamapcuc.myownwotreplays.search.facets.RepositoryFacetBuilder;
+import ru.kamapcuc.myownwotreplays.search.facets.TankLevelFacetBuilder;
 
 public class Config {
 
@@ -28,9 +29,9 @@ public class Config {
     }
 
     public final static FacetBuilder[] FACET_BUILDERS = new FacetBuilder[]{
-            new FieldFacetBuilder("Нация", "tankNation"),
-            new FieldFacetBuilder("Класс", "tankClass"),
-            new FieldFacetBuilder("Уровень", "tankLevel")
+            new RepositoryFacetBuilder("tankNation", "Нация", "nation"),
+            new RepositoryFacetBuilder("tankClass", "Класс", "class"),
+            new TankLevelFacetBuilder("tankLevel", "Уровень")
     };
 
 }

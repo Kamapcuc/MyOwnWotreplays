@@ -30,13 +30,13 @@ public class ReplaysRequest {
     private SearchRequestBuilder createSearchRequest() {
         SearchRequestBuilder result = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
         result.setTypes(Config.BATTLE_TYPE_NAME);
-        result.setSize(Config.PAGINATION_SIZE);
         result.setQuery(new MatchQueryBuilder("haveResults", true));
         return result;
     }
 
     public SearchResult execute() {
         parseLang();
+        parsePagination();
         parseSort();
         parseFacets();
         return client.search(searchRequest);
@@ -45,6 +45,17 @@ public class ReplaysRequest {
     private void parseLang() {
         if (params.containsKey("lang"))
             Config.lang = params.get("lang");
+    }
+
+    private void parsePagination() {
+        searchRequest.setSize(Config.PAGINATION_SIZE);
+        if (params.containsKey("page")) {
+            try {
+                int pageNum = Integer.valueOf(params.get("page"));
+                searchRequest.setFrom((pageNum - 1) * Config.PAGINATION_SIZE);
+            } catch (NumberFormatException ignored) {
+            }
+        }
     }
 
     private void parseSort() {

@@ -12,8 +12,6 @@ public abstract class Facet {
 
     public abstract String getId();
 
-    public abstract String getName();
-
     public abstract FilterBuilder getFilter();
 
     protected abstract AggregationBuilder getUnfilteredFacet();

@@ -9,9 +9,9 @@ import java.io.IOException;
 public class SearchResult {
 
     private final DocMap docs;
-    private final Facets facets;
+    private final FacetResult facets;
 
-    public SearchResult(DocMap hits, Facets facets) {
+    public SearchResult(DocMap hits, FacetResult facets) {
         this.docs = hits;
         this.facets = facets;
     }
