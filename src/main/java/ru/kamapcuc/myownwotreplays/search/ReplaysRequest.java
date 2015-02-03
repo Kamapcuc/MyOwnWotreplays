@@ -44,7 +44,8 @@ public class ReplaysRequest {
 
     private void parseLang() {
         if (params.containsKey("lang")) {
-            Config.lang = (String) params.get("lang");
+            String[] langValue = (String[]) params.get("lang");
+            Config.lang = langValue[0];
         }
     }
 
