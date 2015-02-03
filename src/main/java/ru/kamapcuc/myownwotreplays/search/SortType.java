@@ -33,16 +33,16 @@ public enum SortType implements ToXContent {
         return description;
     }
 
-    public static SortType getSortType(Object value) {
-        if (value != null && value instanceof String[])
-            return valueOf(((String[]) value)[0]);
+    public static SortType getSortType(String[] value) {
+        if (value != null )
+            return valueOf(value[0]);
         else
             return SortType.DATE;
     }
 
-    public static SortOrder getSortOrder(Object value) {
-        if (value != null && value instanceof String[])
-            return SortOrder.valueOf(((String[]) value)[0]);
+    public static SortOrder getSortOrder(String[] value) {
+        if (value != null)
+            return SortOrder.valueOf(value[0]);
         else
             return SortOrder.DESC;
     }

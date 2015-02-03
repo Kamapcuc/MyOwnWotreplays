@@ -19,10 +19,10 @@ public class ReplaysRequest {
 
     private final static ElasticClient client = ElasticClient.getInstance();
 
-    private final Map params;
+    private final Map<String, String[]> params;
     private final SearchRequestBuilder searchRequest;
 
-    public ReplaysRequest(Map params) {
+    public ReplaysRequest(Map<String, String[]> params) {
         this.params = params;
         this.searchRequest = createSearchRequest();
     }
@@ -43,10 +43,8 @@ public class ReplaysRequest {
     }
 
     private void parseLang() {
-        if (params.containsKey("lang")) {
-            String[] langValue = (String[]) params.get("lang");
-            Config.lang = langValue[0];
-        }
+        if (params.containsKey("lang"))
+            Config.lang = params.get("lang")[0];
     }
 
     private void parseSort() {

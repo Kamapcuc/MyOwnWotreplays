@@ -31,7 +31,8 @@ public class ReplaysController {
     }
 
     private String searchInternal(HttpServletRequest httpRequest) {
-        Map params = httpRequest.getParameterMap();
+        @SuppressWarnings("unchecked")
+        Map<String, String[]> params = httpRequest.getParameterMap();
         ReplaysRequest requestBuilder = new ReplaysRequest(params);
         SearchResult searchResult = requestBuilder.execute();
         return searchResult.stringify();
