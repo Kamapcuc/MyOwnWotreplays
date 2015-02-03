@@ -9,11 +9,10 @@ public class FieldFacetBuilder extends FacetBuilder {
     }
 
     @Override
-    public Facet getFacet(Map<String, String[]> params) {
+    public Facet getFacet(Map<String, String> params) {
         String[] selectedValues = null;
-        String[] paramValue = params.get(field);
-        if (paramValue != null)
-            selectedValues = paramValue[0].split(",");
+        if (params.containsKey(field))
+            selectedValues = params.get(field).split(",");
         return new FieldFacet(this, selectedValues);
     }
 

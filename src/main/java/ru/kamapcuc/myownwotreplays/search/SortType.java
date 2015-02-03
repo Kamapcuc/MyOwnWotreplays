@@ -8,7 +8,6 @@ import org.elasticsearch.search.sort.SortOrder;
 
 import java.io.IOException;
 
-@SuppressWarnings("unused")
 public enum SortType implements ToXContent {
 
     DATE("battleDate", "по дате"),
@@ -19,6 +18,9 @@ public enum SortType implements ToXContent {
 
     private final String field;
     private final String description;
+
+    private final static SortType DEFAULT_SORT = SortType.DATE;
+    private final static SortOrder DEFAULT_ORDER = SortOrder.DESC;
 
     private SortType(String field, String name) {
         this.field = field;
@@ -33,18 +35,18 @@ public enum SortType implements ToXContent {
         return description;
     }
 
-    public static SortType getSortType(String[] value) {
-        if (value != null )
-            return valueOf(value[0]);
+    public static SortType getSortType(String value) {
+        if (value != null)
+            return valueOf(value);
         else
-            return SortType.DATE;
+            return DEFAULT_SORT;
     }
 
-    public static SortOrder getSortOrder(String[] value) {
+    public static SortOrder getSortOrder(String value) {
         if (value != null)
-            return SortOrder.valueOf(value[0]);
+            return SortOrder.valueOf(value);
         else
-            return SortOrder.DESC;
+            return DEFAULT_ORDER;
     }
 
     @Override
@@ -66,7 +68,7 @@ public enum SortType implements ToXContent {
             builder.close();
             return builder.string();
         } catch (IOException e) {
-            return "[]";
+            return null;
         }
     }
 

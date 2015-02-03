@@ -12,6 +12,6 @@ public abstract class FacetBuilder {
         this.field = field;
     }
 
-    public abstract Facet getFacet(Map<String, String[]> params);
+    public abstract Facet getFacet(Map<String, String> params);
 
 }
