@@ -20,8 +20,7 @@ public class SearchResult {
         return docs;
     }
 
-    @Override
-    public String toString() {
+    public String stringify() {
         try {
             XContentBuilder builder = XContentFactory.jsonBuilder();
             builder.startObject();

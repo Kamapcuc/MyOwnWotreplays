@@ -4,37 +4,35 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.index.query.AndFilterBuilder;
 import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.search.facets.Facet;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
-import ru.kamapcuc.myownwotreplays.search.facets.FieldFacetBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BattlesRequest {
+public class ReplaysRequest {
 
     private final static ElasticClient client = ElasticClient.getInstance();
 
-    private final static FacetBuilder[] facetBuilders = new FacetBuilder[]{
-            new FieldFacetBuilder("Нация", "tankNation"),
-            new FieldFacetBuilder("Класс", "tankClass"),
-            new FieldFacetBuilder("Уровень", "tankLevel")
-    };
-
-    private final SearchRequestBuilder searchRequest;
     private final Map params;
-    private final List<Facet> facets = new ArrayList<>();
+    private final SearchRequestBuilder searchRequest;
 
-    public BattlesRequest(Map params) {
-        searchRequest = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
-        searchRequest.setTypes(Config.BATTLE_TYPE_NAME);
-        searchRequest.setSize(Config.PAGINATION_SIZE);
-        searchRequest.setQuery(new MatchQueryBuilder("haveResults", true));
+    public ReplaysRequest(Map params) {
         this.params = params;
+        this.searchRequest = createSearchRequest();
+    }
+
+    private SearchRequestBuilder createSearchRequest() {
+        SearchRequestBuilder result = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
+        result.setTypes(Config.BATTLE_TYPE_NAME);
+        result.setSize(Config.PAGINATION_SIZE);
+        result.setQuery(new MatchQueryBuilder("haveResults", true));
+        return result;
     }
 
     public SearchResult execute() {
@@ -62,13 +60,10 @@ public class BattlesRequest {
     }
 
     private void parseFacets() {
-        for (FacetBuilder facetBuilder : facetBuilders)
+        List<Facet> facets = new ArrayList<>();
+        for (FacetBuilder facetBuilder : Config.FACET_BUILDERS)
             facets.add(facetBuilder.getFacet(params));
-        buildFilters();
-        buildFacets();
-    }
 
-    private void buildFilters() {
         List<FilterBuilder> filters = new ArrayList<>();
         for (Facet facet : facets) {
             FilterBuilder filter = facet.getFilter();
@@ -80,10 +75,11 @@ public class BattlesRequest {
             filters.forEach(andFilter::add);
             searchRequest.setPostFilter(andFilter);
         }
-    }
 
-    private void buildFacets() {
-        facets.stream().forEach(facet -> searchRequest.addAggregation(facet.getFacet(facets)));
+        facets.stream().forEach(facet -> {
+            AggregationBuilder aggregation = facet.getFacet(facets);
+            searchRequest.addAggregation(aggregation);
+        });
     }
 
 }

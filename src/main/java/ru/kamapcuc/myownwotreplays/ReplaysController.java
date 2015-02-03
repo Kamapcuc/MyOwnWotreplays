@@ -5,7 +5,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
-import ru.kamapcuc.myownwotreplays.search.BattlesRequest;
+import ru.kamapcuc.myownwotreplays.search.ReplaysRequest;
 import ru.kamapcuc.myownwotreplays.search.SortType;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +19,7 @@ public class ReplaysController {
     @RequestMapping({"/", "/search.do"})
     public String search(HttpServletRequest httpRequest, ModelMap model) {
         model.put("indexer", indexer);
-        model.put("sortTypes", SortType.toXContent());
+        model.put("sortTypes", SortType.stringify());
         model.put("battlesData", searchInternal(httpRequest));
         return "mainPage";
     }
@@ -32,9 +32,9 @@ public class ReplaysController {
 
     private String searchInternal(HttpServletRequest httpRequest) {
         Map params = httpRequest.getParameterMap();
-        BattlesRequest requestBuilder = new BattlesRequest(params);
+        ReplaysRequest requestBuilder = new ReplaysRequest(params);
         SearchResult searchResult = requestBuilder.execute();
-        return searchResult.toString();
+        return searchResult.stringify();
     }
 
 }

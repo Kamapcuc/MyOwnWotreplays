@@ -56,7 +56,7 @@ public enum SortType implements ToXContent {
         return builder;
     }
 
-    public static String toXContent() {
+    public static String stringify() {
         try {
             XContentBuilder builder = XContentFactory.jsonBuilder();
             builder.startArray();

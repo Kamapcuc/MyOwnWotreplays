@@ -1,5 +1,8 @@
 package ru.kamapcuc.myownwotreplays.search;
 
+import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
+import ru.kamapcuc.myownwotreplays.search.facets.FieldFacetBuilder;
+
 public class Config {
 
     public volatile static String lang = "ru";
@@ -23,5 +26,11 @@ public class Config {
     public static String getElasticDataPath() {
         return System.getProperty("wotPath") + "MyOwnWotreplays/data/";
     }
+
+    public final static FacetBuilder[] FACET_BUILDERS = new FacetBuilder[]{
+            new FieldFacetBuilder("Нация", "tankNation"),
+            new FieldFacetBuilder("Класс", "tankClass"),
+            new FieldFacetBuilder("Уровень", "tankLevel")
+    };
 
 }
