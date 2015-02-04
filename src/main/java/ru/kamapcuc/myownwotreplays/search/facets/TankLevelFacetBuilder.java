@@ -12,12 +12,8 @@ public class TankLevelFacetBuilder extends FieldFacetBuilder {
 
     @Override
     protected void toXContentValues(XContentBuilder builder) throws IOException {
-        for (int i = 1; i <= 10; i++) {
-            builder.field(Integer.toString(i));
-            builder.startObject();
-            builder.field("name", Integer.toString(i));
-            builder.endObject();
-        }
+        for (int i = 1; i <= 10; i++)
+            builder.field(Integer.toString(i), Integer.toString(i));
     }
 
 }

@@ -34,6 +34,7 @@ public abstract class FacetBuilder implements ToXContent {
     public final XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
         builder.field(getId());
         builder.startObject();
+        builder.field("type", getType());
         builder.field("name", getName());
         toXContentInner(builder);
         builder.endObject();

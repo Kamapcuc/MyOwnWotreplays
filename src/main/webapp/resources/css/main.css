@@ -4111,6 +4111,22 @@ i.i-48_wotreplays {
     min-height: 240px;
 }
 
+.tf_filters label[class=disabled] {
+    color: #333333;
+}
+
+.tf_filters label[class=disabled]:hover {
+    color: #555555;
+}
+
+.tf_filters label[class=disabled] small {
+    visibility: hidden;
+}
+
+.cbx:checked + label[class=disabled] span {
+    background-position: -28px -4px;
+}
+
 .main-menu .t_container.active {
     display: block
 }
@@ -4354,7 +4370,9 @@ i.i-48_wotreplays {
 }
 
 .tf_filters small {
-    color: #505050
+    color: #505050;
+    min-width: 30px;
+    display: inline-block;
 }
 
 .tf_filters ul {
@@ -4365,6 +4383,15 @@ i.i-48_wotreplays {
     -webkit-column-count: 2;
     -moz-column-count: 2;
     column-count: 2;
+    -webkit-column-gap: 10px;
+    -moz-column-gap: 10px;
+    column-gap: 10px
+}
+
+.three-column ul {
+    -webkit-column-count: 3;
+    -moz-column-count: 3;
+    column-count: 3;
     -webkit-column-gap: 10px;
     -moz-column-gap: 10px;
     column-gap: 10px

@@ -31,6 +31,7 @@ public class Config {
     public final static FacetBuilder[] FACET_BUILDERS = new FacetBuilder[]{
             new RepositoryFacetBuilder("tankNation", "Нация", "nation"),
             new RepositoryFacetBuilder("tankClass", "Класс", "class"),
+            new RepositoryFacetBuilder("map", "Карта", "map"),
             new TankLevelFacetBuilder("tankLevel", "Уровень")
     };
 

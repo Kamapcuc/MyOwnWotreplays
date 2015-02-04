@@ -25,6 +25,7 @@
         <property name="messageConverters">
             <array>
                 <bean class = "org.springframework.http.converter.StringHttpMessageConverter">
+                    <constructor-arg index="0" name="defaultCharset" value="UTF-8"/>
                     <property name="supportedMediaTypes" value = "application/json; charset=UTF-8" />
                 </bean>
             </array>

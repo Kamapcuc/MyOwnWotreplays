@@ -18,12 +18,8 @@ public class RepositoryFacetBuilder extends FieldFacetBuilder {
 
     @Override
     protected void toXContentValues(XContentBuilder builder) throws IOException {
-        for (Doc value : values.values()) {
-            builder.field(value.getId());
-            builder.startObject();
-            builder.field("name", value.get("name"));
-            builder.endObject();
-        }
+        for (Doc value : values.values())
+            builder.field(value.getId(), value.get("name"));
     }
 
 }

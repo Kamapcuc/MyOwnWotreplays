@@ -23,8 +23,6 @@ public class FacetResult implements ToXContent {
     }
 
     private void facetToXContent(XContentBuilder builder, Aggregation facet) throws IOException {
-        builder.field(facet.getName());
-        builder.startObject();
         if (facet instanceof Terms) {
             Terms termsFacet = (Terms) facet;
             for (Terms.Bucket bucket : termsFacet.getBuckets())
@@ -34,14 +32,17 @@ public class FacetResult implements ToXContent {
             Aggregation innerFacet = filteredFacet.getAggregations().asList().get(0);
             facetToXContent(builder, innerFacet);
         }
-        builder.endObject();
     }
 
     @Override
     public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
         builder.startObject();
-        for (Aggregation facet : list)
+        for (Aggregation facet : list) {
+            builder.field(facet.getName());
+            builder.startObject();
             facetToXContent(builder, facet);
+            builder.endObject();
+        }
         builder.endObject();
         return builder;
     }
