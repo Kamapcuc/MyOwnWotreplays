@@ -45,13 +45,13 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                         <div id="tab_0" class="t_container active" style="padding: 0;">
                             <div class="tank-filter">
                                 <div class="tf_filters" id="tankNation">
-                                <#-- NATION FACET HERE -->
+                                <#-- NATION FACET -->
                                 </div>
                                 <div class="tf_filters two-column" id="tankLevel">
-                                <#-- LEVEL FACET HERE -->
+                                <#-- LEVEL FACET -->
                                 </div>
                                 <div class="tf_filters" id="tankClass">
-                                <#-- CLASS FACET HERE -->
+                                <#-- CLASS FACET -->
                                 </div>
                             </div>
                             <div class="tf_slider">
@@ -78,548 +78,41 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                         </div>
                         <div id="tab_1" class="t_container">
                             <div class="tf_filters three-column" id="map">
-                            <#-- MAP FACET HERE -->
+                            <#-- MAP FACET -->
                             </div>
                         </div>
-                        <div id="tab_2" class="t_container">
-                            <div class="t_title">Медали</div>
-                            <div class="column-content">
-                                <div style="margin-bottom: 25px;"
-                                        >
-                                    <div class="t_title">Эпические достижения</div>
-                                    <ul>
-                                        <li>
-                                            <input type="checkbox" class="cbx" id="medal50">
-                                            <label for="medal50"><span></span>Медаль Орлика</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal51">
-                                            <label for="medal51"><span></span>Медаль Оськина</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal52">
-                                            <label for="medal52"><span></span>Медаль Халонена</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal53">
-                                            <label for="medal53"><span></span>Медаль Бурды</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal54">
-                                            <label for="medal54"><span></span>Медаль Бийота</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal55">
-                                            <label for="medal55"><span></span>Медаль
-                                                Колобанова</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal56">
-                                            <label for="medal56"><span></span>Медаль Фадина</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal73">
-                                            <label for="medal73"><span></span>Медаль
-                                                Рэдли-Уолтерса</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal74">
-                                            <label for="medal74"><span></span>Медаль Пула</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal75">
-                                            <label for="medal75"><span></span>Медаль Бруно</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal76">
-                                            <label for="medal76"><span></span>Медаль Тарцая</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal77">
-                                            <label for="medal77"><span></span>Медаль Паскуччи</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal78">
-                                            <label for="medal78"><span></span>Медаль Думитру</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal106">
-                                            <label for="medal106"><span></span>Медаль
-                                                Лехвеслайхо</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal107">
-                                            <label for="medal107"><span></span>Медаль Николса</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal110">
-                                            <label for="medal110"><span></span>Медаль героев Расейняя</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal145">
-                                            <label for="medal145"><span></span>Медаль де
-                                                Ланглада</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal146">
-                                            <label for="medal146"><span></span>Медаль Тамада
-                                                Йошио</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal148">
-                                            <label for="medal148"><span></span>Медаль Найдина</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal305">
-                                            <label for="medal305"><span></span>Медаль «Поле боя:
-                                                Арденнская операция 1944 года»</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal301">
-                                            <label for="medal301"><span></span>Медаль «Поле боя: бои
-                                                у озера Балатон»</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal303">
-                                            <label for="medal303"><span></span>Медаль «Поле боя:
-                                                битва на Курской дуге»</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal298">
-                                            <label for="medal298"><span></span>Медаль Гора</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal300">
-                                            <label for="medal300"><span></span>Медаль Старка</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div style="margin-bottom: 25px;"
-                                        >
-                                    <div class="t_title">Герой битвы</div>
-                                    <ul>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal34">
-                                            <label for="medal34"><span></span>Воин</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal35">
-                                            <label for="medal35"><span></span>Захватчик</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal37">
-                                            <label for="medal37"><span></span>Защитник</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal38">
-                                            <label for="medal38"><span></span>Стальная стена</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal39">
-                                            <label for="medal39"><span></span>Поддержка</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal40">
-                                            <label for="medal40"><span></span>Разведчик</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal72">
-                                            <label for="medal72"><span></span>Дозорный</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal227">
-                                            <label for="medal227"
-                                                    ><span></span>Танкист-снайпер</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal228">
-                                            <label for="medal228"><span></span>Основной
-                                                калибр</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal232">
-                                            <label for="medal232"><span></span>Отличник боевой
-                                                подготовки</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal230">
-                                            <label for="medal230"><span></span>За отличную
-                                                стрельбу</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div style="margin-bottom: 25px;"
-                                        >
-                                    <div class="t_title">Групповые достижения</div>
-                                    <ul>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal143">
-                                            <label for="medal143"><span></span>Братья по
-                                                оружию</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal144">
-                                            <label for="medal144"><span></span>Решающий вклад</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal236">
-                                            <label for="medal236"><span></span>Бронетанковый
-                                                кулак</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div style="margin-bottom: 25px;"
-                                        >
-                                    <div class="t_title">Почётные звания</div>
-                                    <ul>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal61">
-                                            <label for="medal61"><span></span>Рейдер</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal62">
-                                            <label for="medal62"><span></span>Коса смерти</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal64">
-                                            <label for="medal64"><span></span>Камикадзе</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal147">
-                                            <label for="medal147"><span></span>Бомбардир</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal237">
-                                            <label for="medal237"><span></span>Тактик</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal306">
-                                            <label for="medal306"><span></span>Уроки истории:
-                                                Арденнская операция 1944 года</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal302">
-                                            <label for="medal302"><span></span>Уроки истории: бои у
-                                                озера Балатон</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal304">
-                                            <label for="medal304"><span></span>Уроки истории: битва
-                                                на Курской дуге</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal297">
-                                            <label for="medal297"><span></span>За контрбатарейную
-                                                стрельбу</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal299">
-                                            <label for="medal299"><span></span>Хладнокровный</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal289">
-                                            <label for="medal289"><span></span>За волю к
-                                                победе</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal523">
-                                            <label for="medal523"><span></span>Дуэлянт</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal522">
-                                            <label for="medal522"><span></span>Боец</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal517">
-                                            <label for="medal517"><span></span>Непробиваемый</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal521">
-                                            <label for="medal521"><span></span>Огонь на
-                                                поражение</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div style="margin-bottom: 25px;"
-                                        >
-                                    <div class="t_title">Памятные знаки</div>
-                                    <ul>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal150">
-                                            <label for="medal150"><span></span>Спартанец</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal151">
-                                            <label for="medal151"><span></span>Невозмутимый</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal152">
-                                            <label for="medal152"><span></span>Счастливчик</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal233">
-                                            <label for="medal233"><span></span>Царь горы</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal286">
-                                            <label for="medal286"><span></span>Бог войны</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal296">
-                                            <label for="medal296"><span></span>Монолит</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal479">
-                                            <label for="medal479"><span></span>Бой до
-                                                последнего</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal525">
-                                            <label for="medal525"><span></span>Поджигатель</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal526">
-                                            <label for="medal526"><span></span>Костолом</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal527">
-                                            <label for="medal527"><span></span>Заговорённый</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal524">
-                                            <label for="medal524"><span></span>Взрывотехник</label>
-                                        </li>
-                                        <li>
-                                            <input type="checkbox" class="cbx"
-                                                   id="medal528">
-                                            <label for="medal528"><span></span>В расчёте!</label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab_3" class="t_container">
-                            <div style="display: inline-block; vertical-align: top; margin-right: 60px;">
-                                <div class="t_title">Поиск по игроку</div>
-                                <div class="m_search-container search-player">
-                                    <input class="m_search" type="text"
-                                           placeholder="введите имя игрока">
-                                </div>
-                            </div>
-                            <div style="display: inline-block; vertical-align: top;">
-                                <div class="t_title">Поиск по клану</div>
-                                <div style="display: none">{"query":null,"results":null}</div>
-                                <div class="m_search-container search-clan">
-                                    <input class="m_search   " type="text"
-                                           placeholder="введите название клана">
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tab_4" class="t_container">
-                            <div class="tf_filters">
-                                <div class="t_title">Тип боя</div>
-                                <ul class="two-column">
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type1">
-                                        <label for="battle_type1"><span></span>Случайный бой</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type2">
-                                        <label for="battle_type2"><span></span>Тренировка</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type3">
-                                        <label for="battle_type3"><span></span>Ротный бой</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type4">
-                                        <label for="battle_type4"><span></span>Турнир</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type5">
-                                        <label for="battle_type5"><span></span>ГК</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type6">
-                                        <label for="battle_type6"><span></span>Боевое
-                                            обучение</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type7">
-                                        <label for="battle_type7"><span></span>Командный бой</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type8">
-                                        <label for="battle_type8"><span></span>Исторические
-                                            бои</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type9">
-                                        <label for="battle_type9"><span></span>Химмельсбол</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type10">
-                                        <label for="battle_type10"><span></span>Вылазка</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx"
-                                               id="battle_type11">
-                                        <label for="battle_type11"><span></span>Битва за
-                                            Укрепрайон</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="tf_filters">
-                                <div class="t_title">Респ</div>
-                                <ul>
-                                    <li>
-                                        <input type="checkbox" class="cbx" id="resp1"
-                                                >
-                                        <label for="resp1"><span></span>1</label>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" class="cbx" id="resp2"
-                                                >
-                                        <label for="resp2"><span></span>2</label>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="tf_filters">
-                                <div class="t_title">Знак классности</div>
-                                <ul>
-                                    <li>
-                                        <input type="checkbox" class="cbx" id="mastery"
-                                                >
-                                        <label for="mastery"><span></span>Мастер</label>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                        <div id="tab_2" class="t_container"></div>
+                        <div id="tab_3" class="t_container"></div>
+                        <div id="tab_4" class="t_container"></div>
                     </div>
                     <div class="tabs-bottom">
                         <div class="selected-filters">
-                            <span class="tf_s__selectall">Очистить все фильтры&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-
-                            <div>
-                                <small>Уровни:</small>
-                                <span>
-                                <a title="Удалить фильтр" class="">4</a>
-                                </span>
-                            </div>
-                            <div>
-                                <small>Нации:</small>
-                                <span>
-                                <a title="Удалить фильтр" class="">Франция</a>
-                                </span>
-                            </div>
-                            <div>
-                                <small>Типы:</small>
-                                <span>
-                                <a title="Удалить фильтр" class="">ПТ</a>
-                                </span>
-                            </div>
-                            <div>
-                                <small>Танки:</small>
-                                <span>
-                                <a title="Удалить фильтр" class="">Somua SAu 40</a>
-                                </span>
-                            </div>
-                            <div>
-                                <small>Версии:</small>
-                                <span>
-                                <a title="Удалить фильтр" class="">0.9.5</a>
-                                </span>
-                            </div>
+                            <span class="tf_s__selectall">Очистить все фильтры</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
     <div>
         <div class="b-replays">
             <div class="b-sort b-replays__sort">
-                <span class="b-sort__label">Сортировать</span>
-                <ul class="b-sort__list b-list" id="sortTypesContainer">
-
+                <span class="b-sort__label">Сортировать:</span>
+                <ul class="b-sort__list b-list">
+                <#list sortTypes as sortType>
+                    <li class="b-list__item">
+                        <a class="b-link" onclick="sortFacet.select(event);">
+                            <div class="b-link__text" id="${sortType.name()}">
+                                ${sortType.getDescription()}
+                                <ins class="b-sort__dir"></ins>
+                            </div>
+                        </a>
+                    </li>
+                </#list>
                 </ul>
             </div>
             <div id="battlesContainer">
+            <#-- BATTLES LIST -->
             </div>
             <ul class="pagination replays-pagination" style="height: 29px; overflow: visible;">
                 <li class="disabled">← Назад</li>
@@ -736,17 +229,6 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     {{/each}}
 </script>
 
-<script id="sortTypeTemplate" type="text/x-handlebars-template">
-    <li class="b-list__item">
-        <a class="b-link {{#if selected}}b-link_active{{/if}}">
-            <span class="b-link__text">{{description}}</span>
-            <span class="sortOrder" {{#if selected}}{{else}}style="display:none" {{/if}}>
-            <ins class="b-sort__dir">{{#if asc}}↓{{else}}↑{{/if}}</ins>
-            </span>
-        </a>
-    </li>
-</script>
-
 <script id="fieldFacetTemplate" type="text/x-handlebars-template">
     <div class="tf_title">
         <div>{{name}}</div>
@@ -764,18 +246,17 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 </script>
 
 <script>
-    var fieldFacetTemplate = Handlebars.compile($('#fieldFacetTemplate').html());
     var battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
     var battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
-    var sortTypeTemplate = Handlebars.compile($('#sortTypeTemplate').html());
     var battlesTemplate = battlesTableTemplate;
 
     var battlesContainer = $('#battlesContainer');
-    var sortTypesContainer = $('#sortTypesContainer');
 
     var battles = ${battlesData};
     var facetsData = ${facetsData};
-    var sortTypes = ${sortTypes};
+
+    var queryNumber = 0;
+    var appliedDataNumber = 0;
 
     var facets = [];
 
@@ -788,9 +269,6 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         }
         getData(queryParams.join('&'));
     };
-
-    var queryNumber = 0;
-    var appliedDataNumber = 0;
 
     var getData = function (query) {
         var currentDataNumber = ++queryNumber;
@@ -817,26 +295,16 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         }
     };
 
-    for (var facetKey in facetsData) {
-        var facetData = facetsData[facetKey];
-        var facet;
-        switch (facetData.type) {
-            case 'field':
-                facet = new FieldFacet(facetKey, facetData);
-                break;
-        }
-        facets.push(facet);
-    }
-
     function FieldFacet(id, facetData) {
         this.id = id;
         $.extend(this, facetData);
         var facetContainer = document.getElementById(id);
         var funcName = 'on' + id + 'Change';
         window[funcName] = this.onClick;
-        facetContainer.innerHTML = fieldFacetTemplate(this);
+        facetContainer.innerHTML = this.template(this);
     }
 
+    FieldFacet.prototype.template = Handlebars.compile($('#fieldFacetTemplate').html())
     FieldFacet.prototype.getQueryParam = function () {
         var result = [];
         for (var value in this.values)
@@ -846,6 +314,13 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             return this.id + '=' + result.join(',');
         else
             return null;
+    };
+
+    FieldFacet.prototype.setSelected = function (queryParams) {
+        var values = queryParams[this.id];
+        if (values)
+            for (var i in values)
+                $('#' + this.id + ' #' + values[i]).prop('checked', true);
     };
 
     FieldFacet.prototype.setResult = function (data) {
@@ -858,6 +333,14 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             } else
                 label.addClass('disabled');
         }
+    };
+
+    var buildQuery = function () {
+        var keys = Object.keys(queryParams);
+        var pairs = keys.map(function (a) {
+            return a + '=' + queryParams[a].join(',')
+        });
+        return '?' + pairs.join('&');
     };
 
     var getQueryParams = function () {
@@ -874,41 +357,66 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         return result;
     };
 
-    var buildQuery = function () {
-        var keys = Object.keys(queryParams);
-        var pairs = keys.map(function (a) {
-            return a + '=' + queryParams[a].join(',')
-        });
-        return '?' + pairs.join('&');
-    };
-
-    var queryParams = getQueryParams();
-
-    function SortType(data) {
-        $.extend(this, data);
-        if (queryParams.sortType)
-            this.selected = this.name == queryParams.sortType[0];
-        this.asc = false;
-        if (queryParams.sortOrder)
-            this.asc = "ASC" == queryParams.sortOrder[0];
-        this.html = $(sortTypeTemplate(this));
-        this.html.click($.proxy(this.select, this));
-        sortTypesContainer.append(this.html);
+    function SortFacet() {
+        this.sort = this.defaultSort;
+        this.order = this.defaultOrder;
     }
+    SortFacet.prototype.defaultSort = '${defaultSort.name()}';
+    SortFacet.prototype.defaultOrder = '${defaultOrder.name()}';
 
-    SortType.prototype.select = function () {
-        if (!this.selected)
-            queryParams.sortType = [this.name];
-        this.asc = this.selected && !this.asc;
-        queryParams.sortOrder = [this.asc ? 'ASC' : 'DESC'];
-        window.location.search = buildQuery();
+    SortFacet.prototype.select = function (event) {
+        var newSort = event.target.id;
+        if (this.sort == newSort)
+            this.order = (this.order == 'ASC')? 'DESC' : 'ASC';
+        else {
+            $('.b-replays__sort #' + this.sort).removeClass('b-link_active');
+            this.sort = newSort;
+        }
+        this.setSelected({});
+        onFacetsChanged();
     };
 
-    sortTypes.forEach(function (a) {
-        new SortType(a);
-    });
+    SortFacet.prototype.getQueryParam = function () {
+        var result = [];
+        if (this.sort != this.defaultSort)
+            result.push('sortType=' + this.sort);
+        if (this.order != this.defaultOrder)
+            result.push('sortOrder=' + this.order);
+        return result.join("&");
+    };
+
+    SortFacet.prototype.setSelected = function (queryParams) {
+        if (queryParams.sortType)
+            this.sort = queryParams.sortType;
+        if (queryParams.sortOrder)
+            this.order = queryParams.sortOrder;
+        var ref = $('.b-replays__sort #' + this.sort);
+        ref.addClass('b-link_active');
+        var arrow = (this.order == 'DESC') ? '↑' : '↓';
+        ref.find('.b-sort__dir').html(arrow);
+    };
+
+    SortFacet.prototype.setResult = function () {
+        //doNothing
+    };
+
+    for (var facetKey in facetsData) {
+        var facetData = facetsData[facetKey];
+        var facet;
+        switch (facetData.type) {
+            case 'field':
+                facet = new FieldFacet(facetKey, facetData);
+                break;
+        }
+        facets.push(facet);
+    }
+    var sortFacet = new SortFacet();
+    facets.push(sortFacet);
 
     applyData(battles);
+    var queryParams = getQueryParams();
+    for (var i in facets)
+        facets[i].setSelected(queryParams);
 
 </script>
 </html>

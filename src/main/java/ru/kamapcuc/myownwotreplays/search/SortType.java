@@ -1,14 +1,9 @@
 package ru.kamapcuc.myownwotreplays.search;
 
-import org.elasticsearch.common.xcontent.ToXContent;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 
-import java.io.IOException;
-
-public enum SortType implements ToXContent {
+public enum SortType {
 
     DATE("battleDate", "по дате"),
     DMG("damageDealt", "по урону"),
@@ -19,8 +14,8 @@ public enum SortType implements ToXContent {
     private final String field;
     private final String description;
 
-    private final static SortType DEFAULT_SORT = SortType.DATE;
-    private final static SortOrder DEFAULT_ORDER = SortOrder.DESC;
+    public final static SortType DEFAULT_SORT = SortType.DATE;
+    public final static SortOrder DEFAULT_ORDER = SortOrder.DESC;
 
     private SortType(String field, String name) {
         this.field = field;
@@ -31,6 +26,7 @@ public enum SortType implements ToXContent {
         return new FieldSortBuilder(field);
     }
 
+    @SuppressWarnings("unused")
     public String getDescription() {
         return description;
     }
@@ -47,29 +43,6 @@ public enum SortType implements ToXContent {
             return SortOrder.valueOf(value);
         else
             return DEFAULT_ORDER;
-    }
-
-    @Override
-    public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
-        builder.startObject();
-        builder.field("name", name());
-        builder.field("description", getDescription());
-        builder.endObject();
-        return builder;
-    }
-
-    public static String stringify() {
-        try {
-            XContentBuilder builder = XContentFactory.jsonBuilder();
-            builder.startArray();
-            for (SortType sortType : values())
-                sortType.toXContent(builder, ToXContent.EMPTY_PARAMS);
-            builder.endArray();
-            builder.close();
-            return builder.string();
-        } catch (IOException e) {
-            return null;
-        }
     }
 
 }

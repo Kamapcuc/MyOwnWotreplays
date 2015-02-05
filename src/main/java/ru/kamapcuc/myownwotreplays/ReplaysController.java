@@ -27,7 +27,9 @@ public class ReplaysController {
     public String search(HttpServletRequest httpRequest, ModelMap model) {
         model.put("battlesData", searchInternal(httpRequest));
         model.put("indexer", indexer);
-        model.put("sortTypes", SortType.stringify());
+        model.put("sortTypes", SortType.values());
+        model.put("defaultSort", SortType.DEFAULT_SORT);
+        model.put("defaultOrder", SortType.DEFAULT_ORDER);
         model.put("facetsData", getFacetsData());
         return "mainPage";
     }

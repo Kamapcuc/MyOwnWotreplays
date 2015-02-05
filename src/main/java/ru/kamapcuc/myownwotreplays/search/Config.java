@@ -7,7 +7,7 @@ import ru.kamapcuc.myownwotreplays.search.facets.TankLevelFacetBuilder;
 public class Config {
 
     public volatile static String lang = "ru";
-    public volatile static String defaultLang = "ru";
+    public volatile static String defaultLang = "en";
 
     public final static int PAGINATION_SIZE = 9;
 
