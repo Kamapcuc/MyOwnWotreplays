@@ -18,9 +18,6 @@
 
     <div class="main-menu clearfix" style="margin-bottom: 30px;">
     </div>
-    <!--   *********************   -->
-    <!--          CONTENT          -->
-    <!--   *********************   -->
 
     <div class="b-overlay" id="overlay-container" style="display:none"></div>
 
@@ -254,7 +251,7 @@
                                                 src="/resources/img/maps/thumb/34_redshire.png"
                                                 alt="Редшир"></div>
                                         <img class="result_map_tank"
-                                             src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/japan-Chi_To.png"
+                                             src="http://worldoftanks.com/static/2.18.1/encyclopedia/tankopedia/vehicle/germany-g108_pzkpfwii_ausfd.png"
                                              alt="Type 4 Chi-To">
 
                                         <div class="result_map_user">
