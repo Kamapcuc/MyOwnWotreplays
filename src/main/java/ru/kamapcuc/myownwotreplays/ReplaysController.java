@@ -31,7 +31,12 @@ public class ReplaysController {
         model.put("defaultSort", SortType.DEFAULT_SORT);
         model.put("defaultOrder", SortType.DEFAULT_ORDER);
         model.put("facetsData", getFacetsData());
-        return "mainPage";
+        return "search";
+    }
+
+    @RequestMapping({"/view.do"})
+    public String view(HttpServletRequest httpRequest, ModelMap model) {
+        return "view";
     }
 
     @ResponseBody

@@ -7,10 +7,13 @@
     <meta charset="UTF-8">
     <script src="resources/js/handlebars-v2.0.0.js"></script>
     <script src="resources/js/jquery-2.1.3.min.js"></script>
-    <script src="resources/js/wr.js"></script>
+    <script src="resources/js/search.js"></script>
     <link rel="icon" type="image/png" href="/resources/img/favicon.ico"/>
 </head>
 <body>
+<header>
+
+</header>
 <div style="height: 23px; display: none">
 ${indexer.getCompleted()}/${indexer.getTotal()}
 </div>
