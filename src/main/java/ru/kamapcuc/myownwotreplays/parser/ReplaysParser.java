@@ -1,4 +1,4 @@
-package ru.kamapcuc.myownwotreplays;
+package ru.kamapcuc.myownwotreplays.parser;
 
 import org.elasticsearch.common.base.Joiner;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;

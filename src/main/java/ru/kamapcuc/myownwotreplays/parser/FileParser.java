@@ -1,6 +1,7 @@
-package ru.kamapcuc.myownwotreplays;
+package ru.kamapcuc.myownwotreplays.parser;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import ru.kamapcuc.myownwotreplays.parser.ReplaysParser;
 
 import java.io.BufferedReader;
 import java.io.File;

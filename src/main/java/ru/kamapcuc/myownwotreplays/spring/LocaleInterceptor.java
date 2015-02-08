@@ -1,4 +1,4 @@
-package ru.kamapcuc.myownwotreplays;
+package ru.kamapcuc.myownwotreplays.spring;
 
 import org.elasticsearch.common.util.LocaleUtils;
 import org.springframework.context.i18n.LocaleContextHolder;

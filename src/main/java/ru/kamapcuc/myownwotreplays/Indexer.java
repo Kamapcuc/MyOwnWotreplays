@@ -2,6 +2,7 @@ package ru.kamapcuc.myownwotreplays;
 
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
+import ru.kamapcuc.myownwotreplays.parser.FileParser;
 import ru.kamapcuc.myownwotreplays.search.Config;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
