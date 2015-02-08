@@ -14,7 +14,8 @@ public class TypesMeta {
             Config.TANK_TYPE_NAME,
             Config.MAP_TYPE_NAME,
             Config.CLASS_TYPE_NAME,
-            Config.NATION_TYPE_NAME
+            Config.NATION_TYPE_NAME,
+            Config.LANGUAGE_TYPE_NAME
     };
 
     public final static HashMap<String, DocMap> REPOSITORIES = new HashMap<>();

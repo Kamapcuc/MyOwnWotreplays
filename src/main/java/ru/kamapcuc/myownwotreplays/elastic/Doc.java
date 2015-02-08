@@ -3,26 +3,16 @@ package ru.kamapcuc.myownwotreplays.elastic;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.search.SearchHit;
+import org.springframework.context.i18n.LocaleContextHolder;
 import ru.kamapcuc.myownwotreplays.search.Config;
-import ru.kamapcuc.stuff.Utils;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import static ru.kamapcuc.myownwotreplays.search.TypesMeta.REPOSITORIES;
 
 public class Doc implements ToXContent {
-
-    private final static Set<String> localizedFields = new HashSet<>();
-
-    static {
-        localizedFields.add("description");
-        localizedFields.add("name");
-        localizedFields.add("shortName");
-    }
 
     private final String id;
     private final Map<String, Object> source;
@@ -44,21 +34,33 @@ public class Doc implements ToXContent {
         return source.get(paramName);
     }
 
+    private Object getLocalized(String paramName) {
+        Map langMap = (Map) source.get(paramName);
+        Object result = langMap.get(LocaleContextHolder.getLocale().getLanguage());
+        if (result != null)
+            return result;
+        else
+            return langMap.get(Config.DEFAULT_LOCALE.getLanguage());
+    }
+
+    private Object retFromRepository(String paramName) {
+        Map<String, Doc> repository = REPOSITORIES.get(paramName);
+        String docId = (String) source.get(paramName);
+        Doc doc = repository.get(docId);
+        if (doc == null) {
+            System.out.println(String.format("Missing doc with \"%s\" id in \"%s\" repository", docId, paramName));
+            return new Doc(docId, new HashMap<>());
+        } else
+            return doc;
+    }
+
     public Object get(String paramName) {
-        if (localizedFields.contains(paramName)) {
-            Map langMap = (Map) source.get(paramName);
-            return Utils.coalesce(langMap.get(Config.lang), langMap.get(Config.defaultLang));
+        if (paramName.endsWith("_i18n")) {
+            return getLocalized(paramName);
         } else {
-            if (REPOSITORIES.containsKey(paramName)) {
-                Map<String, Doc> repository = REPOSITORIES.get(paramName);
-                String docId = (String) source.get(paramName);
-                Doc doc = repository.get(docId);
-                if (doc == null) {
-                    System.out.println(String.format("Missing doc with \"%s\" id in \"%s\" repository", docId, paramName));
-                    return new Doc(docId, new HashMap<>());
-                } else
-                    return doc;
-            } else
+            if (REPOSITORIES.containsKey(paramName))
+                return retFromRepository(paramName);
+            else
                 return source.get(paramName);
         }
     }

@@ -4,10 +4,11 @@ import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
 import ru.kamapcuc.myownwotreplays.search.facets.RepositoryFacetBuilder;
 import ru.kamapcuc.myownwotreplays.search.facets.TankLevelFacetBuilder;
 
+import java.util.Locale;
+
 public class Config {
 
-    public volatile static String lang = "ru";
-    public volatile static String defaultLang = "en";
+    public final static Locale DEFAULT_LOCALE = Locale.ENGLISH;
 
     public final static int PAGINATION_SIZE = 9;
 
@@ -19,6 +20,7 @@ public class Config {
     public final static String MAP_TYPE_NAME = "map";
     public final static String CLASS_TYPE_NAME = "class";
     public final static String NATION_TYPE_NAME = "nation";
+    public final static String LANGUAGE_TYPE_NAME = "language";
 
     public static String getReplaysPath() {
         return System.getProperty("wotPath") + "replays/";

@@ -4361,9 +4361,10 @@ i.i-48_wotreplays {
 }
 
 .tank-filter {
-    padding: 20px 10px 10px 20px;
+    padding: 20px 5px 10px 15px;
     width: 570px;
-    float: left
+    float: left;
+    display: inline-flex;
 }
 
 .tank-filter .icon-info {

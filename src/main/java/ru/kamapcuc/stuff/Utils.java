@@ -7,13 +7,6 @@ import java.util.stream.Stream;
 
 public class Utils {
 
-    public static Object coalesce(Object... items) {
-        for (Object i : items)
-            if (i != null)
-                return i;
-        return null;
-    }
-
     public static Map<String, String> castParams(Map params) {
         Map<String, String> result = new HashMap<>();
         Stream<?> entrySet = params.entrySet().stream();

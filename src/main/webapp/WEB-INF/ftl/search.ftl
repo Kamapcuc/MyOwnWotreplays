@@ -142,7 +142,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             <div class="r-info">
                 <h3>
                     <a href="view.do?id={{_id}}">
-                        {{tank.shortName}}, {{map.name}}, Стандартный бой
+                        {{tank.shortName_i18n}}, {{map.name_i18n}}, Стандартный бой
                     </a>
                 </h3>
                 {{#if haveResults}}
@@ -162,7 +162,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                 </ul>
                 {{/if}}
                 <ul class="r-info_ci">
-                    <li><b>Танк:</b> {{tank.shortName}}</li>
+                    <li><b>Танк:</b> {{tank.shortName_i18n}}</li>
                     <li><b>Играл:</b> {{playerName}}</li>
                     <li><b>Версия:</b> {{version}}</li>
                     <li><b>Дата:</b> {{battleDate}}</li>
@@ -181,7 +181,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     <a href="view.do?id={{_id}}">
         <div class="mr_replay">
             <div class="mrr_head" style="background-image: url(/resources/img/maps/thumb/{{map._id}}.png)"
-                 title="{{map.name}}">
+                 title="{{map.name_i18n}}">
                 <div class="mrr_tank">
                     <div style="background-image: url({{tank.image.big}})"></div>
                 </div>
@@ -199,7 +199,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                 </div>
             </div>
             <div class="mrr_info">
-                <div class="mrr_title">{{playerName}} на {{tank.shortName}}</div>
+                <div class="mrr_title">{{playerName}} на {{tank.shortName_i18n}}</div>
                 <div style="text-align: center;">
                     <div class="mrr_damage">
                         <span>{{damageDealt}}</span>
@@ -240,8 +240,8 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         {{#each values}}
         <li>
             <input type="checkbox" class="cbx" id="{{@key}}" onchange="onFacetsChanged(event)">
-            <label for="{{@key}}"><span></span>{{this}}
-                <small></small>
+            <label for="{{@key}}">
+                <span></span>{{this}}&nbsp;<small></small>
             </label>
         </li>
         {{/each}}
@@ -251,7 +251,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 <script>
     var battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
     var battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
-    var battlesTemplate = battlesTableTemplate;
+    var battlesTemplate = battlesTileTemplate;
 
     var battlesContainer = $('#battlesContainer');
 

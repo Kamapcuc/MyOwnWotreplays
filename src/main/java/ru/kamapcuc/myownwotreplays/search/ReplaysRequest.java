@@ -35,16 +35,10 @@ public class ReplaysRequest {
     }
 
     public SearchResult execute() {
-        parseLang();
         parsePagination();
         parseSort();
         parseFacets();
         return client.search(searchRequest);
-    }
-
-    private void parseLang() {
-        if (params.containsKey("lang"))
-            Config.lang = params.get("lang");
     }
 
     private void parsePagination() {
