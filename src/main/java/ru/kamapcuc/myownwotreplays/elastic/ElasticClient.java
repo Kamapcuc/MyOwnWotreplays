@@ -11,6 +11,7 @@ import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import ru.kamapcuc.myownwotreplays.search.Config;
 
 public class ElasticClient {
@@ -34,14 +35,12 @@ public class ElasticClient {
 
     public SearchResult search(SearchRequestBuilder searchRequest) {
         SearchResponse response = searchRequest.execute().actionGet();
-
+        SearchHits hits = response.getHits();
         DocMap result = new DocMap();
-        for (SearchHit hit : response.getHits().getHits())
+        for (SearchHit hit : hits)
             result.put(hit.getId(), new Doc(hit));
-
         FacetResult facets = new FacetResult(response.getAggregations());
-
-        return new SearchResult(result, facets);
+        return new SearchResult(hits.totalHits(), result, facets);
     }
 
     @SuppressWarnings("unused")

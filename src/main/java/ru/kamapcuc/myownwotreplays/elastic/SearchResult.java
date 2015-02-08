@@ -8,10 +8,12 @@ import java.io.IOException;
 
 public class SearchResult {
 
+    private final long total;
     private final DocMap docs;
     private final FacetResult facets;
 
-    public SearchResult(DocMap hits, FacetResult facets) {
+    public SearchResult(long total, DocMap hits, FacetResult facets) {
+        this.total = total;
         this.docs = hits;
         this.facets = facets;
     }
@@ -24,6 +26,7 @@ public class SearchResult {
         try {
             XContentBuilder builder = XContentFactory.jsonBuilder();
             builder.startObject();
+            builder.field("total", total);
             builder.field("docs");
             docs.toXContent(builder, ToXContent.EMPTY_PARAMS);
             builder.field("facets");

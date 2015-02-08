@@ -3,20 +3,27 @@ package ru.kamapcuc.myownwotreplays.spring;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kamapcuc.myownwotreplays.Indexer;
+import ru.kamapcuc.myownwotreplays.elastic.Doc;
+import ru.kamapcuc.myownwotreplays.elastic.DocMap;
 import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.search.Config;
 import ru.kamapcuc.myownwotreplays.search.ReplaysRequest;
 import ru.kamapcuc.myownwotreplays.search.SortType;
+import ru.kamapcuc.myownwotreplays.search.TypesMeta;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
 import ru.kamapcuc.stuff.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -32,6 +39,8 @@ public class ReplaysController {
         model.put("defaultSort", SortType.DEFAULT_SORT);
         model.put("defaultOrder", SortType.DEFAULT_ORDER);
         model.put("facetsData", getFacetsData());
+        model.put("language", LocaleContextHolder.getLocale().getLanguage());
+        model.put("languages", TypesMeta.REPOSITORIES.get(Config.LANGUAGE_TYPE_NAME).values());
         return "search";
     }
 

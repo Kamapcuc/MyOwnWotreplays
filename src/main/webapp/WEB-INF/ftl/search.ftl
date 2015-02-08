@@ -11,9 +11,21 @@
     <link rel="icon" type="image/png" href="/resources/img/favicon.ico"/>
 </head>
 <body>
-<header>
 
+<header>
+    <div class="header-menu clearfix">
+        <ul>
+        <#list languages as lang>
+            <li>
+                <a href="/search.do?lang=${lang.id}">
+                    <img src="/resources/img/flags/${lang.flag}"/>${lang.name}
+                </a>
+            </li>
+        </#list>
+        </ul>
+    </div>
 </header>
+
 <div style="height: 23px; display: none">
 ${indexer.getCompleted()}/${indexer.getTotal()}
 </div>
@@ -106,7 +118,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                     <li class="b-list__item">
                         <a class="b-link" onclick="sortFacet.select(event);">
                             <div class="b-link__text" id="${sortType.name()}">
-                                ${sortType.getDescription()}
+                            ${sortType.getDescription()}
                                 <ins class="b-sort__dir"></ins>
                             </div>
                         </a>
@@ -135,13 +147,13 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     <ul class="r_list initial">
         {{#each docs}}
         <li class="clearfix">
-            <a class="r-map_85" href="view.do?id={{_id}}"
+            <a class="r-map_85" href="view.do?id={{_id}}&lang=${language}"
                title="{{map.name}}" style="background-image: url('/resources/img/maps/plan/{{map._id}}.jpg');">
             </a>
 
             <div class="r-info">
                 <h3>
-                    <a href="view.do?id={{_id}}">
+                    <a href="view.do?id={{_id}}&lang=${language}">
                         {{tank.shortName_i18n}}, {{map.name_i18n}}, Стандартный бой
                     </a>
                 </h3>
@@ -241,7 +253,8 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         <li>
             <input type="checkbox" class="cbx" id="{{@key}}" onchange="onFacetsChanged(event)">
             <label for="{{@key}}">
-                <span></span>{{this}}&nbsp;<small></small>
+                <span></span>{{this}}&nbsp;
+                <small></small>
             </label>
         </li>
         {{/each}}
@@ -251,7 +264,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 <script>
     var battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
     var battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
-    var battlesTemplate = battlesTileTemplate;
+    var battlesTemplate = battlesTableTemplate;
 
     var battlesContainer = $('#battlesContainer');
 
@@ -263,14 +276,36 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 
     var facets = [];
 
-    var onFacetsChanged = function () {
+    var buildQueryUrl = function () {
         var queryParams = [];
         for (var i in facets) {
             var queryParam = facets[i].getQueryParam();
             if (queryParam)
                 queryParams.push(queryParam);
         }
-        getData(queryParams.join('&'));
+        queryParams.push('lang=${language}');
+        return queryParams.join('&');
+    };
+
+    var onFacetsChanged = function () {
+        getData(buildQueryUrl());
+    };
+
+    var parseUrlParams = function () {
+        var result = {};
+        var search = window.location.search;
+        if (search) {
+            var query = window.location.search.substring(1);
+            var vars = query.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                var variable = vars[i];
+                if (variable) {
+                    var pair = vars[i].split('=');
+                    result[pair[0]] = pair[1].split(',');
+                }
+            }
+        }
+        return result;
     };
 
     var getData = function (query) {
@@ -338,39 +373,18 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         }
     };
 
-    var buildQuery = function () {
-        var keys = Object.keys(queryParams);
-        var pairs = keys.map(function (a) {
-            return a + '=' + queryParams[a].join(',')
-        });
-        return '?' + pairs.join('&');
-    };
-
-    var getQueryParams = function () {
-        var result = {};
-        var search = window.location.search;
-        if (search) {
-            var query = window.location.search.substring(1);
-            var vars = query.split('&');
-            for (var i = 0; i < vars.length; i++) {
-                var pair = vars[i].split('=');
-                result[pair[0]] = pair[1].split(',');
-            }
-        }
-        return result;
-    };
-
     function SortFacet() {
         this.sort = this.defaultSort;
         this.order = this.defaultOrder;
     }
+
     SortFacet.prototype.defaultSort = '${defaultSort.name()}';
     SortFacet.prototype.defaultOrder = '${defaultOrder.name()}';
 
     SortFacet.prototype.select = function (event) {
         var newSort = event.target.id;
         if (this.sort == newSort)
-            this.order = (this.order == 'ASC')? 'DESC' : 'ASC';
+            this.order = (this.order == 'ASC') ? 'DESC' : 'ASC';
         else {
             $('.b-replays__sort #' + this.sort).removeClass('b-link_active');
             this.sort = newSort;
@@ -417,7 +431,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     facets.push(sortFacet);
 
     applyData(battles);
-    var queryParams = getQueryParams();
+    var queryParams = parseUrlParams();
     for (var i in facets)
         facets[i].setSelected(queryParams);
 
