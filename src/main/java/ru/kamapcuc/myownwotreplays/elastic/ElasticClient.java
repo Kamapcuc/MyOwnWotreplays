@@ -1,6 +1,8 @@
 package ru.kamapcuc.myownwotreplays.elastic;
 
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
+import org.elasticsearch.action.get.GetRequestBuilder;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
@@ -41,6 +43,15 @@ public class ElasticClient {
             result.put(hit.getId(), new Doc(hit));
         FacetResult facets = new FacetResult(response.getAggregations());
         return new SearchResult(hits.totalHits(), result, facets);
+    }
+
+    public Doc get(String index, String type, String id) {
+        GetRequestBuilder getRequest = client.prepareGet();
+        getRequest.setIndex(index);
+        getRequest.setType(type);
+        getRequest.setId(id);
+        GetResponse getResponse = getRequest.execute().actionGet();
+        return new Doc(getResponse);
     }
 
     @SuppressWarnings("unused")

@@ -22,6 +22,7 @@ public class ReplaysRequest {
     private final Map<String, String> params;
     private final SearchRequestBuilder searchRequest;
 
+
     public ReplaysRequest(Map<String, String> params) {
         this.params = params;
         this.searchRequest = createSearchRequest();
@@ -31,6 +32,7 @@ public class ReplaysRequest {
         SearchRequestBuilder result = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
         result.setTypes(Config.BATTLE_TYPE_NAME);
         result.setQuery(new MatchQueryBuilder("haveResults", true));
+        result.setFetchSource(null, new String[]{"allies", "enemies"});
         return result;
     }
 

@@ -28,12 +28,8 @@
             <div class="b-replay__buttons">
                 <a href="http://wotreplays.ru/site/download/4563201" class="btn_l-orange">Запустить</a>
             </div>
-            <div class="b-replay__h1">Сново Чи то рвет рандом!!</div>
         </div>
 
-        <div class="replay-action collapsed"></div>
-
-        <!-- b-replay > -->
         <div class="b-replay b-replay_detail">
 
 
@@ -245,23 +241,20 @@
                                     </div>
                                 </div>
                                 <div class="wtst_half wtst_half__left">
-                                    <div class="wtst-title__panel wtst-title__gradient">Редшир – Стандартный бой</div>
+                                    <div class="wtst-title__panel wtst-title__gradient">${battle.map.name_i18n} – Стандартный бой</div>
                                     <div class="result_map">
-                                        <div class="result_map_frame"><img
-                                                src="/resources/img/maps/thumb/34_redshire.png"
-                                                alt="Редшир"></div>
-                                        <img class="result_map_tank"
-                                             src="http://worldoftanks.com/static/2.18.1/encyclopedia/tankopedia/vehicle/germany-g108_pzkpfwii_ausfd.png"
-                                             alt="Type 4 Chi-To">
+                                        <div class="result_map_frame">
+                                            <img src="/resources/img/maps/thumb/${battle.map.id}.png" alt="${battle.map.name_i18n}">
+                                        </div>
+                                        <img class="result_map_tank" alt="${battle.tank.name_i18n}"
+                                             src="/resources/img/tanks/big/${battle.tank.image}">
 
                                         <div class="result_map_user">
-                                            <div class="result_map_user_name" title="_uRKa_GuN_ [TRIKS]">_uRKa_GuN_
+                                            <div class="result_map_user_name" title="${battle.playerName} [TRIKS]">${battle.playerName}
                                                 [TRIKS]
                                             </div>
-                                            <time datetime="2012-11-05T9:49" class="result_map_user_timestamp"
-                                                  title="03.02.2015 07:28">03.02.2015 07:28
-                                            </time>
-                                            <div class="result_map_tank_model" title="Type 4 Chi-To">Type 4 Chi-To</div>
+                                            <time class="result_map_user_timestamp">${battle.date}</time>
+                                            <div class="result_map_tank_model" title="${battle.tank.name_i18n}">${battle.tank.name_i18n}</div>
                                             <div class="result_map_survive">
                                                 <!--Выжил-->
                                             </div>
@@ -1458,16 +1451,12 @@
             <!-- b-tabs < -->
             <ul class="b-replay__info b-replay__added-info clearfix b-list">
                 <li class="b-list__item">
-                    <span class="b-label">Отправил:</span>
-                    <span class="b-replay__sender"><a href="http://wotreplays.ru/uploader/_uRKa_GuN_/id/272597">_uRKa_GuN_</a></span>
-                </li>
-                <li class="b-list__item">
                     <span class="b-label">Серв. вр. игры:</span>
                     2015-02-03 в 07:28
                 </li>
                 <li class="b-list__item">
                     <span class="b-label">Версия:</span>
-                    0.9.5.0
+                    ${battle.version}
                 </li>
                 <li class="b-list__item">
                     <span class="b-label">Тип боя:</span> Случайный бой
@@ -1475,9 +1464,9 @@
                 <li class="b-list__item b-replay__img-wrap">
                     <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/redshire.jpg" alt=""
                          class="b-replay__img">
-                <span class="b-replay__img-descr">
-                    <span class="b-label">Респ: </span>
-                    I                </span>
+                    <span class="b-replay__img-descr">
+                        <span class="b-label">Респ: </span>${battle.respawn}
+                    </span>
                 </li>
             </ul>
         </div>

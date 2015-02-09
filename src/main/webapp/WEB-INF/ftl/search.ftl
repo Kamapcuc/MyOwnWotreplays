@@ -177,7 +177,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                     <li><b>Танк:</b> {{tank.shortName_i18n}}</li>
                     <li><b>Играл:</b> {{playerName}}</li>
                     <li><b>Версия:</b> {{version}}</li>
-                    <li><b>Дата:</b> {{battleDate}}</li>
+                    <li><b>Дата:</b> {{date}}</li>
                 </ul>
             </div>
             <div class="r-act">

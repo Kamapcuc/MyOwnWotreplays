@@ -14,6 +14,7 @@ public class ReplaysParser {
     private long version = 0;
     private final Map startInfo;
     private final List endInfo;
+    private Map<String, Map<String, Object>> players;
     private Map<String, Object> document = new HashMap<>();
     private final static Map<String, Doc> tanksData = TypesMeta.REPOSITORIES.get(Config.TANK_TYPE_NAME);
 
@@ -39,23 +40,60 @@ public class ReplaysParser {
     }
 
     public Map<String, Object> buildDoc() {
-        parseStartInfo(startInfo);
+        parseStartInfo();
         if (endInfo != null) {
             document.put("haveResults", true);
-            parseEndInfo(endInfo);
+            parseEndInfo();
         } else
             document.put("haveResults", false);
         return document;
     }
 
-    private void parseStartInfo(Map startInfo) {
+    private static String getTankId(Object obj) {
+        String str = (String) obj;
+        return str.substring(str.indexOf(':') + 1);
+    }
+
+    private void parseTeams() {
+        List<Map<String, Object>> team1 = new ArrayList<>();
+        List<Map<String, Object>> team2 = new ArrayList<>();
+        Integer playerTeam = 1;
+        Object playerName = document.get("playerName");
+        for (Map<String, Object> currentPlayerData : players.values()) {
+            Map<String, Object> currentPlayer = new HashMap<>();
+            currentPlayer.put("isAlive", currentPlayerData.get("isAlive"));
+            currentPlayer.put("name", currentPlayerData.get("name"));
+            currentPlayer.put("clanAbbrev", currentPlayerData.get("clanAbbrev"));
+            currentPlayer.put("isTeamKiller", currentPlayerData.get("isTeamKiller"));
+            currentPlayer.put("tank", getTankId(currentPlayerData.get("vehicleType")));
+            Integer currentPlayerTeam = (Integer) currentPlayerData.get("team");
+            if (currentPlayerTeam.equals(1)) {
+                team1.add(currentPlayer);
+            } else
+                team2.add(currentPlayer);
+            if (playerName.equals(currentPlayer.get("name")))
+                playerTeam = currentPlayerTeam;
+        }
+        document.put("respawn", playerTeam);
+        if (playerTeam.equals(1)) {
+            document.put("allies", team1);
+            document.put("enemies", team2);
+        } else {
+            document.put("allies", team2);
+            document.put("enemies", team1);
+        }
+    }
+
+    private void parseStartInfo() {
         String battleDate = startInfo.get("dateTime").toString();
-        document.put("battleDate", parseDate(battleDate));
+        document.put("date", parseDate(battleDate));
         document.put("playerName", startInfo.get("playerName"));
         document.put("map", startInfo.get("mapName"));
         String tankInfo = (String) startInfo.get("playerVehicle");
         String tankId = tankInfo.substring(tankInfo.indexOf('-') + 1);
+        players = (Map) startInfo.get("vehicles");
         addTankSearchInfo(tankId);
+        parseTeams();
     }
 
     private void addTankSearchInfo(String tankId) {
@@ -69,8 +107,7 @@ public class ReplaysParser {
             System.out.println(String.format("Don't found tank with id=\"%s\"", tankId));
     }
 
-
-    private void parseEndInfo(List endInfo) {
+    private void parseEndInfo() {
         Map personalResults = (Map) endInfo.get(0);
         if (version >= 9_00_00) {
             Map personal = (Map) personalResults.get("personal");
@@ -78,9 +115,6 @@ public class ReplaysParser {
         } else
             parsePersonal(personalResults);
     }
-
-    public final static Set<Long> wrong1 = new HashSet<>();
-    public final static Set<Long> wrong2 = new HashSet<>();
 
     private void parsePersonal(Map personalResults) {
         Integer credits = (Integer) personalResults.get("credits");

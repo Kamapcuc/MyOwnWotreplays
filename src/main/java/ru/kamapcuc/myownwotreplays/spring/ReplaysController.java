@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kamapcuc.myownwotreplays.Indexer;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.elastic.DocMap;
+import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.search.Config;
 import ru.kamapcuc.myownwotreplays.search.ReplaysRequest;
@@ -21,15 +21,13 @@ import ru.kamapcuc.stuff.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 @Controller
 public class ReplaysController {
 
     private Indexer indexer = Indexer.getInstance();
+    private final static ElasticClient client = ElasticClient.getInstance();
 
     @RequestMapping({"/", "/search.do"})
     public String search(HttpServletRequest httpRequest, ModelMap model) {
@@ -46,6 +44,11 @@ public class ReplaysController {
 
     @RequestMapping({"/view.do"})
     public String view(HttpServletRequest httpRequest, ModelMap model) {
+        String id = httpRequest.getParameter("id");
+        if (id != null) {
+            Doc battle = client.get(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME, id);
+            model.put("battle", battle);
+        }
         return "view";
     }
 

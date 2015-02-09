@@ -5,7 +5,7 @@ import org.elasticsearch.search.sort.SortOrder;
 
 public enum SortType {
 
-    DATE("battleDate", "по дате"),
+    DATE("date", "по дате"),
     DMG("damageDealt", "по урону"),
     XP("originalXP", "по опыту"),
     CASH("originalCredits", "по кредитам"),
