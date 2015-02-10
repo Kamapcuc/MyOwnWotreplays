@@ -17,10 +17,11 @@ import ru.kamapcuc.myownwotreplays.search.ReplaysRequest;
 import ru.kamapcuc.myownwotreplays.search.SortType;
 import ru.kamapcuc.myownwotreplays.search.TypesMeta;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
-import ru.kamapcuc.stuff.Utils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -59,8 +60,7 @@ public class ReplaysController {
     }
 
     private String searchInternal(HttpServletRequest httpRequest) {
-        Map<String, String> params = Utils.castParams(httpRequest.getParameterMap());
-        ReplaysRequest requestBuilder = new ReplaysRequest(params);
+        ReplaysRequest requestBuilder = new ReplaysRequest(castParams(httpRequest));
         SearchResult searchResult = requestBuilder.execute();
         return searchResult.stringify();
     }
@@ -76,6 +76,15 @@ public class ReplaysController {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    public static Map<String, String> castParams(HttpServletRequest httpRequest) {
+        Map<String, String> result = new HashMap<>();
+        for (Object keyO : Collections.list(httpRequest.getParameterNames())) {
+            String key = (String) keyO;
+            result.put(key, httpRequest.getParameter(key));
+        }
+        return result;
     }
 
 }
