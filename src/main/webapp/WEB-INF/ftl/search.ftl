@@ -116,7 +116,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                 <ul class="b-sort__list b-list">
                 <#list sortTypes as sortType>
                     <li class="b-list__item">
-                        <a class="b-link" onclick="sortFacet.select(event);">
+                        <a class="b-link" onclick="sortFacet.onClick(event);">
                             <div class="b-link__text" id="${sortType.name()}">
                             ${sortType.getDescription()}
                                 <ins class="b-sort__dir"></ins>
@@ -291,7 +291,6 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     };
 
     window.addEventListener('popstate', function(event) {
-        console.log(event);
         applyData(history.state);
         renewCheckboxes();
     });
@@ -392,15 +391,15 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     SortFacet.prototype.defaultSort = '${defaultSort.name()}';
     SortFacet.prototype.defaultOrder = '${defaultOrder.name()}';
 
-    SortFacet.prototype.select = function (event) {
-        var newSort = event.target.id;
-        if (this.sort == newSort)
-            this.order = (this.order == 'ASC') ? 'DESC' : 'ASC';
-        else {
-            $('.b-replays__sort #' + this.sort).removeClass('b-link_active');
-            this.sort = newSort;
-        }
-        this.setSelected({});
+    SortFacet.prototype.onClick = function (event) {
+        var param = {
+            sortType : event.target.id,
+            sortOrder : 'DESC'
+        };
+        if (this.sort == param.sortType)
+            param.sortOrder = (this.order == 'ASC') ? 'DESC' : 'ASC';
+
+        this.setSelected(param);
         onFacetsChanged();
     };
 
@@ -414,14 +413,16 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     };
 
     SortFacet.prototype.setSelected = function (queryParams) {
-        if (queryParams.sortType)
+        if (queryParams.sortType) {
+            if (this.sort != queryParams.sortType)
+                $('.b-replays__sort #' + this.sort).removeClass('b-link_active');
             this.sort = queryParams.sortType;
+        }
         if (queryParams.sortOrder)
             this.order = queryParams.sortOrder;
         var ref = $('.b-replays__sort #' + this.sort);
         ref.addClass('b-link_active');
-        var arrow = (this.order == 'DESC') ? '↑' : '↓';
-        ref.find('.b-sort__dir').html(arrow);
+        ref.find('.b-sort__dir').html((this.order == 'DESC') ? '↑' : '↓');
     };
 
     SortFacet.prototype.setResult = function () {
