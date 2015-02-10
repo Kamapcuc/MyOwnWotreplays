@@ -205,8 +205,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                 </div>
                 <div class="medal">
                     <img src="http://worldoftanks.com/static/2.18.1/encyclopedia/tankopedia/achievement/medallafayettepool.png"
-                         alt="Медаль Пула" title="Медаль Пула" class="wtst_head_awards_item">
-
+                         alt="Медаль Пула" title="Медаль Пула" class="wtst_head_awards_item" />
                     <div class="yellow-ribbon"></div>
                 </div>
             </div>
@@ -291,6 +290,12 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         getData(buildQueryUrl());
     };
 
+    window.addEventListener('popstate', function(event) {
+        console.log(event);
+        applyData(history.state);
+        renewCheckboxes();
+    });
+
     var parseUrlParams = function () {
         var result = {};
         var search = window.location.search;
@@ -317,9 +322,9 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             cache: false,
             success: function (data) {
                 if (currentDataNumber > appliedDataNumber) {
+                    history.pushState(data, null, location.pathname + '?' + query)
                     applyData(data);
                     currentDataNumber = appliedDataNumber;
-                    history.pushState(null, 'My Own WoTReplays', '/search.do?' + query);
                 }
             }
         });
@@ -331,6 +336,12 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             var facet = facets[i];
             facet.setResult(data.facets[facet.id]);
         }
+    };
+
+    var renewCheckboxes = function() {
+        var queryParams = parseUrlParams();
+        for (var i in facets)
+            facets[i].setSelected(queryParams);
     };
 
     function FieldFacet(id, facetData) {
@@ -430,10 +441,9 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     var sortFacet = new SortFacet();
     facets.push(sortFacet);
 
+    history.replaceState(battles);
     applyData(battles);
-    var queryParams = parseUrlParams();
-    for (var i in facets)
-        facets[i].setSelected(queryParams);
+    renewCheckboxes();
 
 </script>
 </html>
