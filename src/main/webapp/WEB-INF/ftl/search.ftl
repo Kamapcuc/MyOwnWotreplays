@@ -346,9 +346,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     function FieldFacet(id, facetData) {
         this.id = id;
         $.extend(this, facetData);
-        var facetContainer = document.getElementById(id);
-        var funcName = 'on' + id + 'Change';
-        window[funcName] = this.onClick;
+        var facetContainer = document.getElementById(this.id);
         facetContainer.innerHTML = this.template(this);
     }
 
@@ -365,10 +363,9 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     };
 
     FieldFacet.prototype.setSelected = function (queryParams) {
-        var values = queryParams[this.id];
-        if (values)
-            for (var i in values)
-                $('#' + this.id + ' #' + values[i]).prop('checked', true);
+        var selectedValues = queryParams[this.id];
+        for (var value in this.values) {
+            $('#' + this.id + ' #' + values[i]).prop('checked', selectedValues.indexOf(value) != -1);
     };
 
     FieldFacet.prototype.setResult = function (data) {
