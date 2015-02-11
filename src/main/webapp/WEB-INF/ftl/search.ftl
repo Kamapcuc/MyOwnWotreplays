@@ -116,7 +116,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                 <ul class="b-sort__list b-list">
                 <#list sortTypes as sortType>
                     <li class="b-list__item">
-                        <a class="b-link" onclick="sortFacet.onClick(event);">
+                        <a class="b-link">
                             <div class="b-link__text" id="${sortType.name()}">
                             ${sortType.getDescription()}
                                 <ins class="b-sort__dir"></ins>
@@ -290,7 +290,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         getData(buildQueryUrl());
     };
 
-    window.addEventListener('popstate', function(event) {
+    window.addEventListener('popstate', function() {
         applyData(history.state);
         renewCheckboxes();
     });
@@ -321,7 +321,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             cache: false,
             success: function (data) {
                 if (currentDataNumber > appliedDataNumber) {
-                    history.pushState(data, null, location.pathname + '?' + query)
+                    history.pushState(data, null, location.pathname + '?' + query);
                     applyData(data);
                     currentDataNumber = appliedDataNumber;
                 }
@@ -335,6 +335,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             var facet = facets[i];
             facet.setResult(data.facets[facet.id]);
         }
+        battles = data;
     };
 
     var renewCheckboxes = function() {
@@ -350,7 +351,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         facetContainer.innerHTML = this.template(this);
     }
 
-    FieldFacet.prototype.template = Handlebars.compile($('#fieldFacetTemplate').html())
+    FieldFacet.prototype.template = Handlebars.compile($('#fieldFacetTemplate').html());
     FieldFacet.prototype.getQueryParam = function () {
         var result = [];
         for (var value in this.values)
@@ -363,9 +364,9 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     };
 
     FieldFacet.prototype.setSelected = function (queryParams) {
-        var selectedValues = queryParams[this.id];
-        for (var value in this.values) {
-            $('#' + this.id + ' #' + values[i]).prop('checked', selectedValues.indexOf(value) != -1);
+        var selectedValues = queryParams[this.id]? queryParams[this.id] : [];
+        for (var value in this.values)
+            $('#' + this.id + ' #' + value).prop('checked', selectedValues.indexOf(value) != -1);
     };
 
     FieldFacet.prototype.setResult = function (data) {
@@ -383,6 +384,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     function SortFacet() {
         this.sort = this.defaultSort;
         this.order = this.defaultOrder;
+        $('.b-replays__sort a').on('click', $.proxy(this.onClick, this));
     }
 
     SortFacet.prototype.defaultSort = '${defaultSort.name()}';
@@ -410,11 +412,11 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     };
 
     SortFacet.prototype.setSelected = function (queryParams) {
-        if (queryParams.sortType) {
-            if (this.sort != queryParams.sortType)
-                $('.b-replays__sort #' + this.sort).removeClass('b-link_active');
-            this.sort = queryParams.sortType;
-        }
+        if (!queryParams.sortType)
+            queryParams.sortType = this.defaultSort;
+        if (this.sort != queryParams.sortType)
+            $('.b-replays__sort #' + this.sort).removeClass('b-link_active');
+        this.sort = queryParams.sortType;
         if (queryParams.sortOrder)
             this.order = queryParams.sortOrder;
         var ref = $('.b-replays__sort #' + this.sort);
@@ -436,8 +438,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         }
         facets.push(facet);
     }
-    var sortFacet = new SortFacet();
-    facets.push(sortFacet);
+    facets.push(new SortFacet());
 
     history.replaceState(battles);
     applyData(battles);
