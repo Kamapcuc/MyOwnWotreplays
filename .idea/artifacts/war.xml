@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="exploded-war" name="war">
-    <output-path>$PROJECT_DIR$/out/artifacts/war</output-path>
-    <root id="root">
-      <element id="module-output" name="MyOwnWotreplays" />
-    </root>
-  </artifact>
-</component>
