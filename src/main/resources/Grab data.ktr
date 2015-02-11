@@ -100,10 +100,12 @@
   <hop> <from>Concat 5</from><to>Grab images</to><enabled>N</enabled> </hop>
   <hop> <from>Concat 5</from><to>Build source 5</to><enabled>Y</enabled> </hop>
   <hop> <from>Build source 5</from><to>Save medal</to><enabled>Y</enabled> </hop>
-  <hop> <from>Build source 6</from><to>Save section</to><enabled>Y</enabled> </hop>
   <hop> <from>Concat 6</from><to>Build source 6</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows 6</from><to>Concat 6</to><enabled>Y</enabled> </hop>
   <hop> <from>Parse data 3</from><to>Sort rows 6</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build source 6</from><to>Select values 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values 2</from><to>Save section</to><enabled>Y</enabled> </hop>
+  <hop> <from>My section</from><to>Save section</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Achievements</name>
@@ -280,7 +282,7 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Build source</jsScript_name>
-        <jsScript_script>var achievementObj &#x3d; &#x7b;&#xd;&#xa;	section &#x3a; sectionId,&#xd;&#xa;	order &#x3a; order,&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	description_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	condition_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	heroInfo_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	image &#x3a; image&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var descriptionArr &#x3d; description.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var conditionArr &#x3d; condition.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var heroInfoArr &#x3d; &#x28;heroInfo &#x21;&#x3d; &#x22;&#x22;&#x29;&#x3f; heroInfo.split&#x28;&#x27;&#x5e;&#x27;&#x29; &#x3a; &#x5b;&#x5d;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	achievementObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.condition_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; descriptionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.description_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; conditionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.heroInfo_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; heroInfoArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;achievementObj&#x29;&#x3b;</jsScript_script>
+        <jsScript_script>var section &#x3d; sectionId&#x3b;&#xd;&#xa;if &#x28;id.indexOf&#x28;&#x27;markOfMastery&#x27;&#x29; &#x3d;&#x3d; 0&#x29;&#xd;&#xa;	section &#x3d; &#x27;mastery&#x27;&#x3b;&#xd;&#xa;&#xd;&#xa;var achievementObj &#x3d; &#x7b;&#xd;&#xa;	section &#x3a; section,&#xd;&#xa;	order &#x3a; order,&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	description_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	condition_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	heroInfo_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	image &#x3a; image&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var descriptionArr &#x3d; description.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var conditionArr &#x3d; condition.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var heroInfoArr &#x3d; &#x28;heroInfo &#x21;&#x3d; &#x22;&#x22;&#x29;&#x3f; heroInfo.split&#x28;&#x27;&#x5e;&#x27;&#x29; &#x3a; &#x5b;&#x5d;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	achievementObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.condition_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; descriptionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.description_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; conditionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.heroInfo_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; heroInfoArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;achievementObj&#x29;&#x3b;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
         <rename>source</rename>
         <type>String</type>
@@ -1782,6 +1784,76 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>352</xloc>
       <yloc>608</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>My section</name>
+    <type>DataGrid</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>sectionId</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>source</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+    <data>
+      <line> <item>mastery</item><item>&#x7b;&#x22;name_i18n&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Mastery Badge&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x417;&#x43d;&#x430;&#x43a; &#x43a;&#x43b;&#x430;&#x441;&#x441;&#x43d;&#x43e;&#x441;&#x442;&#x438;&#x22;,&#x22;pl&#x22;&#x3a;&#x22;Odznaka mistrzowska&#x22;,&#x22;de&#x22;&#x3a;&#x22;&#xdc;berlegenheitsabz&#x22;,&#x22;fr&#x22;&#x3a;&#x22;Insigne de ma&#xee;trise&#x22;,&#x22;es&#x22;&#x3a;&#x22;Insignia de Maestr&#xed;a&#x22;,&#x22;zh&#x22;&#x3a;&#x22;&#x6218;&#x6597;&#x5609;&#x5956;&#x22;,&#x22;tr&#x22;&#x3a;&#x22;Ustal&#x131;k Br&#xf6;vesi&#x22;,&#x22;cs&#x22;&#x3a;&#x22;Vzorn&#xfd; tankista&#x22;,&#x22;th&#x22;&#x3a;&#x22;&#xe15;&#xe23;&#xe32;&#xe04;&#xe27;&#xe32;&#xe21;&#xe40;&#xe0a;&#xe35;&#xe48;&#xe22;&#xe27;&#xe0a;&#xe32;&#xe0d;&#x22;,&#x22;vi&#x22;&#x3a;&#x22;C&#x1ea5;p &#x111;&#x1ed9; Master&#x22;,&#x22;ko&#x22;&#x3a;&#x22;&#xc219;&#xb828;&#xc758; &#xc99d;&#xd45c;&#x22;&#x7d;&#x7d;</item> </line>
+    </data>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1056</xloc>
+      <yloc>896</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select values 2</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>sectionId</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>source</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>832</xloc>
+      <yloc>896</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
