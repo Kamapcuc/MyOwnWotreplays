@@ -100,6 +100,10 @@
   <hop> <from>Concat 5</from><to>Grab images</to><enabled>N</enabled> </hop>
   <hop> <from>Concat 5</from><to>Build source 5</to><enabled>Y</enabled> </hop>
   <hop> <from>Build source 5</from><to>Save medal</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build source 6</from><to>Save section</to><enabled>Y</enabled> </hop>
+  <hop> <from>Concat 6</from><to>Build source 6</to><enabled>Y</enabled> </hop>
+  <hop> <from>Sort rows 6</from><to>Concat 6</to><enabled>Y</enabled> </hop>
+  <hop> <from>Parse data 3</from><to>Sort rows 6</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Achievements</name>
@@ -258,6 +262,64 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>736</xloc>
       <yloc>704</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Build source 5</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Build source</jsScript_name>
+        <jsScript_script>var achievementObj &#x3d; &#x7b;&#xd;&#xa;	section &#x3a; sectionId,&#xd;&#xa;	order &#x3a; order,&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	description_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	condition_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	heroInfo_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	image &#x3a; image&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var descriptionArr &#x3d; description.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var conditionArr &#x3d; condition.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var heroInfoArr &#x3d; &#x28;heroInfo &#x21;&#x3d; &#x22;&#x22;&#x29;&#x3f; heroInfo.split&#x28;&#x27;&#x5e;&#x27;&#x29; &#x3a; &#x5b;&#x5d;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	achievementObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.condition_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; descriptionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.description_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; conditionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.heroInfo_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; heroInfoArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;achievementObj&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
+        <rename>source</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>736</xloc>
+      <yloc>800</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Build source 6</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var sectionObj &#x3d; &#x7b;&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; sectionName.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	sectionObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;sectionObj&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
+        <rename>source</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>736</xloc>
+      <yloc>896</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -601,6 +663,51 @@
     </step>
 
   <step>
+    <name>Concat 6</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <all_rows>N</all_rows>
+      <ignore_aggregate>N</ignore_aggregate>
+      <field_ignore/>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>grp</prefix>
+      <add_linenr>N</add_linenr>
+      <linenr_fieldname/>
+      <give_back_row>N</give_back_row>
+      <group>
+        <field>
+          <name>sectionId</name>
+        </field>
+      </group>
+      <fields>
+        <field>
+          <aggregate>lang</aggregate>
+          <subject>lang</subject>
+          <type>CONCAT_STRING</type>
+          <valuefield>&#x5e;</valuefield>
+        </field>
+        <field>
+          <aggregate>sectionName</aggregate>
+          <subject>sectionName</subject>
+          <type>CONCAT_STRING</type>
+          <valuefield>&#x5e;</valuefield>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>640</xloc>
+      <yloc>896</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Concat img</name>
     <type>GroupBy</type>
     <description/>
@@ -637,7 +744,7 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>832</xloc>
-      <yloc>896</yloc>
+      <yloc>992</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -672,7 +779,7 @@
       </field>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>736</xloc>
-      <yloc>896</yloc>
+      <yloc>992</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -969,7 +1076,7 @@
     <name>Parse data 3</name>
     <type>ScriptValueMod</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <copies>1</copies>
          <partitioning>
            <method>none</method>
@@ -982,7 +1089,7 @@
         <jsScript_script>trans_Status &#x3d; SKIP_TRANSFORMATION&#x3b;&#xd;&#xa;&#xd;&#xa;var data &#x3d; JSON.parse&#x28;result&#x29;.data&#x3b;&#xd;&#xa;for &#x28;var key in data&#x29; &#x7b;&#xd;&#xa;	var achievement &#x3d; data&#x5b;key&#x5d;&#x3b;&#xd;&#xa;    var row &#x3d; createRowCopy&#x28;getOutputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x29;&#x3b;&#xd;&#xa;    var idx &#x3d; getInputRowMeta&#x28;&#x29;.size&#x28;&#x29;&#x3b;&#xd;&#xa;	var idNum &#x3d; idx&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; key&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; achievement.section&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; achievement.section_i18n&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; achievement.order&#x3b;&#xd;&#xa;	var nameNum &#x3d; idx&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; achievement.name_i18n&#x3b;&#xd;&#xa;	var descriptionNum &#x3d; idx&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; achievement.description&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; achievement.condition&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; achievement.hero_info&#x3b;&#xd;&#xa;	var imageNum &#x3d; idx&#x3b;&#xd;&#xa;    row&#x5b;idx&#x2b;&#x2b;&#x5d; &#x3d; getImage&#x28;achievement.image&#x29;&#x3b;&#xd;&#xa;	if &#x28;&#x21;achievement.options &#x7c;&#x7c; achievement.options.length &#x3d;&#x3d; 0&#x29; &#x7b;&#xd;&#xa;	    putRow&#x28;row&#x29;&#x3b;&#xd;&#xa;	&#x7d; else &#x7b;&#xd;&#xa;		for &#x28;var i in achievement.options&#x29; &#x7b;&#xd;&#xa;			var option &#x3d; achievement.options&#x5b;i&#x5d;&#x3b;&#xd;&#xa;			var clonedRow &#x3d; row.slice&#x28;0&#x29;&#x3b;&#xd;&#xa;			var tmp &#x3d; parseInt&#x28;i&#x29; &#x2b; 1&#x3b;&#xd;&#xa;			clonedRow&#x5b;idNum&#x5d; &#x3d; key &#x2b; tmp&#x3b;&#xd;&#xa;			clonedRow&#x5b;nameNum&#x5d; &#x3d; option.name_i18n&#x3b;&#xd;&#xa;			clonedRow&#x5b;descriptionNum&#x5d; &#x3d; option.description&#xd;&#xa;			clonedRow&#x5b;imageNum&#x5d; &#x3d; getImage&#x28;option.image&#x29;&#x3b;&#xd;&#xa;			putRow&#x28;clonedRow&#x29;&#x3b;&#xd;&#xa;		&#x7d;&#xd;&#xa;	&#x7d;&#xd;&#xa;&#x7d;</jsScript_script>
       </jsScript>      <jsScript>        <jsScript_type>1</jsScript_type>
         <jsScript_name>Item_0</jsScript_name>
-        <jsScript_script>var urlLength &#x3d; &#x27;http&#x3a;&#x2f;&#x2f;worldoftanks.com&#x2f;static&#x2f;2.18.1&#x2f;encyclopedia&#x2f;tankopedia&#x2f;achievement&#x2f;&#x27;.length&#x3b;&#xd;&#xa;&#xd;&#xa;var getImage &#x3d; function &#x28;str&#x29; &#x7b;&#xd;&#xa;	return str&#x3f; str.substring&#x28;urlLength&#x29; &#x3a; null&#x3b;&#xd;&#xa;&#x7d;</jsScript_script>
+        <jsScript_script>var urlLength &#x3d; &#x27;http&#x3a;&#x2f;&#x2f;worldoftanks.com&#x2f;static&#x2f;2.18.1&#x2f;encyclopedia&#x2f;tankopedia&#x2f;achievement&#x2f;&#x27;.length&#x3b;&#xd;&#xa;&#xd;&#xa;var getImage &#x3d; function &#x28;str&#x29; &#x7b;&#xd;&#xa;	return str&#x3f; str.substring&#x28;urlLength&#x29; &#x3a; null&#x3b;&#xd;&#xa;&#x7d;&#x3b;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>id</name>
         <rename>id</rename>
         <type>String</type>
@@ -1197,6 +1304,54 @@
     </step>
 
   <step>
+    <name>Save medal</name>
+    <type>ElasticSearchBulk</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <general>
+      <index>data</index>
+      <type>medal</type>
+      <operationType>INSERT</operationType>
+      <script/>
+      <batchSize>100</batchSize>
+      <timeout/>
+      <timeoutUnit>SECONDS</timeoutUnit>
+      <isJson>Y</isJson>
+      <jsonField>source</jsonField>
+      <idField>id</idField>
+      <overwriteIfExists>N</overwriteIfExists>
+      <useOutput>N</useOutput>
+      <stopOnError>Y</stopOnError>
+      <docAsUpsert>N</docAsUpsert>
+    </general>
+    <fields>
+    </fields>
+    <servers>
+      <server>
+        <address>localhost</address>
+        <port>9300</port>
+      </server>
+    </servers>
+    <settings>
+      <setting>
+        <name>client.transport.ignore_cluster_name</name>
+        <value>true</value>
+      </setting>
+    </settings>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>928</xloc>
+      <yloc>800</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Save nation</name>
     <type>ElasticSearchBulk</type>
     <description/>
@@ -1240,6 +1395,54 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>928</xloc>
       <yloc>512</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Save section</name>
+    <type>ElasticSearchBulk</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <general>
+      <index>data</index>
+      <type>medalSection</type>
+      <operationType>INSERT</operationType>
+      <script/>
+      <batchSize>100</batchSize>
+      <timeout/>
+      <timeoutUnit>SECONDS</timeoutUnit>
+      <isJson>Y</isJson>
+      <jsonField>source</jsonField>
+      <idField>sectionId</idField>
+      <overwriteIfExists>N</overwriteIfExists>
+      <useOutput>N</useOutput>
+      <stopOnError>Y</stopOnError>
+      <docAsUpsert>N</docAsUpsert>
+    </general>
+    <fields>
+    </fields>
+    <servers>
+      <server>
+        <address>localhost</address>
+        <port>9300</port>
+      </server>
+    </servers>
+    <settings>
+      <setting>
+        <name>client.transport.ignore_cluster_name</name>
+        <value>true</value>
+      </setting>
+    </settings>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>928</xloc>
+      <yloc>896</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1505,6 +1708,43 @@
     </step>
 
   <step>
+    <name>Sort rows 6</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>Y</unique_rows>
+    <fields>
+      <field>
+        <name>sectionId</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+      </field>
+      <field>
+        <name>num</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>544</xloc>
+      <yloc>896</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Tanks</name>
     <type>Rest</type>
     <description/>
@@ -1542,84 +1782,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>352</xloc>
       <yloc>608</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Build source 5</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Build source</jsScript_name>
-        <jsScript_script>var achievementObj &#x3d; &#x7b;&#xd;&#xa;	section &#x3a; sectionId,&#xd;&#xa;	order &#x3a; order,&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	description_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	condition_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	heroInfo_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	image &#x3a; image&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var descriptionArr &#x3d; description.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var conditionArr &#x3d; condition.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var heroInfoArr &#x3d; &#x28;heroInfo &#x21;&#x3d; &#x22;&#x22;&#x29;&#x3f; heroInfo.split&#x28;&#x27;&#x5e;&#x27;&#x29; &#x3a; &#x5b;&#x5d;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	achievementObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.condition_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; descriptionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.description_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; conditionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.heroInfo_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; heroInfoArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;achievementObj&#x29;&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
-        <rename>source</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>736</xloc>
-      <yloc>800</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Save medal</name>
-    <type>ElasticSearchBulk</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <general>
-      <index>data</index>
-      <type>medal</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>100</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>Y</isJson>
-      <jsonField>source</jsonField>
-      <idField>id</idField>
-      <parentInField/>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>928</xloc>
-      <yloc>800</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
