@@ -21,6 +21,7 @@ public class Config {
     public final static String CLASS_TYPE_NAME = "class";
     public final static String NATION_TYPE_NAME = "nation";
     public final static String LANGUAGE_TYPE_NAME = "language";
+    public final static String MEDAL_TYPE_NAME = "medal";
 
     public static String getReplaysPath() {
         return System.getProperty("wotPath") + "replays/";

@@ -8,6 +8,7 @@ import ru.kamapcuc.myownwotreplays.search.TypesMeta;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ReplaysParser {
 
@@ -134,6 +135,11 @@ public class ReplaysParser {
         document.put("damageAssistedRadio", personalResults.get("damageAssistedRadio"));
         document.put("damageDealt", personalResults.get("damageDealt"));
         document.put("kills", personalResults.get("kills"));
+        List<String> medals = new ArrayList<>();
+        List<Integer> achievements = (List<Integer>) personalResults.get("achievements");
+        if (achievements != null)
+            medals = achievements.stream().map(String::valueOf).collect(Collectors.toList());
+        document.put("medal", medals);
     }
 
     private Date parseDate(String date) {

@@ -122,139 +122,49 @@
                                         <table class="wtst_head_awards">
                                             <tbody>
                                             <tr>
+                                            <#list battle.medal as medal>
                                                 <td>
                                                     <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/MedalLafayettePool.png"
-                                                             alt="Медаль Пула" class="wtst_head_awards_item">
-
-                                                        <div class="yellow-ribbon"></div>
-
-
+                                                        <img src="/resources/img/medals/${medal.image}"
+                                                             alt="${medal.name_i18n}" class="wtst_head_awards_item">
+                                                        <#if medal.section == 'epic'>
+                                                            <div class="yellow-ribbon"></div>
+                                                        </#if>
                                                         <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">Медаль Пула</div>
+                                                            <div class="medal-title">${medal.name_i18n}</div>
                                                             <div class="medal-info">
-                                                                Выдаётся игроку, уничтожившему в одном бою 10 и более
-                                                                танков или САУ противника уровнем от 4-го и выше.
+                                                            ${medal.description_i18n?replace('\n', '<br>')}
+                                                            ${medal.condition_i18n?replace('\n', '<br>')}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/MedalKolobanov.png"
-                                                             alt="Медаль Колобанова" class="wtst_head_awards_item">
-
-                                                        <div class="yellow-ribbon"></div>
-
-
-                                                        <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">Медаль Колобанова</div>
-                                                            <div class="medal-info">
-                                                                Присваивается игроку, который в одиночку одержал победу
-                                                                против 5 и более танков и ПТ-САУ противника.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/Defender.png"
-                                                             alt="Защитник" class="wtst_head_awards_item">
-
-                                                        <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">Защитник</div>
-                                                            <div class="medal-info">
-                                                                Присуждается игроку, сбившему наибольший процент захвата
-                                                                дружественной базы (70 % и более). При равном количестве
-                                                                сбитых очков награда присуждается тому, кто в данном бою
-                                                                заработал наибольшее количество очков опыта с учетом
-                                                                премиум аккаунта.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/mainGun.png"
-                                                             alt="Основной калибр" class="wtst_head_awards_item">
-
-                                                        <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">Основной калибр</div>
-                                                            <div class="medal-info">
-                                                                • Нанесённый урон должен составлять не менее 20% от
-                                                                суммарной прочности
-                                                                техники противника.<br>
-                                                                • Нанесённый урон должен составлять не менее 1000
-                                                                единиц.<br>
-                                                                • Нельзя задевать союзников прямыми выстрелами.<br>
-                                                                • При равном количестве нанесённого урона награждается
-                                                                игрок, получивший
-                                                                наибольшее количество очков опыта за бой.<br>
-                                                                • Выдаётся только в Случайных боях.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/Invader.png"
-                                                             alt="Захватчик" class="wtst_head_awards_item">
-
-                                                        <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">Захватчик</div>
-                                                            <div class="medal-info">
-                                                                Присуждается игроку, получившему наибольшее количество
-                                                                очков захвата базы, но не менее 80. Выдаётся после
-                                                                состоявшегося захвата без учета того, что бой мог быть
-                                                                закончен уничтожением всех противников. В случае
-                                                                одновременного захвата базы обоими командами,
-                                                                присваивается игроку, получившему наибольшее количество
-                                                                опыта.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/warrior.png"
-                                                             alt="Воин" class="wtst_head_awards_item">
-
-                                                        <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">Воин</div>
-                                                            <div class="medal-info">
-                                                                Присваивается игроку, уничтожившему наибольшее
-                                                                количество машин противника (не менее шести).
-                                                                Присваивается как выжившему игроку, так и посмертно.
-                                                                Если по итогам боя двое или более игроков лидируют по
-                                                                этому показателю при одинаковом количестве уничтоженных
-                                                                единиц техники, то звание присваивается игроку,
-                                                                получившему за бой большее количество очков опыта с
-                                                                учетом наличия/отсутствия премиум-аккаунта, а при равном
-                                                                опыте не выдаётся никому.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
+                                            </#list>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="wtst_half wtst_half__left">
-                                    <div class="wtst-title__panel wtst-title__gradient">${battle.map.name_i18n} – Стандартный бой</div>
+                                    <div class="wtst-title__panel wtst-title__gradient">${battle.map.name_i18n} –
+                                        Стандартный бой
+                                    </div>
                                     <div class="result_map">
                                         <div class="result_map_frame">
-                                            <img src="/resources/img/maps/thumb/${battle.map.id}.png" alt="${battle.map.name_i18n}">
+                                            <img src="/resources/img/maps/thumb/${battle.map.id}.png"
+                                                 alt="${battle.map.name_i18n}">
                                         </div>
                                         <img class="result_map_tank" alt="${battle.tank.name_i18n}"
                                              src="/resources/img/tanks/big/${battle.tank.image}">
 
                                         <div class="result_map_user">
-                                            <div class="result_map_user_name" title="${battle.playerName} [TRIKS]">${battle.playerName}
+                                            <div class="result_map_user_name"
+                                                 title="${battle.playerName} [TRIKS]">${battle.playerName}
                                                 [TRIKS]
                                             </div>
                                             <time class="result_map_user_timestamp">${battle.date}</time>
-                                            <div class="result_map_tank_model" title="${battle.tank.name_i18n}">${battle.tank.name_i18n}</div>
+                                            <div class="result_map_tank_model"
+                                                 title="${battle.tank.name_i18n}">${battle.tank.name_i18n}</div>
                                             <div class="result_map_survive">
                                                 <!--Выжил-->
                                             </div>
@@ -1456,7 +1366,7 @@
                 </li>
                 <li class="b-list__item">
                     <span class="b-label">Версия:</span>
-                    ${battle.version}
+                ${battle.version}
                 </li>
                 <li class="b-list__item">
                     <span class="b-label">Тип боя:</span> Случайный бой

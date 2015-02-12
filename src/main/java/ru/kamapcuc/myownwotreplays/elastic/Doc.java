@@ -12,6 +12,7 @@ import ru.kamapcuc.myownwotreplays.search.Config;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,15 +54,26 @@ public class Doc implements ToXContent {
             return langMap.get(Config.DEFAULT_LOCALE.getLanguage());
     }
 
-    private Object retFromRepository(String repositoryName, Object id) {
+    private Object getFromRepository(String repositoryName, String id) {
         Map<String, Doc> repository = REPOSITORIES.get(repositoryName);
-        String docId = (String) id;
-        Doc doc = repository.get(docId);
+        Doc doc = repository.get(id);
         if (doc == null) {
-            System.out.println(String.format("Missing doc with \"%s\" id in \"%s\" repository", docId, repositoryName));
-            return new Doc(docId, new HashMap<>());
+            System.out.println(String.format("Missing doc with \"%s\" id in \"%s\" repository", id, repositoryName));
+            return new Doc(id, new HashMap<>());
         } else
             return doc;
+    }
+
+    private Object retFromRepository(String repositoryName, Object value) {
+        if (value instanceof List) {
+            List list = (List) value;
+            List<Object> result = new ArrayList<>();
+            for (Object element : list)
+                result.add(getFromRepository(repositoryName, (String) element));
+            return result;
+        } else {
+            return getFromRepository(repositoryName, (String) value);
+        }
     }
 
     private Object getInternal(String paramName, Map map) {
@@ -81,11 +93,8 @@ public class Doc implements ToXContent {
 
     private void toXContent(XContentBuilder builder, String rootKey, List list) throws IOException {
         builder.startArray();
-        for (Object item : list) {
-            builder.startObject();
+        for (Object item : list)
             toXContent(builder, rootKey, item);
-            builder.endObject();
-        }
         builder.endArray();
     }
 
