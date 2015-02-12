@@ -19,18 +19,15 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException {
-        Locale contextLocale;
+        Locale locale;
         String lang = request.getParameter("lang");
-        if (lang != null) {
-            contextLocale = LocaleUtils.parse(lang);
-        } else {
-            Locale requestLocale = request.getLocale();
-            if (supportedLanguages.containsKey(requestLocale.getLanguage()))
-                contextLocale = requestLocale;
-            else
-                contextLocale = Config.DEFAULT_LOCALE;
-        }
-        LocaleContextHolder.setLocale(contextLocale, true);
+        if (lang != null)
+            locale = LocaleUtils.parse(lang);
+        else
+            locale = request.getLocale();
+        if (!supportedLanguages.containsKey(locale.getLanguage()))
+            locale = Config.DEFAULT_LOCALE;
+        LocaleContextHolder.setLocale(locale, true);
         return true;
     }
 
