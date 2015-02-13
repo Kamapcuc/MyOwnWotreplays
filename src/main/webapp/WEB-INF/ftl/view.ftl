@@ -50,97 +50,57 @@
                                     <div class="wtst_head_ribbon clearfix">
                                         <table class="wtst_head_awards">
                                             <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/MarkOfMastery4.png"
-                                                             alt="Мастер" title="Мастер" class="wtst_head_awards_item">
+                                                <tr>
 
-                                                        <div class="yellow-ribbon"></div>
-                                                    </div>
-                                                </td>
-
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/shootToKill.png"
-                                                             alt="Огонь на поражение" class="wtst_head_awards_item">
-
-                                                        <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">Огонь на поражение</div>
-                                                            <div class="medal-info">
-                                                                Нанести противнику урона больше, чем прочность
-                                                                собственной машины.<br>
-                                                                • Засчитывается также урон, нанесённый тараном и
-                                                                поджогом.<br>
-                                                                • Не выдаётся при игре на САУ.<br>
-                                                                • Выдаётся только в Случайных боях.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/duelist.png"
-                                                             alt="Дуэлянт" class="wtst_head_awards_item">
-
-                                                        <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">Дуэлянт</div>
-                                                            <div class="medal-info">
-                                                                Уничтожить в бою не менее 2 машин противника, нанёсших
-                                                                вам урон.<br>
-                                                                • Повреждения модулей засчитываются.<br>
-                                                                • Рикошеты и непробития не засчитываются.<br>
-                                                                • Выдаётся только в Случайных боях.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/bonecrusher.png"
-                                                             alt="Костолом" class="wtst_head_awards_item">
-
-                                                        <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">Костолом</div>
-                                                            <div class="medal-info">
-                                                                Повредить в бою не менее 5 модулей или членов экипажа
-                                                                противника.<br>
-                                                                • Засчитываются также модули, повреждённые в результате
-                                                                пожара.<br>
-                                                                • Выдаётся только в Случайных боях.
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                    <#assign flagOnce=true/>
+                                                    <#macro tableBreak>
+                                                        <#assign flagOnce=false/>
+                                                    <#-- start of dirty cheat -->
+                                                </tr>
                                             </tbody>
                                         </table>
                                         <div class="wtst_head_overall">
-                                            <div class="wtst_head_credits">55207</div>
-                                            <div class="wtst_head_experience">2&nbsp;578</div>
+                                            <div class="wtst_head_credits">${battle.credits?string["###,###,###"]}</div>
+                                            <div class="wtst_head_experience">${battle.xp?string["###,###,###"]}</div>
                                         </div>
                                         <table class="wtst_head_awards">
                                             <tbody>
-                                            <tr>
-                                            <#list battle.medal as medal>
-                                                <td>
-                                                    <div class="medal">
-                                                        <img src="/resources/img/medals/${medal.image}"
-                                                             alt="${medal.name_i18n}" class="wtst_head_awards_item">
-                                                        <#if medal.section == 'epic'>
-                                                            <div class="yellow-ribbon"></div>
+                                                <tr>
+                                                    <#-- end of dirty cheat -->
+                                                    </#macro>
+
+                                                    <#if battle.medal?size == 0>
+                                                        <@tableBreak/>
+                                                    </#if>
+
+                                                    <#list battle.medal as medal>
+                                                        <#if (medal.section == 'epic' || medal.section == 'battle') && flagOnce>
+                                                            <@tableBreak/>
                                                         </#if>
-                                                        <div class="medal_tooltip animationDelay">
-                                                            <div class="medal-title">${medal.name_i18n}</div>
-                                                            <div class="medal-info">
-                                                            ${medal.description_i18n?replace('\n', '<br>')}
-                                                            ${medal.condition_i18n?replace('\n', '<br>')}
+
+                                                        <td>
+                                                            <div class="medal">
+                                                                <img src="/resources/img/medals/${medal.image}"
+                                                                     alt="${medal.name_i18n}" class="wtst_head_awards_item">
+                                                                <#if medal.section == 'epic'>
+                                                                    <div class="yellow-ribbon"></div>
+                                                                </#if>
+                                                                <div class="medal_tooltip animationDelay">
+                                                                    <div class="medal-title">${medal.name_i18n}</div>
+                                                                    <div class="medal-info">
+                                                                    ${medal.id}<br/>
+                                                                    ${medal.description_i18n?replace('\n', '<br/>')}
+                                                                    ${medal.condition_i18n?replace('\n', '<br/>')}
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </#list>
-                                            </tr>
+                                                        </td>
+
+                                                        <#if !medal_has_next && flagOnce>
+                                                            <@tableBreak/>
+                                                        </#if>
+                                                    </#list>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -179,13 +139,13 @@
                                             <tbody>
                                             <tr>
                                                 <th>Кредиты</th>
-                                                <td class="r_cr ">36&nbsp;805</td>
-                                                <td class="r_cr active ">55&nbsp;207</td>
+                                                <td class="r_cr ">0</td>
+                                                <td class="r_cr active ">${battle.credits?string["###,###,###"]}</td>
                                             </tr>
                                             <tr>
                                                 <th>Опыт</th>
-                                                <td class="r_xp ">1&nbsp;718</td>
-                                                <td class="r_xp active">2&nbsp;578</td>
+                                                <td class="r_xp ">0</td>
+                                                <td class="r_xp active">${battle.xp?string["###,###,###"]}</td>
                                             </tr>
                                             </tbody>
                                         </table>

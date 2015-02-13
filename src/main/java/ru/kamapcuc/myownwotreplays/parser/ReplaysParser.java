@@ -8,7 +8,6 @@ import ru.kamapcuc.myownwotreplays.search.TypesMeta;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ReplaysParser {
 
@@ -18,6 +17,7 @@ public class ReplaysParser {
     private Map<String, Map<String, Object>> players;
     private Map<String, Object> document = new HashMap<>();
     private final static Map<String, Doc> tanksData = TypesMeta.REPOSITORIES.get(Config.TANK_TYPE_NAME);
+    private final static Map<String, Doc> medals_rep = TypesMeta.REPOSITORIES.get(Config.MEDAL_TYPE_NAME);
 
     private final static Joiner JOINER = Joiner.on(".").skipNulls();
     private final static SimpleDateFormat DATE_PARSER = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
@@ -136,9 +136,20 @@ public class ReplaysParser {
         document.put("damageDealt", personalResults.get("damageDealt"));
         document.put("kills", personalResults.get("kills"));
         List<String> medals = new ArrayList<>();
+        Integer markOfMastery = (Integer) personalResults.get("markOfMastery");
+        if (markOfMastery != null)
+            medals.add(String.valueOf(markOfMastery));
+//        List<List<Integer>> dossierPopUps = (List<List<Integer>>) personalResults.get("dossierPopUps");
+//        if (dossierPopUps != null)
+//            for (List<Integer> memorySignPop : dossierPopUps) {
+//                String memorySign = String.valueOf(memorySignPop.get(0));
+//                if (medals_rep.containsKey(memorySign))
+//                    medals.add(memorySign);
+//            }
         List<Integer> achievements = (List<Integer>) personalResults.get("achievements");
         if (achievements != null)
-            medals = achievements.stream().map(String::valueOf).collect(Collectors.toList());
+            for (Integer achievement : achievements)
+                medals.add(String.valueOf(achievement));
         document.put("medal", medals);
     }
 

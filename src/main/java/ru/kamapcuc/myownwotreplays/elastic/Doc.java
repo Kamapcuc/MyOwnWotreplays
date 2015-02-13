@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +58,7 @@ public class Doc implements ToXContent {
         Doc doc = repository.get(id);
         if (doc == null) {
             System.out.println(String.format("Missing doc with \"%s\" id in \"%s\" repository", id, repositoryName));
-            return new Doc(id, new HashMap<>());
+            return null;
         } else
             return doc;
     }
@@ -77,11 +76,16 @@ public class Doc implements ToXContent {
     }
 
     private Object getInternal(String paramName, Map map) {
+        Object value = map.get(paramName);
         if (paramName.endsWith("_i18n")) {
-            return getLocalized(map.get(paramName));
+            return getLocalized(value);
+        } else if (paramName.equals("date")) {
+            DateTime zz = ISODateTimeFormat.dateOptionalTimeParser().parseDateTime((String) value);
+            DateFormat localizedFormat = new SimpleDateFormat("dd MMM yyyy kk:mm", LocaleContextHolder.getLocale());
+            return localizedFormat.format(zz.toDate());
         } else {
             if (REPOSITORIES.containsKey(paramName))
-                return retFromRepository(paramName, map.get(paramName));
+                return retFromRepository(paramName, value);
             else
                 return map.get(paramName);
         }
@@ -105,10 +109,6 @@ public class Doc implements ToXContent {
             toXContent(builder, (Map) value);
         } else if (value instanceof List) {
             toXContent(builder, key, (List) value);
-        } else if ("date".equals(key)) {
-            DateTime zz = ISODateTimeFormat.dateOptionalTimeParser().parseDateTime((String) value);
-            DateFormat localizedFormat = new SimpleDateFormat("dd MMM yyyy kk:mm", LocaleContextHolder.getLocale());
-            builder.value(localizedFormat.format(zz.toDate()));
         } else {
             builder.value(value);
         }
