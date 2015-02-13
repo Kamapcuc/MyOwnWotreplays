@@ -1321,18 +1321,18 @@
             <!-- b-tabs < -->
             <ul class="b-replay__info b-replay__added-info clearfix b-list">
                 <li class="b-list__item">
-                    <span class="b-label">Серв. вр. игры:</span>
-                    2015-02-03 в 07:28
+                    <span class="b-label">Дата:</span>
+                    ${battle.date}
                 </li>
                 <li class="b-list__item">
                     <span class="b-label">Версия:</span>
-                ${battle.version}
+                    ${battle.version}
                 </li>
                 <li class="b-list__item">
                     <span class="b-label">Тип боя:</span> Случайный бой
                 </li>
                 <li class="b-list__item b-replay__img-wrap">
-                    <img src="./WoTReplays Type 4 Chi-To _uRKa_GuN_ Редшир_files/redshire.jpg" alt=""
+                    <img src="/resources/img/maps/plan/${battle.map.id}.jpg" alt=""
                          class="b-replay__img">
                     <span class="b-replay__img-descr">
                         <span class="b-label">Респ: </span>${battle.respawn}
