@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class TankLevelFacetBuilder extends FieldFacetBuilder {
 
-    public TankLevelFacetBuilder(String field, String name) {
-        super(field, name);
+    public TankLevelFacetBuilder(String field, String code) {
+        super(field, code);
     }
 
     @Override

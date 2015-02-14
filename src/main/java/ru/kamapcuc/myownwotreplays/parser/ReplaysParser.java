@@ -29,7 +29,7 @@ public class ReplaysParser {
     }
 
     private void parseVersion(String clientVersion) {
-        String[] digits = clientVersion.split("(,| )+");
+        String[] digits = clientVersion.split("(,| |\\.)+");
         document.put("version", JOINER.join(digits));
         for (int i = 0; i < digits.length; i++) {
             try {
@@ -127,17 +127,18 @@ public class ReplaysParser {
             Integer originalXP = (Integer) personalResults.get("originalXP");
             document.put("originalCredits", originalCredits);
             document.put("originalXP", originalXP);
-        } else if (version != 8_11_00) {
-            document.put("originalCredits", (int) (credits / 1.5));
-            document.put("originalXP", (int) (xp / 1.5));
         }
+//        else if (version != 8_11_00) {
+//            document.put("originalCredits", (int) (credits / 1.5));
+//            document.put("originalXP", (int) (xp / 1.5));
+//        }
         document.put("damageBlockedByArmor", personalResults.get("damageBlockedByArmor"));
         document.put("damageAssistedRadio", personalResults.get("damageAssistedRadio"));
         document.put("damageDealt", personalResults.get("damageDealt"));
         document.put("kills", personalResults.get("kills"));
         List<String> medals = new ArrayList<>();
         Integer markOfMastery = (Integer) personalResults.get("markOfMastery");
-        if (markOfMastery != null)
+        if (markOfMastery != null && markOfMastery != 0)
             medals.add(String.valueOf(markOfMastery));
 //        List<List<Integer>> dossierPopUps = (List<List<Integer>>) personalResults.get("dossierPopUps");
 //        if (dossierPopUps != null)

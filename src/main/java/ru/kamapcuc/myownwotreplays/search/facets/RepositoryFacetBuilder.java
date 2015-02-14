@@ -11,8 +11,8 @@ public class RepositoryFacetBuilder extends FieldFacetBuilder {
 
     private final DocMap values;
 
-    public RepositoryFacetBuilder(String field, String name, String repository) {
-        super(field, name);
+    public RepositoryFacetBuilder(String field, String code, String repository) {
+        super(field, code);
         values = TypesMeta.REPOSITORIES.get(repository);
     }
 

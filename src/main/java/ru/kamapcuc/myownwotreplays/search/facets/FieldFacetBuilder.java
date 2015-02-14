@@ -1,19 +1,28 @@
 package ru.kamapcuc.myownwotreplays.search.facets;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
+import ru.kamapcuc.myownwotreplays.spring.Translator;
 
 import java.io.IOException;
 import java.util.Map;
 
 public abstract class FieldFacetBuilder extends FacetBuilder {
 
-    public FieldFacetBuilder(String field, String name) {
-        super(field, name);
+    private final String code;
+
+    public FieldFacetBuilder(String field, String code) {
+        super(field);
+        this.code = code;
     }
 
     @Override
     public String getType() {
         return "field";
+    }
+
+    @Override
+    public String getName() {
+        return Translator.translate(code);
     }
 
     @Override

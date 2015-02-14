@@ -1,5 +1,6 @@
 package ru.kamapcuc.myownwotreplays.spring;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 import java.util.Locale;
@@ -16,12 +17,16 @@ public class Translator {
 
     private final Locale locale;
 
-    public Translator(Locale locale) {
-        this.locale = locale;
+    public Translator() {
+        this.locale = LocaleContextHolder.getLocale();
     }
 
     public String get(String code) {
         return messageSource.getMessage(code, null, locale);
+    }
+
+    public static String translate(String code) {
+        return messageSource.getMessage(code, null, LocaleContextHolder.getLocale());
     }
 
 }

@@ -37,9 +37,9 @@ public class ReplaysController {
         model.put("defaultSort", SortType.DEFAULT_SORT);
         model.put("defaultOrder", SortType.DEFAULT_ORDER);
         model.put("facetsData", getFacetsData());
-        Locale locale = LocaleContextHolder.getLocale();
         model.put("languages", TypesMeta.REPOSITORIES.get(Config.LANGUAGE_TYPE_NAME).values());
-        model.put("translate",  new Translator(locale));
+        model.put("translate",  new Translator());
+        model.put("path",  Config.getReplaysPath());
         return "search";
     }
 

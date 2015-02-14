@@ -116,63 +116,8 @@
 </div>
 </body>
 
-<#include "battlesTableTemplate.ftl">
-
-<script id="battlesTileTemplate" type="text/x-handlebars-template">
-    {{#each docs}}
-    <a href="view.do?id={{_id}}">
-        <div class="mr_replay">
-            <div class="mrr_head" style="background-image: url(/resources/img/maps/thumb/{{map._id}}.png)"
-                 title="{{map.name_i18n}}">
-                <div class="mrr_tank">
-                    <div style="background-image: url({{tank.image.big}})"></div>
-                </div>
-            </div>
-            <div class="mrr_ribbon win">
-                <div class="mrr_earnings">
-                    <div class="mrr_exp"><span>{{originalXP}}</span><i class="i-24_exp"></i></div>
-                    <div class="mrr_medals"><span>1</span><i class="i-24_medal"></i></div>
-                </div>
-                <div class="medal">
-                    <img src="http://worldoftanks.com/static/2.18.1/encyclopedia/tankopedia/achievement/medallafayettepool.png"
-                         alt="Медаль Пула" title="Медаль Пула" class="wtst_head_awards_item"/>
-
-                    <div class="yellow-ribbon"></div>
-                </div>
-            </div>
-            <div class="mrr_info">
-                <div class="mrr_title">{{playerName}} на {{tank.shortName_i18n}}</div>
-                <div style="text-align: center;">
-                    <div class="mrr_damage">
-                        <span>{{damageDealt}}</span>
-                        <i class="i-24_dmg tooltip">
-                            <span class="tooltip-container">Урон</span>
-                        </i>
-                    </div>
-                    <div class="mrr_assist">
-                        <i class="i-24_assist tooltip">
-                            <span class="tooltip-container">Урон по засвету</span>
-                        </i>
-                        <span>{{damageAssistedRadio}}</span>
-                    </div>
-                    <div class="mrr_frags">
-                        <span>{{kills}}</span>
-                        <i class="i-24_frags tooltip">
-                            <span class="tooltip-container">Фраги</span>
-                        </i>
-                    </div>
-                    <div class="mrr_dmg-blocked">
-                        <i class="i-24_dmg-blocked tooltip">
-                            <span class="tooltip-container">Заблокированный урон</span>
-                        </i>
-                        <span>{{damageBlockedByArmor}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </a>
-    {{/each}}
-</script>
+<#include "battlesTable.mustache" />
+<#include "battlesTile.mustache" />
 
 <script id="fieldFacetTemplate" type="text/x-handlebars-template">
     <div class="tf_title">
@@ -245,7 +190,7 @@
     var getData = function (query) {
         var currentDataNumber = ++queryNumber;
         $.ajax({
-            url: '/search_ajax.do?' + query,
+            url: './search_ajax.do?' + query,
             async: true,
             dataType: "json",
             cache: false,

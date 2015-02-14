@@ -32,10 +32,10 @@ public class Config {
     }
 
     public final static FacetBuilder[] FACET_BUILDERS = new FacetBuilder[]{
-            new RepositoryFacetBuilder("tankNation", "Нация", "nation"),
-            new RepositoryFacetBuilder("tankClass", "Класс", "class"),
-            new RepositoryFacetBuilder("map", "Карта", "map"),
-            new TankLevelFacetBuilder("tankLevel", "Уровень")
+            new RepositoryFacetBuilder("tankNation", "facet_tank_nation", "nation"),
+            new RepositoryFacetBuilder("tankClass", "facet_tank_class", "class"),
+            new RepositoryFacetBuilder("map", "facet_map", "map"),
+            new TankLevelFacetBuilder("tankLevel", "facet_tank_level")
     };
 
 }

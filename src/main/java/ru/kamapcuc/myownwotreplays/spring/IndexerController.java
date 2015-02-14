@@ -11,7 +11,7 @@ public class IndexerController {
     private Indexer indexer = Indexer.getInstance();
 
     @ResponseBody
-    @RequestMapping("**/indexer_state.do")
+    @RequestMapping("/indexer_state.do")
     public String indexerState() {
         return String.format("{'completed': %d, 'total':%d}", indexer.getCompleted(), indexer.getTotal());
     }
