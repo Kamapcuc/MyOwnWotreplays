@@ -1,18 +1,6 @@
-﻿<html lang="ru">
-<head>
-    <title>My Own WoTReplays</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/main.css" media="all">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta charset="UTF-8">
-    <script src="resources/js/jquery-2.1.3.min.js"></script>
-    <script src="resources/js/view.js"></script>
-    <link rel="icon" type="image/png" href="/resources/img/favicon.ico"/>
-</head>
-<body>
+﻿<#include "site.ftl">
 
-<header>
-
-</header>
+<@site>
 
 <div class="main clearfix view-replay" id="baseCtrl">
 
@@ -1380,4 +1368,4 @@
     $tabs.on("click", tab);
 </script>
 
-</html>
+</@site>

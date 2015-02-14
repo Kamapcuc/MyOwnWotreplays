@@ -27,13 +27,11 @@ import java.util.Map;
 @Controller
 public class ReplaysController {
 
-    private Indexer indexer = Indexer.getInstance();
     private final static ElasticClient client = ElasticClient.getInstance();
 
-    @RequestMapping({"/", "/search.do"})
+    @RequestMapping({"/", "**/search.do"})
     public String search(HttpServletRequest httpRequest, ModelMap model) {
         model.put("battlesData", searchInternal(httpRequest));
-        model.put("indexer", indexer);
         model.put("sortTypes", SortType.values());
         model.put("defaultSort", SortType.DEFAULT_SORT);
         model.put("defaultOrder", SortType.DEFAULT_ORDER);
@@ -43,18 +41,20 @@ public class ReplaysController {
         return "search";
     }
 
-    @RequestMapping({"/view.do"})
+    @RequestMapping("**/view.do")
     public String view(HttpServletRequest httpRequest, ModelMap model) {
         String id = httpRequest.getParameter("id");
         if (id != null) {
             Doc battle = client.get(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME, id);
             model.put("battle", battle);
         }
+        model.put("language", LocaleContextHolder.getLocale().getLanguage());
+        model.put("languages", TypesMeta.REPOSITORIES.get(Config.LANGUAGE_TYPE_NAME).values());
         return "view";
     }
 
     @ResponseBody
-    @RequestMapping("/search_ajax.do")
+    @RequestMapping("**/search_ajax.do")
     public String searchAjax(HttpServletRequest httpRequest) {
         return searchInternal(httpRequest);
     }

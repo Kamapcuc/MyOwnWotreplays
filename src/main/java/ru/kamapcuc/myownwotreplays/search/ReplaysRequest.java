@@ -22,7 +22,6 @@ public class ReplaysRequest {
     private final Map<String, String> params;
     private final SearchRequestBuilder searchRequest;
 
-
     public ReplaysRequest(Map<String, String> params) {
         this.params = params;
         this.searchRequest = createSearchRequest();

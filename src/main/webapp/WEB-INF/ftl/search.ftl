@@ -1,34 +1,7 @@
-﻿<?xml version='1.0' encoding='UTF-8' ?>
-<html lang="ru">
-<head>
-    <title>My Own WoTReplays</title>
-    <link rel="stylesheet" type="text/css" href="/resources/css/main.css" media="all">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <meta charset="UTF-8">
-    <script src="resources/js/handlebars-v2.0.0.js"></script>
-    <script src="resources/js/jquery-2.1.3.min.js"></script>
-    <script src="resources/js/search.js"></script>
-    <link rel="icon" type="image/png" href="/resources/img/favicon.ico"/>
-</head>
-<body>
+﻿<#include "site.ftl">
 
-<header>
-    <div class="header-menu clearfix">
-        <ul>
-        <#list languages as lang>
-            <li>
-                <a href="/search.do?lang=${lang.id}">
-                    <img src="/resources/img/flags/${lang.flag}"/>${lang.name}
-                </a>
-            </li>
-        </#list>
-        </ul>
-    </div>
-</header>
+<@site>
 
-<div style="height: 23px; display: none">
-${indexer.getCompleted()}/${indexer.getTotal()}
-</div>
 <div class="main clearfix" id="baseCtrl">
     <div class="main-menu clearfix" style="margin-bottom: 319px;">
         <div class="m-item_dropdown expanded" id="helper-1">
@@ -114,16 +87,16 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             <div class="b-sort b-replays__sort">
                 <span class="b-sort__label">Сортировать:</span>
                 <ul class="b-sort__list b-list">
-                <#list sortTypes as sortType>
-                    <li class="b-list__item">
-                        <a class="b-link">
-                            <div class="b-link__text" id="${sortType.name()}">
-                            ${sortType.getDescription()}
-                                <ins class="b-sort__dir"></ins>
-                            </div>
-                        </a>
-                    </li>
-                </#list>
+                    <#list sortTypes as sortType>
+                        <li class="b-list__item">
+                            <a class="b-link">
+                                <div class="b-link__text" id="${sortType.name()}">
+                                ${sortType.getDescription()}
+                                    <ins class="b-sort__dir"></ins>
+                                </div>
+                            </a>
+                        </li>
+                    </#list>
                 </ul>
             </div>
             <div id="battlesContainer">
@@ -147,13 +120,13 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     <ul class="r_list initial">
         {{#each docs}}
         <li class="clearfix">
-            <a class="r-map_85" href="view.do?id={{_id}}&lang=${language}"
+            <a class="r-map_85" href="view.do?id={{_id}}"
                title="{{map.name}}" style="background-image: url('/resources/img/maps/plan/{{map._id}}.jpg');">
             </a>
 
             <div class="r-info">
                 <h3>
-                    <a href="view.do?id={{_id}}&lang=${language}">
+                    <a href="view.do?id={{_id}}">
                         {{tank.shortName_i18n}}, {{map.name_i18n}}, Стандартный бой
                     </a>
                 </h3>
@@ -205,7 +178,8 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
                 </div>
                 <div class="medal">
                     <img src="http://worldoftanks.com/static/2.18.1/encyclopedia/tankopedia/achievement/medallafayettepool.png"
-                         alt="Медаль Пула" title="Медаль Пула" class="wtst_head_awards_item" />
+                         alt="Медаль Пула" title="Медаль Пула" class="wtst_head_awards_item"/>
+
                     <div class="yellow-ribbon"></div>
                 </div>
             </div>
@@ -282,7 +256,6 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
             if (queryParam)
                 queryParams.push(queryParam);
         }
-        queryParams.push('lang=${language}');
         return queryParams.join('&');
     };
 
@@ -290,7 +263,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         getData(buildQueryUrl());
     };
 
-    window.addEventListener('popstate', function() {
+    window.addEventListener('popstate', function () {
         applyData(history.state);
         renewCheckboxes();
     });
@@ -338,7 +311,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
         battles = data;
     };
 
-    var renewCheckboxes = function() {
+    var renewCheckboxes = function () {
         var queryParams = parseUrlParams();
         for (var i in facets)
             facets[i].setSelected(queryParams);
@@ -364,7 +337,7 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     };
 
     FieldFacet.prototype.setSelected = function (queryParams) {
-        var selectedValues = queryParams[this.id]? queryParams[this.id] : [];
+        var selectedValues = queryParams[this.id] ? queryParams[this.id] : [];
         for (var value in this.values)
             $('#' + this.id + ' #' + value).prop('checked', selectedValues.indexOf(value) != -1);
     };
@@ -392,8 +365,8 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
 
     SortFacet.prototype.onClick = function (event) {
         var param = {
-            sortType : event.target.id,
-            sortOrder : 'DESC'
+            sortType: event.target.id,
+            sortOrder: 'DESC'
         };
         if (this.sort == param.sortType)
             param.sortOrder = (this.order == 'ASC') ? 'DESC' : 'ASC';
@@ -445,4 +418,4 @@ ${indexer.getCompleted()}/${indexer.getTotal()}
     renewCheckboxes();
 
 </script>
-</html>
+</@site>

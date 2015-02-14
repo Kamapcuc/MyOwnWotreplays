@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LocaleInterceptor extends HandlerInterceptorAdapter {
 
@@ -20,15 +22,24 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException {
         Locale locale;
-        String lang = request.getParameter("lang");
-        if (lang != null)
-            locale = LocaleUtils.parse(lang);
-        else
+        String lang = getLang(request);
+        if (lang == null)
             locale = request.getLocale();
+        else
+            locale = LocaleUtils.parse(lang);
         if (!supportedLanguages.containsKey(locale.getLanguage()))
             locale = Config.DEFAULT_LOCALE;
         LocaleContextHolder.setLocale(locale, true);
         return true;
+    }
+
+    private String getLang(HttpServletRequest request) {
+        String path = request.getRequestURI().substring(request.getContextPath().length());
+        Pattern pattern = Pattern.compile("^/([a-z]{2})/.+$");
+        Matcher matcher = pattern.matcher(path);
+        if (matcher.find())
+            return matcher.group(1);
+        return null;
     }
 
 }
