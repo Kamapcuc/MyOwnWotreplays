@@ -4,7 +4,6 @@ import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 @Controller
@@ -37,9 +35,6 @@ public class ReplaysController {
         model.put("defaultSort", SortType.DEFAULT_SORT);
         model.put("defaultOrder", SortType.DEFAULT_ORDER);
         model.put("facetsData", getFacetsData());
-        model.put("languages", TypesMeta.REPOSITORIES.get(Config.LANGUAGE_TYPE_NAME).values());
-        model.put("translate",  new Translator());
-        model.put("path",  Config.getReplaysPath());
         return "search";
     }
 
@@ -50,8 +45,6 @@ public class ReplaysController {
             Doc battle = client.get(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME, id);
             model.put("battle", battle);
         }
-        model.put("language", LocaleContextHolder.getLocale().getLanguage());
-        model.put("languages", TypesMeta.REPOSITORIES.get(Config.LANGUAGE_TYPE_NAME).values());
         return "view";
     }
 

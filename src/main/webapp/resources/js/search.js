@@ -42,4 +42,10 @@ $(document)
             $('.main-menu').css('margin-bottom', height + 25);
             return true;
         }
+    })
+    .on('mouseleave', '.language-switcher', function () {
+        $('.language-switcher').addClass('closed');
+    })
+    .on('click', '.language-switcher', function () {
+        $('.language-switcher').toggleClass('closed');
     });
