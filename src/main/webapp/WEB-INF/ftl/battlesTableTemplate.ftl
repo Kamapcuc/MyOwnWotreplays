@@ -1,0 +1,44 @@
+<script id="battlesTableTemplate" type="text/x-handlebars-template">
+    <ul class="r_list initial">
+        {{#each docs}}
+        <li class="clearfix">
+            <a class="r-map_85" href="view.do?id={{_id}}"
+               title="{{map.name}}" style="background-image: url('/resources/img/maps/plan/{{map._id}}.jpg');">
+            </a>
+
+            <div class="r-info">
+                <h3>
+                    <a href="view.do?id={{_id}}">
+                        {{tank.shortName_i18n}}, {{map.name_i18n}}, Стандартный бой
+                    </a>
+                </h3>
+                {{#if haveResults}}
+                <ul class="r-info_ri">
+                    <li><i class="i-16_frags"></i> {{kills}}</li>
+                    <li><i class="i-16_exp"></i> {{originalXP}}</li>
+                    <li><i class="i-16_cr"></i> {{originalCredits}}</li>
+                    <li><i class="i-16_dmg"></i> {{damageDealt}}</li>
+                    <li><i class="i-16_master"></i> Мастер</li>
+                </ul>
+                {{else}}
+                <ul class="r-info_ri">
+                    <li><i class="i-16_frags"></i> 0</li>
+                    <li><i class="i-16_exp"></i> 0</li>
+                    <li><i class="i-16_cr"></i> 0</li>
+                    <li><i class="i-16_dmg"></i> 0</li>
+                </ul>
+                {{/if}}
+                <ul class="r-info_ci">
+                    <li><b>Танк:</b> {{tank.shortName_i18n}}</li>
+                    <li><b>Играл:</b> {{playerName}}</li>
+                    <li><b>Версия:</b> {{version}}</li>
+                    <li><b>Дата:</b> {{date}}</li>
+                </ul>
+            </div>
+            <div class="r-act">
+                <a href="view.do?id={{_id}}" class="btn_l-grey">Запустить реплей</a>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</script>
