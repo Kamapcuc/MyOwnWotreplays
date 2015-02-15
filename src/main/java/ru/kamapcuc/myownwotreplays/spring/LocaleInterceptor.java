@@ -6,8 +6,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.search.Config;
-import ru.kamapcuc.myownwotreplays.search.TypesMeta;
+import ru.kamapcuc.myownwotreplays.Config;
+import ru.kamapcuc.myownwotreplays.elastic.TypesMeta;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

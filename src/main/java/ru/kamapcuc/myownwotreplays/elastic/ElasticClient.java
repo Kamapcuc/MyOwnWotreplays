@@ -14,11 +14,14 @@ import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import ru.kamapcuc.myownwotreplays.search.Config;
+import ru.kamapcuc.myownwotreplays.elastic.mappers.HitMapper;
+import ru.kamapcuc.myownwotreplays.elastic.mappers.Mapper;
+import ru.kamapcuc.myownwotreplays.Config;
 
 public class ElasticClient {
 
     private final Client client;
+    private final Mapper hitMapper = new HitMapper();
 
     private ElasticClient() {
         client = connect();
@@ -27,8 +30,11 @@ public class ElasticClient {
         client.admin().cluster().health(health).actionGet();
     }
 
-    public SearchRequestBuilder prepareSearch(String index) {
-        return client.prepareSearch(index);
+    public SearchRequestBuilder prepareSearch() {
+        SearchRequestBuilder searchRequest = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
+        searchRequest.addField(Doc.SOURCE_FIELD);
+        searchRequest.addField(Doc.PARENT_FIELD);
+        return searchRequest;
     }
 
     public IndexRequestBuilder prepareIndex(String index, String type) {
@@ -40,7 +46,7 @@ public class ElasticClient {
         SearchHits hits = response.getHits();
         DocMap result = new DocMap();
         for (SearchHit hit : hits)
-            result.put(hit.getId(), new Doc(hit));
+            result.put(hit.getId(), hitMapper.mapHit(hit));
         FacetResult facets = new FacetResult(response.getAggregations());
         return new SearchResult(hits.totalHits(), result, facets);
     }
@@ -50,8 +56,10 @@ public class ElasticClient {
         getRequest.setIndex(index);
         getRequest.setType(type);
         getRequest.setId(id);
+        getRequest.setRouting("0");
+        getRequest.setFields(Doc.SOURCE_FIELD, Doc.PARENT_FIELD);
         GetResponse getResponse = getRequest.execute().actionGet();
-        return new Doc(getResponse);
+        return hitMapper.mapHit(getResponse);
     }
 
     @SuppressWarnings("unused")

@@ -57,11 +57,11 @@
                                                     <#-- end of dirty cheat -->
                                                     </#macro>
 
-                                                    <#if battle.medal?size == 0>
+                                                    <#if battle.medals?size == 0>
                                                         <@tableBreak/>
                                                     </#if>
 
-                                                    <#list battle.medal as medal>
+                                                    <#list battle.medals as medal>
                                                         <#if (medal.section == 'epic' || medal.section == 'battle') && flagOnce>
                                                             <@tableBreak/>
                                                         </#if>
@@ -110,7 +110,7 @@
                                                  title="${battle.playerName} [TRIKS]">${battle.playerName}
                                                 [TRIKS]
                                             </div>
-                                            <time class="result_map_user_timestamp">${battle.date}</time>
+                                            <time class="result_map_user_timestamp">${battle.battleDate}</time>
                                             <div class="result_map_tank_model"
                                                  title="${battle.tank.name_i18n}">${battle.tank.name_i18n}</div>
                                             <div class="result_map_survive">
@@ -1310,7 +1310,7 @@
             <ul class="b-replay__info b-replay__added-info clearfix b-list">
                 <li class="b-list__item">
                     <span class="b-label">Дата:</span>
-                    ${battle.date}
+                    ${battle.battleDate}
                 </li>
                 <li class="b-list__item">
                     <span class="b-label">Версия:</span>

@@ -2,8 +2,8 @@ package ru.kamapcuc.myownwotreplays.parser;
 
 import org.elasticsearch.common.base.Joiner;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.search.Config;
-import ru.kamapcuc.myownwotreplays.search.TypesMeta;
+import ru.kamapcuc.myownwotreplays.Config;
+import ru.kamapcuc.myownwotreplays.elastic.TypesMeta;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -87,7 +87,7 @@ public class ReplaysParser {
 
     private void parseStartInfo() {
         String battleDate = startInfo.get("dateTime").toString();
-        document.put("date", parseDate(battleDate));
+        document.put("battleDate", parseDate(battleDate));
         document.put("playerName", startInfo.get("playerName"));
         document.put("map", startInfo.get("mapName"));
         String tankInfo = (String) startInfo.get("playerVehicle");
@@ -101,9 +101,9 @@ public class ReplaysParser {
         document.put("tank", tankId);
         Doc tank = tanksData.get(tankId);
         if (tank != null) {
-            document.put("tankLevel", tank.getStraight("level"));
-            document.put("tankNation", tank.getStraight("nation"));
-            document.put("tankClass", tank.getStraight("class"));
+            document.put("tankLevel", tank.get("level"));
+            document.put("tankNation", tank.get("nation"));
+            document.put("tankClass", tank.get("class"));
         } else
             System.out.println(String.format("Don't found tank with id=\"%s\"", tankId));
     }
@@ -177,7 +177,7 @@ public class ReplaysParser {
         if (achievements != null)
             for (Integer achievement : achievements)
                 medals.add(String.valueOf(achievement));
-        document.put("medal", medals);
+        document.put("medals", medals);
     }
 
     private Date parseDate(String date) {

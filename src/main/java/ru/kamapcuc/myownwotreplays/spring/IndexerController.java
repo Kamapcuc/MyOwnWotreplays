@@ -3,7 +3,7 @@ package ru.kamapcuc.myownwotreplays.spring;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.kamapcuc.myownwotreplays.Indexer;
+import ru.kamapcuc.myownwotreplays.parser.Indexer;
 
 @Controller
 public class IndexerController {

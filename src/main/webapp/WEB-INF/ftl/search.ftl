@@ -75,7 +75,9 @@
                     </div>
                     <div class="tabs-bottom">
                         <div class="selected-filters">
-                            <span class="tf_s__selectall">Очистить все фильтры</span>
+                            <a href="./search.do">
+                                <span class="tf_s__selectall">${translate.facet_clear}<i></i></span>
+                            </a>
                         </div>
                     </div>
                 </div>

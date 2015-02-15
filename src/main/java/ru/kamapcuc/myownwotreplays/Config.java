@@ -1,4 +1,4 @@
-package ru.kamapcuc.myownwotreplays.search;
+package ru.kamapcuc.myownwotreplays;
 
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
 import ru.kamapcuc.myownwotreplays.search.facets.RepositoryFacetBuilder;
@@ -13,9 +13,8 @@ public class Config {
     public final static int PAGINATION_SIZE = 9;
 
     public final static String REPLAYS_INDEX_NAME = "replays";
-    public final static String BATTLE_TYPE_NAME = "battle";
 
-    public final static String DATA_INDEX_NAME = "data";
+    public final static String BATTLE_TYPE_NAME = "battle";
     public final static String TANK_TYPE_NAME = "tank";
     public final static String MAP_TYPE_NAME = "map";
     public final static String CLASS_TYPE_NAME = "class";
@@ -32,9 +31,9 @@ public class Config {
     }
 
     public final static FacetBuilder[] FACET_BUILDERS = new FacetBuilder[]{
-            new RepositoryFacetBuilder("tankNation", "facet_tank_nation", "nation"),
-            new RepositoryFacetBuilder("tankClass", "facet_tank_class", "class"),
-            new RepositoryFacetBuilder("map", "facet_map", "map"),
+            new RepositoryFacetBuilder("tankNation", "facet_tank_nation", NATION_TYPE_NAME),
+            new RepositoryFacetBuilder("tankClass", "facet_tank_class", CLASS_TYPE_NAME),
+            new RepositoryFacetBuilder("map", "facet_map", MAP_TYPE_NAME),
             new TankLevelFacetBuilder("tankLevel", "facet_tank_level")
     };
 

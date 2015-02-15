@@ -1217,7 +1217,7 @@
            <schema_name/>
            </partitioning>
     <general>
-      <index>data</index>
+      <index>replays</index>
       <type>class</type>
       <operationType>INSERT</operationType>
       <script/>
@@ -1227,6 +1227,7 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>classId</idField>
+      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1265,7 +1266,7 @@
            <schema_name/>
            </partitioning>
     <general>
-      <index>data</index>
+      <index>replays</index>
       <type>language</type>
       <operationType>INSERT</operationType>
       <script/>
@@ -1274,6 +1275,7 @@
       <timeoutUnit>SECONDS</timeoutUnit>
       <isJson>N</isJson>
       <idField>lang</idField>
+      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1320,7 +1322,7 @@
            <schema_name/>
            </partitioning>
     <general>
-      <index>data</index>
+      <index>replays</index>
       <type>map</type>
       <operationType>INSERT</operationType>
       <script/>
@@ -1330,6 +1332,7 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>id</idField>
+      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1368,7 +1371,7 @@
            <schema_name/>
            </partitioning>
     <general>
-      <index>data</index>
+      <index>replays</index>
       <type>medal</type>
       <operationType>INSERT</operationType>
       <script/>
@@ -1378,6 +1381,7 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>numericId</idField>
+      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1416,7 +1420,7 @@
            <schema_name/>
            </partitioning>
     <general>
-      <index>data</index>
+      <index>replays</index>
       <type>nation</type>
       <operationType>INSERT</operationType>
       <script/>
@@ -1426,6 +1430,7 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>nationId</idField>
+      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1464,7 +1469,7 @@
            <schema_name/>
            </partitioning>
     <general>
-      <index>data</index>
+      <index>replays</index>
       <type>medalSection</type>
       <operationType>INSERT</operationType>
       <script/>
@@ -1474,6 +1479,7 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>sectionId</idField>
+      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1512,7 +1518,7 @@
            <schema_name/>
            </partitioning>
     <general>
-      <index>data</index>
+      <index>replays</index>
       <type>tank</type>
       <operationType>INSERT</operationType>
       <script/>
@@ -1522,6 +1528,7 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>id</idField>
+      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>

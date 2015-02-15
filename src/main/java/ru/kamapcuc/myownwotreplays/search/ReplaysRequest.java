@@ -6,6 +6,7 @@ import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import ru.kamapcuc.myownwotreplays.Config;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.search.facets.Facet;
@@ -28,7 +29,7 @@ public class ReplaysRequest {
     }
 
     private SearchRequestBuilder createSearchRequest() {
-        SearchRequestBuilder result = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
+        SearchRequestBuilder result = client.prepareSearch();
         result.setTypes(Config.BATTLE_TYPE_NAME);
         result.setQuery(new MatchQueryBuilder("haveResults", true));
         result.setFetchSource(null, new String[]{"allies", "enemies"});

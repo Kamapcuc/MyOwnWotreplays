@@ -3,7 +3,7 @@ package ru.kamapcuc.myownwotreplays.search.facets;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.DocMap;
-import ru.kamapcuc.myownwotreplays.search.TypesMeta;
+import ru.kamapcuc.myownwotreplays.elastic.TypesMeta;
 
 import java.io.IOException;
 

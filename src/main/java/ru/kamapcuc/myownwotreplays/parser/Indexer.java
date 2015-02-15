@@ -1,9 +1,8 @@
-package ru.kamapcuc.myownwotreplays;
+package ru.kamapcuc.myownwotreplays.parser;
 
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
-import ru.kamapcuc.myownwotreplays.parser.FileParser;
-import ru.kamapcuc.myownwotreplays.search.Config;
+import ru.kamapcuc.myownwotreplays.Config;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
 import java.io.File;
@@ -43,6 +42,8 @@ public class Indexer implements Runnable {
                     IndexRequestBuilder indexRequest = client.prepareIndex(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME);
                     indexRequest.setId(file.getName());
                     indexRequest.setSource(doc);
+                    indexRequest.setParent((String) doc.get("tank"));
+                    doc.remove("tank");
                     indexRequest.execute();
                 } else
                     System.out.println(String.format("Failed to parse %s", file.getName()));
@@ -51,12 +52,10 @@ public class Indexer implements Runnable {
         });
     }
 
-    @SuppressWarnings("unused")
     public long getCompleted() {
         return completed;
     }
 
-    @SuppressWarnings("unused")
     public long getTotal() {
         return total;
     }
