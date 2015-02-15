@@ -2,33 +2,33 @@ package ru.kamapcuc.myownwotreplays.search;
 
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import ru.kamapcuc.myownwotreplays.spring.Translator;
 
 public enum SortType {
 
-    DATE("date", "по дате"),
-    DMG("damageDealt", "по урону"),
-    XP("originalXP", "по опыту"),
-    CASH("originalCredits", "по кредитам"),
-    KILLS("kills", "по фрагам");
+    DATE("date", "sort_date"),
+    DMG("damageDealt", "sort_dmg"),
+    XP("originalXP", "sort_xp"),
+    CASH("originalCredits", "sort_cash"),
+    KILLS("kills", "sort_kills");
 
     private final String field;
-    private final String description;
+    private final String code;
 
     public final static SortType DEFAULT_SORT = SortType.DATE;
     public final static SortOrder DEFAULT_ORDER = SortOrder.DESC;
 
-    private SortType(String field, String name) {
+    private SortType(String field, String code) {
         this.field = field;
-        this.description = name;
+        this.code = code;
     }
 
     public FieldSortBuilder getSort() {
         return new FieldSortBuilder(field);
     }
 
-    @SuppressWarnings("unused")
-    public String getDescription() {
-        return description;
+    public String getName() {
+        return Translator.translate(code);
     }
 
     public static SortType getSortType(String value) {

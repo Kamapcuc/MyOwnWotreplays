@@ -85,13 +85,13 @@
     <div>
         <div class="b-replays">
             <div class="b-sort b-replays__sort">
-                <span class="b-sort__label">Сортировать:</span>
+                <span class="b-sort__label">${translate.sort}:</span>
                 <ul class="b-sort__list b-list">
                     <#list sortTypes as sortType>
                         <li class="b-list__item">
                             <a class="b-link">
                                 <div class="b-link__text" id="${sortType.name()}">
-                                ${sortType.getDescription()}
+                                    ${sortType.getName()}
                                     <ins class="b-sort__dir"></ins>
                                 </div>
                             </a>
@@ -139,7 +139,7 @@
 <script>
     var battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
     var battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
-    var battlesTemplate = battlesTableTemplate;
+    var battlesTemplate = battlesTileTemplate;
 
     var battlesContainer = $('#battlesContainer');
 
