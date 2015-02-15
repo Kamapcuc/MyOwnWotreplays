@@ -29,7 +29,7 @@
                 </div>
             </header>
 
-            <#nested />
+            <#nested/>
 
         </body>
     </html>

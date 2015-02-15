@@ -76,9 +76,9 @@
                                                                 <div class="medal_tooltip animationDelay">
                                                                     <div class="medal-title">${medal.name_i18n}</div>
                                                                     <div class="medal-info">
-                                                                    ${medal.id}<br/>
-                                                                    ${medal.description_i18n?replace('\n', '<br/>')}
                                                                     ${medal.condition_i18n?replace('\n', '<br/>')}
+                                                                    <br/>
+                                                                    ${medal.description_i18n?replace('\n', '<br/>')}
                                                                     </div>
                                                                 </div>
                                                             </div>

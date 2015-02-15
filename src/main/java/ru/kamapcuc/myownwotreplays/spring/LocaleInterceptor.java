@@ -1,6 +1,5 @@
 package ru.kamapcuc.myownwotreplays.spring;
 
-import org.elasticsearch.common.collect.Collections2;
 import org.elasticsearch.common.util.LocaleUtils;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.ModelMap;
@@ -13,7 +12,6 @@ import ru.kamapcuc.myownwotreplays.search.TypesMeta;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
