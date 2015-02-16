@@ -125,6 +125,22 @@ public class ReplaysParser {
         if (winnerTeam != 0)
             result = (playerTeam.equals(winnerTeam)) ? "win" : "lose";
         document.put("result", result);
+        Integer finishReason = (Integer) commonResults.get("winnerTeam");
+        String finishReasonName;
+        switch (finishReason) {
+            case 1:
+                finishReasonName = "kill";
+                break;
+            case 2:
+                finishReasonName = "capture";
+                break;
+            case 3:
+                finishReasonName = "time";
+                break;
+            default:
+                throw new RuntimeException("unknown finishReason");
+        }
+        document.put("finishReason", finishReasonName);
     }
 
     private void parsePersonal(Map personalResults) {
