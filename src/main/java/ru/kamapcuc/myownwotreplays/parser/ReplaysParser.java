@@ -12,6 +12,7 @@ import java.util.*;
 public class ReplaysParser {
 
     private long version = 0;
+    Integer playerTeam = 1;
     private final Map startInfo;
     private final List endInfo;
     private Map<String, Map<String, Object>> players;
@@ -58,7 +59,6 @@ public class ReplaysParser {
     private void parseTeams() {
         List<Map<String, Object>> team1 = new ArrayList<>();
         List<Map<String, Object>> team2 = new ArrayList<>();
-        Integer playerTeam = 1;
         Object playerName = document.get("playerName");
         for (Map<String, Object> currentPlayerData : players.values()) {
             Map<String, Object> currentPlayer = new HashMap<>();
@@ -115,6 +115,16 @@ public class ReplaysParser {
             parsePersonal(personal);
         } else
             parsePersonal(personalResults);
+        Map common = (Map) personalResults.get("common");
+        parseCommon(common);
+    }
+
+    private void parseCommon(Map commonResults) {
+        Integer winnerTeam = (Integer) commonResults.get("winnerTeam");
+        String result = "draw";
+        if (winnerTeam != 0)
+            result = (playerTeam.equals(winnerTeam)) ? "win" : "lose";
+        document.put("result", result);
     }
 
     private void parsePersonal(Map personalResults) {

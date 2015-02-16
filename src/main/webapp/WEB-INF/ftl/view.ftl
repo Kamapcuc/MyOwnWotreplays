@@ -30,8 +30,8 @@
                         <dt id="wtst_self" class="b-tabs__label">Личный результат</dt>
                         <dd class="b-tabs__tab b-tabs__tab-active">
                             <div class="b-tabs__tab-in combat_effect">
-                                <div class="wtst_head wtst_head__win">
-                                    <div class="wtst_head_title">Победа!</div>
+                                <div class="wtst_head wtst_head__${battle.result}">
+                                    <div class="wtst_head_title">${translate.get(battle.result)}!</div>
                                     <div class="wtst_head_subtitle">
                                         <!--Все танки противника уничтожены-->
                                     </div>

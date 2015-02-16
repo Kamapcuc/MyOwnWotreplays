@@ -32,7 +32,6 @@ public class Indexer implements Runnable {
         }
         completed = 0;
         new Thread(this).start();
-        //bzzz
     }
 
     @Override
