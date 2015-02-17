@@ -5052,7 +5052,11 @@ i.i-48_wotreplays {
     background-position: 0 0
 }
 
-.mrr_ribbon.loss {
+.mrr_ribbon.lose {
+    background-position: 0 -85px
+}
+
+.mrr_ribbon.draw {
     background-position: 0 -85px
 }
 

@@ -113,10 +113,10 @@ public class ReplaysParser {
         if (version >= 9_00_00) {
             Map personal = (Map) personalResults.get("personal");
             parsePersonal(personal);
+            Map common = (Map) personalResults.get("common");
+            parseCommon(common);
         } else
             parsePersonal(personalResults);
-        Map common = (Map) personalResults.get("common");
-        parseCommon(common);
     }
 
     private void parseCommon(Map commonResults) {
@@ -132,6 +132,7 @@ public class ReplaysParser {
                 finishReasonName = "kill";
                 break;
             case 2:
+            case 0:
                 finishReasonName = "capture";
                 break;
             case 3:

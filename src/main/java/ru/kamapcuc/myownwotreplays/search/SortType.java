@@ -6,7 +6,7 @@ import ru.kamapcuc.myownwotreplays.spring.Translator;
 
 public enum SortType {
 
-    DATE("date", "sort_date"),
+    DATE("battleDate", "sort_date"),
     DMG("damageDealt", "sort_dmg"),
     XP("originalXP", "sort_xp"),
     CASH("originalCredits", "sort_cash"),
