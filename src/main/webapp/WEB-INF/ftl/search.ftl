@@ -141,7 +141,7 @@
 <script>
     var battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
     var battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
-    var battlesTemplate = battlesTileTemplate;
+    var battlesTemplate = battlesTableTemplate;
 
     var battlesContainer = $('#battlesContainer');
 
