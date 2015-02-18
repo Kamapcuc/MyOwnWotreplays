@@ -3,6 +3,9 @@
 <@site>
 
 <div class="main clearfix" id="baseCtrl">
+    <div class="progress-bar">
+        <span style="width: 0"></span>
+    </div>
     <div class="main-menu clearfix" style="margin-bottom: 319px;">
         <div class="m-item_dropdown expanded" id="helper-1">
             <div class="m-item_container">
@@ -317,9 +320,28 @@
     }
     facets.push(new SortFacet());
 
-    history.replaceState(battles);
+    history.replaceState(battles, null);
     applyData(battles);
     renewCheckboxes();
+
+    var renewProgress = function() {
+        $.ajax({
+            url: '/indexer_state.do',
+            async: true,
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+                if (data.completed == data.total) {
+                    $('.progress-bar').css('display', 'none');
+                } else {
+                    var progress = Math.ceil(data.completed / data.total * 100);
+                    $('.progress-bar span')[0].style.width = progress + '%';
+                }
+            }
+        });
+    };
+
+    window.setInterval(renewProgress, 500);
 
 </script>
 </@site>

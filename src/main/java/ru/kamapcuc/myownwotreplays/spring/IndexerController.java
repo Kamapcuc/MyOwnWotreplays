@@ -13,7 +13,7 @@ public class IndexerController {
     @ResponseBody
     @RequestMapping("/indexer_state.do")
     public String indexerState() {
-        return String.format("{'completed': %d, 'total':%d}", indexer.getCompleted(), indexer.getTotal());
+        return String.format("{\"completed\": %d, \"total\":%d}", indexer.getCompleted(), indexer.getTotal());
     }
 
 }

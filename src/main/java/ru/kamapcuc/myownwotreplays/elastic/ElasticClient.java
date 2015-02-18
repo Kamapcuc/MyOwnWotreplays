@@ -65,10 +65,10 @@ public class ElasticClient {
     @SuppressWarnings("unused")
     private static Client createNode() {
         ImmutableSettings.Builder settings = ImmutableSettings.settingsBuilder();
-        settings.loadFromClasspath("main/resources/elasticsearch.yml");
+        settings.loadFromClasspath("/elasticsearch.yml");
         settings.put("path.data", Config.getElasticDataPath());
         NodeBuilder nodebuilder = new NodeBuilder();
-        nodebuilder.settings(settings);
+        nodebuilder.settings(settings.build());
         Node node = nodebuilder.node();
         node.start();
         return node.client();
