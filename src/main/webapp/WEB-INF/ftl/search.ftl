@@ -141,7 +141,7 @@
     </ul>
 </script>
 
-<script>
+<script type="javascript">
     var battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
     var battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
     var battlesTemplate = battlesTableTemplate;
@@ -307,6 +307,13 @@
     SortFacet.prototype.setResult = function () {
         //doNothing
     };
+
+    function Pagination(size) {
+        this.size = size;
+    }
+
+    Pagination.prototype.itemsPerPage = ${paginationSize};
+
 
     for (var facetKey in facetsData) {
         var facetData = facetsData[facetKey];

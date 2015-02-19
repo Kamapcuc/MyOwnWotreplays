@@ -36,10 +36,16 @@ public class ReplaysRequest {
         return result;
     }
 
-    public SearchResult execute() {
+    public SearchResult fullSearch() {
         parsePagination();
         parseSort();
         parseFacets();
+        return client.search(searchRequest);
+    }
+
+    public SearchResult paginate() {
+        parsePagination();
+        parseSort();
         return client.search(searchRequest);
     }
 

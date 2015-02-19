@@ -33,6 +33,7 @@ public class ReplaysController {
         model.put("defaultSort", SortType.DEFAULT_SORT);
         model.put("defaultOrder", SortType.DEFAULT_ORDER);
         model.put("facetsData", getFacetsData());
+        model.put("paginationSize", Config.PAGINATION_SIZE);
         return "search";
     }
 
@@ -52,9 +53,15 @@ public class ReplaysController {
         return searchInternal(httpRequest);
     }
 
+    @ResponseBody
+    @RequestMapping("**/pagination.do")
+    public String paginationAjax(HttpServletRequest httpRequest) {
+        return searchInternal(httpRequest);
+    }
+
     private String searchInternal(HttpServletRequest httpRequest) {
         ReplaysRequest requestBuilder = new ReplaysRequest(castParams(httpRequest));
-        SearchResult searchResult = requestBuilder.execute();
+        SearchResult searchResult = requestBuilder.fullSearch();
         return searchResult.stringify();
     }
 
