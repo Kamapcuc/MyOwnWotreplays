@@ -119,7 +119,6 @@
         </div>
     </div>
 </div>
-</body>
 
 <#include "battlesTable.mustache" />
 <#include "battlesTile.mustache" />
@@ -209,12 +208,30 @@
         });
     };
 
+    var paginate = function (query) {
+        var currentDataNumber = ++queryNumber;
+        $.ajax({
+            url: './paginate.do?' + query,
+            async: true,
+            dataType: "json",
+            cache: false,
+            success: function (data) {
+                if (currentDataNumber > appliedDataNumber) {
+                    history.pushState(data, null, location.pathname + '?' + query);
+                    applyData(data);
+                    currentDataNumber = appliedDataNumber;
+                }
+            }
+        });
+    };
+
     var applyData = function (data) {
         battlesContainer.html(battlesTemplate(data));
         for (var i in facets) {
             var facet = facets[i];
             facet.setResult(data.facets[facet.id]);
         }
+        pagination.setResult(data.size);
         battles = data;
     };
 
@@ -275,8 +292,8 @@
             sortType: event.target.id,
             sortOrder: 'DESC'
         };
-        if (this.sort == param.sortType)
-            param.sortOrder = (this.order == 'ASC') ? 'DESC' : 'ASC';
+        if (this.sort == param.sortType && this.order == 'DESC')
+            param.sortOrder = 'ASC';
 
         this.setSelected(param);
         onFacetsChanged();
@@ -308,12 +325,15 @@
         //doNothing
     };
 
-    function Pagination(size) {
-        this.size = size;
+    function Pagination() {
+    }
+
+    Pagination.prototype.setResult = function (size) {
+        this.position = 1;
+        this.pagesCount = Math.floor(size / this.itemsPerPage);
     }
 
     Pagination.prototype.itemsPerPage = ${paginationSize};
-
 
     for (var facetKey in facetsData) {
         var facetData = facetsData[facetKey];
@@ -326,6 +346,7 @@
         facets.push(facet);
     }
     facets.push(new SortFacet());
+    var pagination = new Pagination();
 
     history.replaceState(battles, null);
     applyData(battles);
@@ -347,7 +368,6 @@
             }
         });
     };
-
     window.setInterval(renewProgress, 500);
 
 </script>

@@ -54,9 +54,11 @@ public class ReplaysController {
     }
 
     @ResponseBody
-    @RequestMapping("**/pagination.do")
+    @RequestMapping("**/paginate.do")
     public String paginationAjax(HttpServletRequest httpRequest) {
-        return searchInternal(httpRequest);
+        ReplaysRequest requestBuilder = new ReplaysRequest(castParams(httpRequest));
+        SearchResult searchResult = requestBuilder.paginate();
+        return searchResult.stringify();
     }
 
     private String searchInternal(HttpServletRequest httpRequest) {
