@@ -2,7 +2,7 @@
 
 <@site>
 
-<div class="main clearfix" id="baseCtrl">
+<div class="main clearfix">
     <div class="progress-bar">
         <span style="width: 0"></span>
     </div>
@@ -141,21 +141,33 @@
 </script>
 
 <script type="javascript">
-    var battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
-    var battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
-    var battlesTemplate = battlesTableTemplate;
 
-    var battlesContainer = $('#battlesContainer');
+    function FacetsController(facetsData) {
+        this.askedQueryNumber = 0;
+        this.appliedQueryNumber = 0;
+        this.battlesTemplate = this.battlesTableTemplate;
+        this.facets = [];
+        this.pagination = new Pagination();
+        this.facets.push(new SortFacet());
 
-    var battles = ${battlesData};
-    var facetsData = ${facetsData};
+        for (var facetKey in facetsData) {
+            var facetData = facetsData[facetKey];
+            var facet;
+            switch (facetData.type) {
+                case 'field':
+                    facet = new FieldFacet(facetKey, facetData);
+                    break;
+            }
+            this.facets.push(facet);
+        }
+    }
 
-    var queryNumber = 0;
-    var appliedDataNumber = 0;
+    FacetsController.prototype.battlesContainer = $('#battlesContainer');
 
-    var facets = [];
+    FacetsController.prototype.battlesTableTemplate = Handlebars.compile($('#battlesTableTemplate').html());
+    FacetsController.prototype.battlesTileTemplate = Handlebars.compile($('#battlesTileTemplate').html());
 
-    var buildQueryUrl = function () {
+    FacetsController.prototype.getQueryParams = function () {
         var queryParams = [];
         for (var i in facets) {
             var queryParam = facets[i].getQueryParam();
@@ -165,16 +177,16 @@
         return queryParams.join('&');
     };
 
-    var onFacetsChanged = function () {
-        getData(buildQueryUrl());
+    FacetsController.prototype.onFacetsChanged = function () {
+        this.getData(this.getQueryParams());
     };
 
-    window.addEventListener('popstate', function () {
-        applyData(history.state);
-        renewCheckboxes();
-    });
+    FacetsController.prototype.historyWalk = function () {
+        this.applyData(history.state);
+        this.renewCheckboxes();
+    };
 
-    var parseUrlParams = function () {
+    FacetsController.prototype.parseUrlParams = function () {
         var result = {};
         var search = window.location.search;
         if (search) {
@@ -191,41 +203,41 @@
         return result;
     };
 
-    var getData = function (query) {
-        var currentDataNumber = ++queryNumber;
+    FacetsController.prototype.getData = function (query) {
+        var currentDataNumber = ++askedQueryNumber;
         $.ajax({
             url: './search_ajax.do?' + query,
             async: true,
             dataType: "json",
             cache: false,
             success: function (data) {
-                if (currentDataNumber > appliedDataNumber) {
+                if (currentDataNumber > appliedQueryNumber) {
                     history.pushState(data, null, location.pathname + '?' + query);
-                    applyData(data);
-                    currentDataNumber = appliedDataNumber;
+                    this.applyData(data);
+                    currentDataNumber = this.appliedQueryNumber;
                 }
             }
         });
     };
 
-    var paginate = function (query) {
-        var currentDataNumber = ++queryNumber;
+    FacetsController.prototype.paginate = function (query) {
+        this.currentDataNumber = ++askedQueryNumber;
         $.ajax({
             url: './paginate.do?' + query,
             async: true,
             dataType: "json",
             cache: false,
             success: function (data) {
-                if (currentDataNumber > appliedDataNumber) {
+                if (this.currentDataNumber > this.appliedQueryNumber) {
                     history.pushState(data, null, location.pathname + '?' + query);
-                    applyData(data);
-                    currentDataNumber = appliedDataNumber;
+                    this.applyData(data);
+                    this.currentDataNumber = this.appliedQueryNumber;
                 }
             }
         });
     };
 
-    var applyData = function (data) {
+    FacetsController.prototype.applyData = function (data) {
         battlesContainer.html(battlesTemplate(data));
         for (var i in facets) {
             var facet = facets[i];
@@ -235,7 +247,7 @@
         battles = data;
     };
 
-    var renewCheckboxes = function () {
+    FacetsController.prototype.renewCheckboxes = function () {
         var queryParams = parseUrlParams();
         for (var i in facets)
             facets[i].setSelected(queryParams);
@@ -335,22 +347,13 @@
 
     Pagination.prototype.itemsPerPage = ${paginationSize};
 
-    for (var facetKey in facetsData) {
-        var facetData = facetsData[facetKey];
-        var facet;
-        switch (facetData.type) {
-            case 'field':
-                facet = new FieldFacet(facetKey, facetData);
-                break;
-        }
-        facets.push(facet);
-    }
-    facets.push(new SortFacet());
-    var pagination = new Pagination();
+    var facetsController = new FacetsController(${facetsData})
+    window.addEventListener('popstate', facetsController.historyWalk);
 
+    var battles = ${battlesData};
     history.replaceState(battles, null);
-    applyData(battles);
-    renewCheckboxes();
+    facetsController.applyData(battles);
+    facetsController.renewCheckboxes();
 
     var renewProgress = function() {
         $.ajax({

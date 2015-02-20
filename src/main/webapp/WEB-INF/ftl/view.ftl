@@ -2,7 +2,7 @@
 
 <@site>
 
-<div class="main clearfix view-replay" id="baseCtrl">
+<div class="main clearfix view-replay">
 
     <div class="main-menu clearfix" style="margin-bottom: 30px;">
     </div>
