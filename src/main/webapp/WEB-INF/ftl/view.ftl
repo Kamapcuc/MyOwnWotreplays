@@ -1335,9 +1335,7 @@
 
 </div>
 
-</body>
-
-<script>
+<script type="text/javascript">
     function tab() {
         if ($(this).hasClass("active")) return;
 

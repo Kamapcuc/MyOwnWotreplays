@@ -1,0 +1,16 @@
+<script id="fieldFacetTemplate" type="text/x-handlebars-template">
+    <div class="tf_title">
+        <div>{{name}}</div>
+    </div>
+    <ul>
+        {{#each values}}
+        <li>
+            <input type="checkbox" class="cbx" id="{{@key}}" onchange="facetsController.reloadData()">
+            <label for="{{@key}}">
+                <span></span>{{this}}&nbsp;
+                <small></small>
+            </label>
+        </li>
+        {{/each}}
+    </ul>
+</script>

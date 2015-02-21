@@ -120,28 +120,11 @@
     </div>
 </div>
 
-<#include "battlesTable.mustache" />
-<#include "battlesTile.mustache" />
+<#include "templates/battlesTable.mustache" />
+<#include "templates/battlesTile.mustache" />
+<#include "templates/fieldFacet.mustache" />
 
-<script id="fieldFacetTemplate" type="text/x-handlebars-template">
-    <div class="tf_title">
-        <div>{{name}}</div>
-    </div>
-    <ul>
-        {{#each values}}
-        <li>
-            <input type="checkbox" class="cbx" id="{{@key}}" onchange="onFacetsChanged(event)">
-            <label for="{{@key}}">
-                <span></span>{{this}}&nbsp;
-                <small></small>
-            </label>
-        </li>
-        {{/each}}
-    </ul>
-</script>
-
-<script type="javascript">
-
+<script type="text/javascript">
 
     function FacetsController(facetsData) {
         this.askedQueryNumber = 0;
@@ -149,7 +132,7 @@
         this.battlesTemplate = this.battlesTableTemplate;
         this.facets = [];
         this.pagination = new Pagination();
-        this.facets.push(new SortFacet());
+        this.facets.push(new SortFacet(this));
 
         for (var facetKey in facetsData) {
             var facetData = facetsData[facetKey];
@@ -161,6 +144,7 @@
             }
             this.facets.push(facet);
         }
+        window.addEventListener('popstate', $.proxy(this.historyWalk, this));
     }
 
     FacetsController.prototype.battlesContainer = $('#battlesContainer');
@@ -175,10 +159,6 @@
                 queryParams.push(queryParam);
         }
         return queryParams.join('&');
-    };
-
-    FacetsController.prototype.onFacetsChanged = function () {
-        this.getData(this.getQueryParams());
     };
 
     FacetsController.prototype.historyWalk = function () {
@@ -203,24 +183,25 @@
         return result;
     };
 
-    FacetsController.prototype.getData = function (query) {
+    FacetsController.prototype.reloadData = function () {
+        var query = this.getQueryParams();
         var queryNumber = ++this.askedQueryNumber;
         $.ajax({
             url: './search_ajax.do?' + query,
             async: true,
             dataType: "json",
             cache: false,
-            success: function (data) {
-                this.applyData(data, queryNumber, query);
-            }
+            success: $.proxy(function (data) {
+                this.tryApplyData(data, queryNumber, query);
+            }, this)
         });
     };
 
-    FacetsController.prototype.applyData = function (data, queryNumber, query) {
+    FacetsController.prototype.tryApplyData = function (data, queryNumber, query) {
         if (queryNumber > this.appliedQueryNumber) {
             history.pushState(data, null, location.pathname + '?' + query);
             this.applyData(data);
-            this.appliedQueryNumber = this.appliedQueryNumber;
+            this.appliedQueryNumber = queryNumber;
         }
     };
 
@@ -248,7 +229,7 @@
             facet.setResult(data.facets[facet.id]);
         }
         //this.pagination.setResult(data.size);
-        battles = data;
+        //battles = data;
     };
 
     FacetsController.prototype.renewCheckboxes = function () {
@@ -257,89 +238,8 @@
             this.facets[i].setSelected(queryParams);
     };
 
-    function FieldFacet(id, facetData) {
-        this.id = id;
-        $.extend(this, facetData);
-        var facetContainer = document.getElementById(this.id);
-        facetContainer.innerHTML = this.template(this);
-    }
-
-    FieldFacet.prototype.template = Handlebars.compile($('#fieldFacetTemplate').html());
-    FieldFacet.prototype.getQueryParam = function () {
-        var result = [];
-        for (var value in this.values)
-            if ($('#' + this.id + ' #' + value).prop('checked'))
-                result.push(value);
-        if (result.length > 0)
-            return this.id + '=' + result.join(',');
-        else
-            return null;
-    };
-
-    FieldFacet.prototype.setSelected = function (queryParams) {
-        var selectedValues = queryParams[this.id] ? queryParams[this.id] : [];
-        for (var value in this.values)
-            $('#' + this.id + ' #' + value).prop('checked', selectedValues.indexOf(value) != -1);
-    };
-
-    FieldFacet.prototype.setResult = function (data) {
-        for (var value in this.values) {
-            var count = data[value];
-            var label = $('#' + this.id + ' label[for=' + value + ']');
-            if (count) {
-                label.find('small').html('(' + data[value] + ')');
-                label.removeClass('disabled');
-            } else
-                label.addClass('disabled');
-        }
-    };
-
-    function SortFacet() {
-        this.sort = this.defaultSort;
-        this.order = this.defaultOrder;
-        $('.b-replays__sort a').on('click', $.proxy(this.onClick, this));
-    }
-
-    SortFacet.prototype.defaultSort = '${defaultSort.name()}';
-    SortFacet.prototype.defaultOrder = '${defaultOrder.name()}';
-
-    SortFacet.prototype.onClick = function (event) {
-        var param = {
-            sortType: event.target.id,
-            sortOrder: 'DESC'
-        };
-        if (this.sort == param.sortType && this.order == 'DESC')
-            param.sortOrder = 'ASC';
-
-        this.setSelected(param);
-        this.onFacetsChanged();
-    };
-
-    SortFacet.prototype.getQueryParam = function () {
-        var result = [];
-        if (this.sort != this.defaultSort)
-            result.push('sortType=' + this.sort);
-        if (this.order != this.defaultOrder)
-            result.push('sortOrder=' + this.order);
-        return result.join("&");
-    };
-
-    SortFacet.prototype.setSelected = function (queryParams) {
-        if (!queryParams.sortType)
-            queryParams.sortType = this.defaultSort;
-        if (this.sort != queryParams.sortType)
-            $('.b-replays__sort #' + this.sort).removeClass('b-link_active');
-        this.sort = queryParams.sortType;
-        if (queryParams.sortOrder)
-            this.order = queryParams.sortOrder;
-        var ref = $('.b-replays__sort #' + this.sort);
-        ref.addClass('b-link_active');
-        ref.find('.b-sort__dir').html((this.order == 'DESC') ? '↑' : '↓');
-    };
-
-    SortFacet.prototype.setResult = function () {
-        //doNothing
-    };
+    <#include "facets/fieldFacet.js" />
+    <#include "facets/sortFacet.js" />
 
     function Pagination() {
     }
@@ -352,7 +252,6 @@
     Pagination.prototype.itemsPerPage = ${paginationSize};
 
     var facetsController = new FacetsController(${facetsData});
-    window.addEventListener('popstate', facetsController.historyWalk);
 
     var battles = ${battlesData};
     history.replaceState(battles, null);
