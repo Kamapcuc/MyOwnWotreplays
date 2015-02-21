@@ -131,8 +131,8 @@
         this.appliedQueryNumber = 0;
         this.battlesTemplate = this.battlesTableTemplate;
         this.facets = [];
-        this.pagination = new Pagination();
         this.facets.push(new SortFacet(this));
+        this.facets.push(new PageFacet());
 
         for (var facetKey in facetsData) {
             var facetData = facetsData[facetKey];
@@ -154,16 +154,11 @@
     FacetsController.prototype.getQueryParams = function () {
         var queryParams = [];
         for (var i in this.facets) {
-            var queryParam = this.facets[i].getQueryParam();
+            var queryParam = this.facets[i].getQueryParams();
             if (queryParam)
                 queryParams.push(queryParam);
         }
-        return queryParams.join('&');
-    };
-
-    FacetsController.prototype.historyWalk = function () {
-        this.applyData(history.state);
-        this.renewCheckboxes();
+        return queryParams
     };
 
     FacetsController.prototype.parseUrlParams = function () {
@@ -184,10 +179,12 @@
     };
 
     FacetsController.prototype.reloadData = function () {
-        var query = this.getQueryParams();
+        var queryParams = this.getQueryParams();
+        var method = (queryParams.page)? './paginate.do?' : './search_ajax.do?';
+        var query = queryParams.join('&');
         var queryNumber = ++this.askedQueryNumber;
         $.ajax({
-            url: './search_ajax.do?' + query,
+            url: method + query,
             async: true,
             dataType: "json",
             cache: false,
@@ -205,58 +202,30 @@
         }
     };
 
-    //    FacetsController.prototype.paginate = function (query) {
-    //        this.currentDataNumber = ++askedQueryNumber;
-    //        $.ajax({
-    //            url: './paginate.do?' + query,
-    //            async: true,
-    //            dataType: "json",
-    //            cache: false,
-    //            success: function (data) {
-    //                if (this.currentDataNumber > this.appliedQueryNumber) {
-    //                    history.pushState(data, null, location.pathname + '?' + query);
-    //                    this.applyData(data);
-    //                    this.currentDataNumber = this.appliedQueryNumber;
-    //                }
-    //            }
-    //        });
-    //    };
-
     FacetsController.prototype.applyData = function (data) {
         this.battlesContainer.html(this.battlesTemplate(data));
-        for (var i in this.facets) {
-            var facet = this.facets[i];
-            facet.setResult(data.facets[facet.id]);
-        }
-        //this.pagination.setResult(data.size);
-        //battles = data;
+        if (data.facets)
+            for (var i in this.facets) {
+                var facet = this.facets[i];
+                facet.setSearchResult(data);
+            }
     };
 
-    FacetsController.prototype.renewCheckboxes = function () {
+    FacetsController.prototype.historyWalk = function () {
+        this.applyData(history.state);
         var queryParams = this.parseUrlParams();
         for (var i in this.facets)
-            this.facets[i].setSelected(queryParams);
+            this.facets[i].setStateFromUrl(queryParams);
     };
 
+        <#include "facets/abstractFacet.js" />
     <#include "facets/fieldFacet.js" />
     <#include "facets/sortFacet.js" />
-
-    function Pagination() {
-    }
-
-    Pagination.prototype.setResult = function (size) {
-        this.position = 1;
-        this.pagesCount = Math.floor(size / this.itemsPerPage);
-    };
-
-    Pagination.prototype.itemsPerPage = ${paginationSize};
+    <#include "facets/pageFacet.js" />
 
     var facetsController = new FacetsController(${facetsData});
-
-    var battles = ${battlesData};
-    history.replaceState(battles, null);
-    facetsController.applyData(battles);
-    facetsController.renewCheckboxes();
+    history.replaceState(${battlesData}, null);
+    facetsController.historyWalk();
 
     var renewProgress = function() {
         $.ajax({

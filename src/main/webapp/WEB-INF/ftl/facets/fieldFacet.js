@@ -5,9 +5,10 @@ function FieldFacet(id, facetData) {
     facetContainer.innerHTML = this.template(this);
 }
 
+FieldFacet.prototype = Object.create(AbstractFacet.prototype);
 FieldFacet.prototype.template = Handlebars.compile($('#fieldFacetTemplate').html());
 
-FieldFacet.prototype.getQueryParam = function () {
+FieldFacet.prototype.getQueryParams = function () {
     var result = [];
     for (var value in this.values)
         if ($('#' + this.id + ' #' + value).prop('checked'))
@@ -18,13 +19,14 @@ FieldFacet.prototype.getQueryParam = function () {
         return null;
 };
 
-FieldFacet.prototype.setSelected = function (queryParams) {
+FieldFacet.prototype.setStateFromUrl = function (queryParams) {
     var selectedValues = queryParams[this.id] ? queryParams[this.id] : [];
     for (var value in this.values)
         $('#' + this.id + ' #' + value).prop('checked', selectedValues.indexOf(value) != -1);
 };
 
-FieldFacet.prototype.setResult = function (data) {
+FieldFacet.prototype.setSearchResult = function (result) {
+    var data = result.facets[this.id];
     for (var value in this.values) {
         var count = data[value];
         var label = $('#' + this.id + ' label[for=' + value + ']');
