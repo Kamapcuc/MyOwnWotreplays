@@ -21,11 +21,15 @@ public class ReplaysRequest {
     private final static ElasticClient client = ElasticClient.getInstance();
 
     private final Map<String, String> params;
+    private final List<Facet> facets = new ArrayList<>();;
     private final SearchRequestBuilder searchRequest;
 
     public ReplaysRequest(Map<String, String> params) {
         this.params = params;
         this.searchRequest = createSearchRequest();
+        parsePagination();
+        parseSort();
+        parseFilters();
     }
 
     private SearchRequestBuilder createSearchRequest() {
@@ -37,15 +41,14 @@ public class ReplaysRequest {
     }
 
     public SearchResult fullSearch() {
-        parsePagination();
-        parseSort();
-        parseFacets();
+        facets.stream().forEach(facet -> {
+            AggregationBuilder aggregation = facet.getFacet(facets);
+            searchRequest.addAggregation(aggregation);
+        });
         return client.search(searchRequest);
     }
 
     public SearchResult paginate() {
-        parsePagination();
-        parseSort();
         return client.search(searchRequest);
     }
 
@@ -66,8 +69,7 @@ public class ReplaysRequest {
         searchRequest.addSort(sort.getSort().order(order));
     }
 
-    private void parseFacets() {
-        List<Facet> facets = new ArrayList<>();
+    private void parseFilters() {
         for (FacetBuilder facetBuilder : Config.FACET_BUILDERS)
             facets.add(facetBuilder.getFacet(params));
 
@@ -77,16 +79,12 @@ public class ReplaysRequest {
             if (filter != null)
                 filters.add(filter);
         }
+
         if (filters.size() > 0) {
             AndFilterBuilder andFilter = new AndFilterBuilder();
             filters.forEach(andFilter::add);
             searchRequest.setPostFilter(andFilter);
         }
-
-        facets.stream().forEach(facet -> {
-            AggregationBuilder aggregation = facet.getFacet(facets);
-            searchRequest.addAggregation(aggregation);
-        });
     }
 
 }

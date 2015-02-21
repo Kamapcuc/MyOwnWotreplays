@@ -27,13 +27,14 @@ FieldFacet.prototype.setStateFromUrl = function (queryParams) {
 
 FieldFacet.prototype.setSearchResult = function (result) {
     var data = result.facets[this.id];
-    for (var value in this.values) {
-        var count = data[value];
-        var label = $('#' + this.id + ' label[for=' + value + ']');
-        if (count) {
-            label.find('small').html('(' + data[value] + ')');
-            label.removeClass('disabled');
-        } else
-            label.addClass('disabled');
-    }
+    if (data)
+        for (var value in this.values) {
+            var count = data[value];
+            var label = $('#' + this.id + ' label[for=' + value + ']');
+            if (count) {
+                label.find('small').html('(' + data[value] + ')');
+                label.removeClass('disabled');
+            } else
+                label.addClass('disabled');
+        }
 };
