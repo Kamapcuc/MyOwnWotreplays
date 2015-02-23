@@ -60,7 +60,7 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
                 return 1;
             if (selected.equals(l1.getId()))
                 return -1;
-            return 0;
+            return (Integer) l1.get("order") - (Integer) l2.get("order");
         });
         return result;
     }

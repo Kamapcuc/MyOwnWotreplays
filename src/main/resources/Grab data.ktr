@@ -1227,7 +1227,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>classId</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1290,6 +1289,10 @@
         <columnName>langName</columnName>
         <targetName>name</targetName>
       </field>
+      <field>
+        <columnName>num</columnName>
+        <targetName>order</targetName>
+      </field>
     </fields>
     <servers>
       <server>
@@ -1332,7 +1335,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>id</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1381,7 +1383,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>numericId</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1430,7 +1431,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>nationId</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1479,7 +1479,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>sectionId</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1528,7 +1527,6 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>id</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
