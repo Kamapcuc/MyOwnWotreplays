@@ -145,282 +145,54 @@
                                     <div class="wtst-title__panel wtst-title__gradient">Боевая эффективность</div>
                                     <table class="c_table">
                                         <tbody>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="Sancio_89 ">Sancio_89</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/ussr-R106_KV85.png)"
-                                                title="R106_KV85">
-                                                КВ-85
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
+                                            <#list battle.battleEfficiency as playerHarm>
+                                                <tr><td colspan="8" class="c_sep"></td></tr>
+                                                <tr>
+                                                    <#if playerHarm.clanAbbrev == ''>
+                                                        <#assign playerHarmName = playerHarm.name />
+                                                    <#else>
+                                                        <#assign playerHarmName = playerHarm.name + '&nbsp;[' + playerHarm.clanAbbrev + ']'/>
+                                                    </#if>
+                                                    <td class="c_n txt_e">${playerHarmName}</td>
+                                                    <td class="c_t txt_e" title="R106_KV85"
+                                                        style="background-image: url(/img/results/Tanks_small/ussr-R106_KV85.png)">
+                                                        ${playerHarm.tank}
+                                                    </td>
 
-                                            <td class="ce ce_d" title="Вы нанесли урона: 502">
-                                            </td>
+                                                    <#if playerHarm.fire != 0>
+                                                        <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
+                                                    <#else>
+                                                        <td class="ce ce_k" style="opacity: 0.2"></td>
+                                                    </#if>
 
-                                            <td class="ce ce_ch" title="Вы нанесли критических повреждений: 1">
-                                                <div class="ce_c">1</div>
+                                                    <#if playerHarm.crits != 0>
+                                                        <td class="ce ce_d" title="Вы нанесли критических повреждений: ${playerHarm.damageDealt}"></td>
+                                                    <#else>
+                                                        <td class="ce ce_d" style="opacity: 0.2"></td>
+                                                    </#if>
 
-                                            </td>
+                                                    <#if playerHarm.crits != 0>
+                                                        <td class="ce ce_ch" title="Вы нанесли критических повреждений: ${playerHarm.crits}">
+                                                            <div class="ce_c">${playerHarm.crits}</div>
+                                                        </td>
+                                                    <#else>
+                                                        <td class="ce ce_ch" style="opacity: 0.2"></td>
+                                                    </#if>
 
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
+                                                    <#assign assistedDamage = playerHarm.damageAssistedTrack + playerHarm.damageAssistedRadio />
+                                                    <#if assistedDamage != 0>
+                                                        <td class="ce ce_da" title="По вашим разведданным союзники нанесли очков урона: ${assistedDamage}"></td>
+                                                    <#else>
+                                                        <td class="ce ce_da" style="opacity: 0.2"></td>
+                                                    </#if>
 
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="dima60905 ">dima60905</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/france-ELC_AMX.png)"
-                                                title="ELC_AMX">
-                                                ELC AMX
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 253">
-                                            </td>
-
-                                            <td class="ce ce_ch" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="maximus77766 ">maximus77766</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/france-ARL_44.png)"
-                                                title="ARL_44">
-                                                ARL 44
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 62">
-                                            </td>
-
-                                            <td class="ce ce_ch" title="Вы нанесли критических повреждений: 1">
-                                                <div class="ce_c">1</div>
-
-                                            </td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="1990xxxx ">1990xxxx</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/ussr-T-34-85.png)"
-                                                title="T-34-85">
-                                                Т-34-85
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 106">
-                                            </td>
-
-                                            <td class="ce ce_ch" title="Вы нанесли критических повреждений: 1">
-                                                <div class="ce_c">1</div>
-
-                                            </td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="HanTeR_snajpe ">HanTeR_snajpe</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/usa-M18_Hellcat.png)"
-                                                title="M18_Hellcat">
-                                                M18 Hellcat
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 570">
-                                            </td>
-
-                                            <td class="ce ce_ch" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="lalaka0404 [HVYML]">lalaka0404 [HVYML]</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/usa-M18_Hellcat.png)"
-                                                title="M18_Hellcat">
-                                                M18 Hellcat
-                                            </td>
-                                            <td class="ce ce_k" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 232">
-                                            </td>
-
-                                            <td class="ce ce_ch" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_da"
-                                                title="По вашим разведданным союзники нанесли очков урона: 100"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="David_Belle ">David_Belle</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/france-S_35CA.png)"
-                                                title="S_35CA">
-                                                S35 CA
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 256">
-                                            </td>
-
-                                            <td class="ce ce_ch" title="Вы нанесли критических повреждений: 1">
-                                                <div class="ce_c">1</div>
-
-                                            </td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="D_e_en [-KOI-]">D_e_en [-KOI-]</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/germany-DickerMax.png)"
-                                                title="DickerMax">
-                                                Dicker Max
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 423">
-                                            </td>
-
-                                            <td class="ce ce_ch" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="MrGotor ">MrGotor</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/germany-Nashorn.png)"
-                                                title="Nashorn">
-                                                Nashorn
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 417">
-                                            </td>
-
-                                            <td class="ce ce_ch" title="Вы нанесли критических повреждений: 1">
-                                                <div class="ce_c">1</div>
-
-                                            </td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="LAWRIK1 ">LAWRIK1</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/germany-Pz_IV_AusfH.png)"
-                                                title="Pz_IV_AusfH">
-                                                Pz.Kpfw. IV Ausf. H
-                                            </td>
-                                            <td class="ce ce_k" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 243">
-                                            </td>
-
-                                            <td class="ce ce_ch" title="Вы нанесли критических повреждений: 3">
-                                                <div class="ce_c">3</div>
-
-                                            </td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="12345renat12345 ">12345renat12345</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/germany-JagdPzIV.png)"
-                                                title="JagdPzIV">
-                                                Jagdpanzer IV
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 600">
-                                            </td>
-
-                                            <td class="ce ce_ch" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" title="Вы обнаружили этот танк противника"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="c_n txt_e" title="Ruzil2505 ">Ruzil2505</td>
-                                            <td class="c_t txt_e"
-                                                style="background-image: url(/img/results/Tanks_small/france-BDR_G1B.png)"
-                                                title="BDR_G1B">
-                                                BDR G1 B
-                                            </td>
-                                            <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
-
-                                            <td class="ce ce_d" title="Вы нанесли урона: 19">
-                                            </td>
-
-                                            <td class="ce ce_ch" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_da" style="opacity: 0.2"></td>
-
-                                            <td class="ce ce_s" style="opacity: 0.2"></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="8" class="c_sep"></td>
-                                        </tr>
-
-                                        <!--getTouchedPlayers-->
+                                                    <#if playerHarm.spotted != 0>
+                                                        <td class="ce ce_s" title="Вы обнаружили этот танк противника"></td>
+                                                    <#else>
+                                                        <td class="ce ce_s" style="opacity: 0.2"></td>
+                                                    </#if>
+                                                </tr>
+                                            </#list>
                                         </tbody>
                                     </table>
                                 </div>

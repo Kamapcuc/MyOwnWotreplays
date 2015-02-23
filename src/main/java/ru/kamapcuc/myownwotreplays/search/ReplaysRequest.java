@@ -36,7 +36,7 @@ public class ReplaysRequest {
         SearchRequestBuilder result = client.prepareSearch();
         result.setTypes(Config.BATTLE_TYPE_NAME);
         result.setQuery(new MatchQueryBuilder("haveResults", true));
-        result.setFetchSource(null, new String[]{"allies", "enemies"});
+        result.setFetchSource(null, new String[]{"allies", "enemies", "battleEfficiency"});
         return result;
     }
 

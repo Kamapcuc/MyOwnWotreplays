@@ -1,8 +1,8 @@
 package ru.kamapcuc.myownwotreplays.parser;
 
 import org.elasticsearch.common.base.Joiner;
-import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.Config;
+import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.TypesMeta;
 
 import java.text.ParseException;
@@ -15,7 +15,8 @@ public class ReplaysParser {
     Integer playerTeam = 1;
     private final Map startInfo;
     private final List endInfo;
-    private Map<String, Map<String, Object>> players;
+    private String playerName;
+    private Map<String, Map<String, Object>> players = new HashMap<>();
     private Map<String, Object> document = new HashMap<>();
     private final static Map<String, Doc> tanksData = TypesMeta.REPOSITORIES.get(Config.TANK_TYPE_NAME);
     private final static Map<String, Doc> medals_rep = TypesMeta.REPOSITORIES.get(Config.MEDAL_TYPE_NAME);
@@ -48,6 +49,7 @@ public class ReplaysParser {
             parseEndInfo();
         } else
             document.put("haveResults", false);
+        buildTeams();
         return document;
     }
 
@@ -56,49 +58,52 @@ public class ReplaysParser {
         return str.substring(str.indexOf(':') + 1);
     }
 
-    private void parseTeams() {
-        List<Map<String, Object>> team1 = new ArrayList<>();
-        List<Map<String, Object>> team2 = new ArrayList<>();
-        Object playerName = document.get("playerName");
-        for (Map<String, Object> currentPlayerData : players.values()) {
+    private void parsePlayers() {
+        Map<String, Map<String, Object>> players = (Map) startInfo.get("vehicles");
+        for (Map.Entry<String, Map<String, Object>> playerEntry : players.entrySet()) {
+            Map<String, Object> currentPlayerData = playerEntry.getValue();
             Map<String, Object> currentPlayer = new HashMap<>();
-            currentPlayer.put("isAlive", currentPlayerData.get("isAlive"));
             currentPlayer.put("name", currentPlayerData.get("name"));
             currentPlayer.put("clanAbbrev", currentPlayerData.get("clanAbbrev"));
-            currentPlayer.put("isTeamKiller", currentPlayerData.get("isTeamKiller"));
+            currentPlayer.put("team", currentPlayerData.get("team"));
             currentPlayer.put("tank", getTankId(currentPlayerData.get("vehicleType")));
             Integer currentPlayerTeam = (Integer) currentPlayerData.get("team");
-            if (currentPlayerTeam.equals(1)) {
-                team1.add(currentPlayer);
-            } else
-                team2.add(currentPlayer);
             if (playerName.equals(currentPlayer.get("name")))
                 playerTeam = currentPlayerTeam;
+            this.players.put(playerEntry.getKey(), currentPlayer);
+        }
+    }
+
+    private void buildTeams() {
+        List<Map<String, Object>> allies = new ArrayList<>();
+        List<Map<String, Object>> enemies = new ArrayList<>();
+        for (Map<String, Object> currentPlayer : players.values()) {
+            Integer currentPlayerTeam = (Integer) currentPlayer.get("team");
+            currentPlayer.remove("team");
+            if (currentPlayerTeam.equals(playerTeam))
+                allies.add(currentPlayer);
+            else
+                enemies.add(currentPlayer);
         }
         document.put("respawn", playerTeam);
-        if (playerTeam.equals(1)) {
-            document.put("allies", team1);
-            document.put("enemies", team2);
-        } else {
-            document.put("allies", team2);
-            document.put("enemies", team1);
-        }
+        document.put("allies", allies);
+        document.put("enemies", enemies);
     }
 
     private void parseStartInfo() {
         String battleDate = startInfo.get("dateTime").toString();
+        playerName = (String) startInfo.get("playerName");
+        document.put("playerName", playerName);
         document.put("battleDate", parseDate(battleDate));
-        document.put("playerName", startInfo.get("playerName"));
         document.put("map", startInfo.get("mapName"));
         String tankInfo = (String) startInfo.get("playerVehicle");
         String tankId = tankInfo.substring(tankInfo.indexOf('-') + 1);
-        players = (Map) startInfo.get("vehicles");
+        document.put("tank", tankId);
         addTankSearchInfo(tankId);
-        parseTeams();
+        parsePlayers();
     }
 
     private void addTankSearchInfo(String tankId) {
-        document.put("tank", tankId);
         Doc tank = tanksData.get(tankId);
         if (tank != null) {
             document.put("tankLevel", tank.get("level"));
@@ -163,6 +168,11 @@ public class ReplaysParser {
         document.put("damageAssistedRadio", personalResults.get("damageAssistedRadio"));
         document.put("damageDealt", personalResults.get("damageDealt"));
         document.put("kills", personalResults.get("kills"));
+        parseMedals(personalResults);
+        parseBattleEfficiency(personalResults);
+    }
+
+    private void parseMedals(Map personalResults) {
         List<String> medals = new ArrayList<>();
         Integer markOfMastery = (Integer) personalResults.get("markOfMastery");
         if (markOfMastery != null && markOfMastery != 0)
@@ -181,12 +191,40 @@ public class ReplaysParser {
         document.put("medals", medals);
     }
 
+    private void parseBattleEfficiency(Map personalResults) {
+        List<Map<String, Object>> battleEfficiency = new ArrayList<>();
+        Map<String, Map<String, Object>> details = (Map) personalResults.get("details");
+        if (details != null)
+            for (Map.Entry<String, Map<String, Object>> playerWounds : details.entrySet()) {
+                Map<String, Object> detailsInfo = new HashMap<>();
+                Map<String, Object> playerInfo = players.get(playerWounds.getKey());
+                detailsInfo.put("name", playerInfo.get("name"));
+                detailsInfo.put("clanAbbrev", playerInfo.get("clanAbbrev"));
+                detailsInfo.put("tank", playerInfo.get("tank"));
+                detailsInfo.putAll(playerWounds.getValue());
+                detailsInfo.put("crits", parseCrits((Integer) detailsInfo.get("crits")));
+                battleEfficiency.add(detailsInfo);
+            }
+        document.put("battleEfficiency", battleEfficiency);
+    }
+
     private Date parseDate(String date) {
         try {
             return DATE_PARSER.parse(date);
         } catch (ParseException e) {
             return null;
         }
+    }
+
+    private Integer parseCrits(Integer crits) {
+        int res = 0;
+        int tmp = crits;
+        while (tmp != 0) {
+            if ((tmp & 1) > 0)
+                res++;
+            tmp = tmp >> 1;
+        }
+        return res;
     }
 
 }
