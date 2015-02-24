@@ -196,21 +196,36 @@
     FacetsController.prototype.tryApplyData = function (data, queryNumber, query) {
         if (queryNumber > this.appliedQueryNumber) {
             history.pushState(data, null, location.pathname + '?' + query);
-            this.applyData(data);
+            this.applyData();
             this.appliedQueryNumber = queryNumber;
         }
     };
 
     FacetsController.prototype.applyData = function (data) {
-        this.battlesContainer.html(this.battlesTemplate(data));
+        this.redraw();
         for (var i in this.facets) {
             var facet = this.facets[i];
-            facet.setSearchResult(data);
+            facet.setSearchResult();
         }
     };
 
+    FacetsController.prototype.redraw = function () {
+        var data = history.state;
+        var content = this.battlesTemplate(data);
+        this.battlesContainer.html(content);
+    };
+
+    FacetsController.prototype.changeView = function () {
+        if (this.battlesTemplate == this.battlesTableTemplate)
+            this.battlesTemplate = this.battlesTileTemplate;
+        else
+            this.battlesTemplate = this.battlesTableTemplate;
+        $('.battles_view').toggleClass('active');
+        this.redraw();
+    };
+
     FacetsController.prototype.applyHistoryState = function () {
-        this.applyData(history.state);
+        this.applyData();
         var queryParams = this.parseUrlParams();
         for (var i in this.facets)
             this.facets[i].setStateFromUrl(queryParams);

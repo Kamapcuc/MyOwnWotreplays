@@ -4638,6 +4638,22 @@ i.i-48_wotreplays {
     color: #656565
 }
 
+.battles_view .list {
+    width: 15px;
+    height: 15px;
+    background: url("/resources/img/icons.png") -22px -311px no-repeat;
+}
+
+.battles_view .tile {
+    width: 15px;
+    height: 15px;
+    background: url("/resources/img/icons.png") -22px -338px no-repeat;
+}
+
+.battles_view .active {
+
+}
+
 .selected-filters i {
     display: inline-block;
     width: 8px;

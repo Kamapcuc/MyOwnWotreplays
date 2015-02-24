@@ -25,8 +25,8 @@ FieldFacet.prototype.setStateFromUrl = function (queryParams) {
         $('#' + this.id + ' #' + value).prop('checked', selectedValues.indexOf(value) != -1);
 };
 
-FieldFacet.prototype.setSearchResult = function (result) {
-    var data = result.facets[this.id];
+FieldFacet.prototype.setSearchResult = function () {
+    var data = history.state.facets[this.id];
     if (data)
         for (var value in this.values) {
             var count = data[value];
