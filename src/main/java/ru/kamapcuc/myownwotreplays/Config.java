@@ -30,11 +30,4 @@ public class Config {
         return System.getProperty("wotPath") + "MyOwnWotreplays/data/";
     }
 
-    public final static FacetBuilder[] FACET_BUILDERS = new FacetBuilder[]{
-            new RepositoryFacetBuilder("tankNation", "facet_tank_nation", NATION_TYPE_NAME),
-            new RepositoryFacetBuilder("tankClass", "facet_tank_class", CLASS_TYPE_NAME),
-            new RepositoryFacetBuilder("map", "facet_map", MAP_TYPE_NAME),
-            new TankLevelFacetBuilder("tankLevel", "facet_tank_level")
-    };
-
 }

@@ -28,7 +28,7 @@ public class BattleMapper extends DefaultMapper {
         source.put(Doc.ID_FIELD, id);
         String tankId = (String) parent;
         source.put("tank", tanks.get(tankId));
-        String mapId =(String) source.get("map");
+        String mapId = (String) source.get("map");
         source.put("map", maps.get(mapId));
         source.put("battleDate", formatDate((String) source.get("battleDate")));
         source.put("medals", mapMedals((List) source.get("medals")));
@@ -38,7 +38,7 @@ public class BattleMapper extends DefaultMapper {
     private List mapMedals(List ids) {
         List<Doc> result = new ArrayList<>();
         for (Object id : ids) {
-            String idString = (String)id;
+            String idString = (String) id;
             result.add(medals.get(idString));
         }
         return result;

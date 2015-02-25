@@ -36,7 +36,8 @@ public class Indexer implements Runnable {
     @Override
     public void run() {
         filesToIndex.forEach(file -> {
-            if (!file.isDirectory() && file.getName().endsWith(".wotreplay")) {
+            if (!file.isDirectory() && file.getName().endsWith(".wotreplay")
+                    && !"temp.wotreplay".equals(file.getName())) {
                 Map<String, Object> doc = parser.parse(file);
                 if (doc != null) {
                     IndexRequestBuilder indexRequest = client.prepareIndex(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME);

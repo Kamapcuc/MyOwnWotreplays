@@ -13,6 +13,7 @@ import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.Config;
 import ru.kamapcuc.myownwotreplays.search.ReplaysRequest;
 import ru.kamapcuc.myownwotreplays.search.SortType;
+import ru.kamapcuc.myownwotreplays.search.WrappedClient;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +25,7 @@ import java.util.Map;
 @Controller
 public class ReplaysController {
 
-    private final static ElasticClient client = ElasticClient.getInstance();
+    private final static WrappedClient client = new WrappedClient();
 
     @RequestMapping({"/", "**/search.do"})
     public String search(HttpServletRequest httpRequest, ModelMap model) {
@@ -71,7 +72,7 @@ public class ReplaysController {
         try {
             XContentBuilder builder = XContentFactory.jsonBuilder();
             builder.startObject();
-            for (FacetBuilder facet : Config.FACET_BUILDERS)
+            for (FacetBuilder facet : ReplaysRequest.FACET_BUILDERS)
                 facet.toXContent(builder, ToXContent.EMPTY_PARAMS);
             builder.close();
             return builder.string();

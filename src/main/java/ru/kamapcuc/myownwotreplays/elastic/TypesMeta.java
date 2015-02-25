@@ -1,8 +1,13 @@
 package ru.kamapcuc.myownwotreplays.elastic;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
 import ru.kamapcuc.myownwotreplays.Config;
+import ru.kamapcuc.myownwotreplays.elastic.mappers.HitMapper;
+import ru.kamapcuc.myownwotreplays.elastic.mappers.Mapper;
 
 import java.util.HashMap;
 
@@ -26,9 +31,18 @@ public class TypesMeta {
             searchRequest.setQuery(new MatchAllQueryBuilder());
             searchRequest.setSize(10_000);
             searchRequest.setTypes(repositoryType);
-            SearchResult searchResult = client.search(searchRequest);
+            SearchResponse searchResponse = client.search(searchRequest);
+            SearchResult searchResult = mapResponse(searchResponse, HitMapper.DEFAULT_MAPPER);
             REPOSITORIES.put(repositoryType, searchResult.getDocs());
         }
     }
 
+    private static SearchResult mapResponse(SearchResponse searchResponse, Mapper mapper) {
+        SearchHits hits = searchResponse.getHits();
+        DocMap result = new DocMap();
+        for (SearchHit hit : hits)
+            result.put(hit.getId(), mapper.mapHit(hit));
+        FacetResult facets = new FacetResult(searchResponse.getAggregations());
+        return new SearchResult(hits.totalHits(), result, facets);
+    }
 }

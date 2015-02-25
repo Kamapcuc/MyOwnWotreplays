@@ -11,7 +11,7 @@ import java.util.Map;
 public class HitMapper implements Mapper {
 
     private final static Map<String, Mapper> TYPE_MAPPERS = new HashMap<>();
-    private final static Mapper DEFAULT_MAPPER = new DefaultMapper();
+    public final static Mapper DEFAULT_MAPPER = new DefaultMapper();
 
     static {
         TYPE_MAPPERS.put(Config.BATTLE_TYPE_NAME, new BattleMapper());
