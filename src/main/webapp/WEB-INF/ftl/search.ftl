@@ -163,9 +163,9 @@
 
     FacetsController.prototype.parseUrlParams = function () {
         var result = {};
-        var search = window.location.search;
+        var search = location.search;
         if (search) {
-            var query = window.location.search.substring(1);
+            var query = search.substring(1);
             var vars = query.split('&');
             for (var i = 0; i < vars.length; i++) {
                 var variable = vars[i];
@@ -188,30 +188,27 @@
             dataType: "json",
             cache: false,
             success: $.proxy(function (data) {
-                this.tryApplyData(data, queryNumber, query);
+                this.applyData(data, queryNumber, query);
             }, this)
         });
     };
 
-    FacetsController.prototype.tryApplyData = function (data, queryNumber, query) {
+    FacetsController.prototype.applyData = function (data, queryNumber, query) {
         if (queryNumber > this.appliedQueryNumber) {
             history.pushState(data, null, location.pathname + '?' + query);
-            this.applyData();
+            this.invalidate();
             this.appliedQueryNumber = queryNumber;
         }
     };
 
-    FacetsController.prototype.applyData = function (data) {
-        this.redraw();
-        for (var i in this.facets) {
-            var facet = this.facets[i];
-            facet.setSearchResult();
-        }
+    FacetsController.prototype.invalidate = function (data) {
+        this.redrawBattles();
+        for (var i in this.facets)
+            this.facets[i].redraw();
     };
 
-    FacetsController.prototype.redraw = function () {
-        var data = history.state;
-        var content = this.battlesTemplate(data);
+    FacetsController.prototype.redrawBattles = function () {
+        var content = this.battlesTemplate(history.state);
         this.battlesContainer.html(content);
     };
 
@@ -221,11 +218,11 @@
         else
             this.battlesTemplate = this.battlesTableTemplate;
         $('.battles_view').toggleClass('active');
-        this.redraw();
+        this.redrawBattles();
     };
 
     FacetsController.prototype.applyHistoryState = function () {
-        this.applyData();
+        this.invalidate();
         var queryParams = this.parseUrlParams();
         for (var i in this.facets)
             this.facets[i].setStateFromUrl(queryParams);

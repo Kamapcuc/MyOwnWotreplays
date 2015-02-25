@@ -25,7 +25,7 @@ FieldFacet.prototype.setStateFromUrl = function (queryParams) {
         $('#' + this.id + ' #' + value).prop('checked', selectedValues.indexOf(value) != -1);
 };
 
-FieldFacet.prototype.setSearchResult = function () {
+FieldFacet.prototype.redraw = function () {
     var data = history.state.facets[this.id];
     if (data)
         for (var value in this.values) {

@@ -20,7 +20,7 @@ PageFacet.prototype.getQueryParams = function () {
 PageFacet.prototype.setStateFromUrl = function (params) {
 };
 
-PageFacet.prototype.setSearchResult = function () {
+PageFacet.prototype.redraw = function () {
     var data = history.state;
     this.pagesCount = Math.ceil(data.total / this.itemsPerPage);
 };
