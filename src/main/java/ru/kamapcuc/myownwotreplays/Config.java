@@ -1,9 +1,5 @@
 package ru.kamapcuc.myownwotreplays;
 
-import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
-import ru.kamapcuc.myownwotreplays.search.facets.RepositoryFacetBuilder;
-import ru.kamapcuc.myownwotreplays.search.facets.TankLevelFacetBuilder;
-
 import java.util.Locale;
 
 public class Config {
@@ -23,11 +19,11 @@ public class Config {
     public final static String MEDAL_TYPE_NAME = "medal";
 
     public static String getReplaysPath() {
-        return System.getProperty("wotPath") + "replays/";
+        return System.getProperty("replaysPath");
     }
 
     public static String getElasticDataPath() {
-        return System.getProperty("wotPath") + "MyOwnWotreplays/data/";
+        return System.getProperty("dataPath");
     }
 
 }
