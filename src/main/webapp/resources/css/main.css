@@ -9,7 +9,6 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, 
 
 .language-switcher {
     top: -5px;
-    background: rgba(1,1,1, 0.8);
     z-index: 200;
     position: absolute;
     margin: 1px;
