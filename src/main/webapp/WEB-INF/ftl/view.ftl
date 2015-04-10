@@ -15,20 +15,15 @@
 
         <div class="b-replay__hat clearfix">
             <div class="b-replay__buttons">
-                <a href="http://wotreplays.ru/site/download/4563201" class="btn_l-orange">Запустить</a>
+                <a href="http://wotreplays.ru/site/download/4563201" class="btn_l-orange">${translate.run}</a>
             </div>
         </div>
 
         <div class="b-replay b-replay_detail">
-
-
             <div class="wtst">
                 <div class="b-tabs-wrap clearfix">
                     <dl class="b-tabs">
-
-                        <!--       ПЕРВАЯ ВКЛАДКА - ОБЩИЕ РЕЗУЛЬТАТЫ        -->
-
-                        <dt id="wtst_self" class="b-tabs__label">Личный результат</dt>
+                        <dt id="wtst_self" class="b-tabs__label">${translate.result_self}</dt>
                         <dd class="b-tabs__tab b-tabs__tab-active">
                             <div class="b-tabs__tab-in combat_effect">
                                 <div class="wtst_head wtst_head__${battle.result}">
@@ -121,29 +116,27 @@
                                         <table class="result_map_awards">
                                             <thead>
                                             <tr>
-                                                <th colspan="2">Без премиума</th>
-                                                <th class="active">С премиумом</th>
+                                                <th colspan="2">${translate.result_wo_premium}</th>
+                                                <th class="active">${translate.result_premium}</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr>
-                                                <th>Кредиты</th>
+                                                <th>${translate.result_credits}</th>
                                                 <td class="r_cr ">0</td>
                                                 <td class="r_cr active ">${battle.credits?string["###,###,###"]}</td>
                                             </tr>
                                             <tr>
-                                                <th>Опыт</th>
+                                                <th>${translate.result_xp}</th>
                                                 <td class="r_xp ">0</td>
                                                 <td class="r_xp active">${battle.xp?string["###,###,###"]}</td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
-                                    <a href="http://wotreplays.ru/site/4563201#wtst_report"
-                                       class="result_btn result_btn__sticky">Подробный отчёт</a>
                                 </div>
                                 <div class="wtst_half wtst_half__right">
-                                    <div class="wtst-title__panel wtst-title__gradient">Боевая эффективность</div>
+                                    <div class="wtst-title__panel wtst-title__gradient">${translate.result_efficiency}</div>
                                     <table class="c_table">
                                         <tbody>
                                             <#list battle.battleEfficiency as playerHarm>
@@ -161,19 +154,19 @@
                                                     </td>
 
                                                     <#if playerHarm.fire != 0>
-                                                        <td class="ce ce_k" title="Вы уничтожили этот танк противника"></td>
+                                                        <td class="ce ce_k" title="${translate.result_self_kill}"></td>
                                                     <#else>
                                                         <td class="ce ce_k" style="opacity: 0.2"></td>
                                                     </#if>
 
                                                     <#if playerHarm.crits != 0>
-                                                        <td class="ce ce_d" title="Вы нанесли критических повреждений: ${playerHarm.damageDealt}"></td>
+                                                        <td class="ce ce_d" title="${translate.result_self_damage}: ${playerHarm.damageDealt}"></td>
                                                     <#else>
                                                         <td class="ce ce_d" style="opacity: 0.2"></td>
                                                     </#if>
 
                                                     <#if playerHarm.crits != 0>
-                                                        <td class="ce ce_ch" title="Вы нанесли критических повреждений: ${playerHarm.crits}">
+                                                        <td class="ce ce_ch" title="${translate.result_self_crits}: ${playerHarm.crits}">
                                                             <div class="ce_c">${playerHarm.crits}</div>
                                                         </td>
                                                     <#else>
@@ -182,13 +175,13 @@
 
                                                     <#assign assistedDamage = playerHarm.damageAssistedTrack + playerHarm.damageAssistedRadio />
                                                     <#if assistedDamage != 0>
-                                                        <td class="ce ce_da" title="По вашим разведданным союзники нанесли очков урона: ${assistedDamage}"></td>
+                                                        <td class="ce ce_da" title="${translate.result_self_help}: ${assistedDamage}"></td>
                                                     <#else>
                                                         <td class="ce ce_da" style="opacity: 0.2"></td>
                                                     </#if>
 
                                                     <#if playerHarm.spotted != 0>
-                                                        <td class="ce ce_s" title="Вы обнаружили этот танк противника"></td>
+                                                        <td class="ce ce_s" title="${translate.result_self_see}"></td>
                                                     <#else>
                                                         <td class="ce ce_s" style="opacity: 0.2"></td>
                                                     </#if>
@@ -200,7 +193,7 @@
                             </div>
                         </dd>
 
-                        <dt id="wtst_team" class="b-tabs__label active">Командный результат</dt>
+                        <dt id="wtst_team" class="b-tabs__label active">${translate.result_team}</dt>
                         <dd class="b-tabs__tab wtst_team active">
                             <div class="b-tabs__tab-in">
                                 <div class="wtst_half wtst_half__left">
@@ -218,7 +211,7 @@
                             </div>
                         </dd>
 
-                        <dt id="wtst_report" class="b-tabs__label">Подробный отчёт</dt>
+                        <dt id="wtst_report" class="b-tabs__label">${translate.result_detail}</dt>
                         <dd class="b-tabs__tab">
                             <div class="b-tabs__tab-in">
                                 <div class="wtst-column wtst-column__overall">

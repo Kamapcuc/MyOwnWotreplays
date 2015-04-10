@@ -43,8 +43,13 @@
         <#list team as member>
             <tr class="c_d">
                 <td class="c_sq"></td>
-                <td class="c_n txt_e" title="${member.name}">
-                ${member.name}
+                <#if member.clanAbbrev??>
+                    <#assign memberName = member.name/>
+                <#else>
+                    <#assign memberName = member.name + "&nbsp" + member.clanAbbrev/>
+                </#if>
+                <td class="c_n txt_e" title="${memberName}">
+                    ${memberName}
                 </td>
                 <#if member.tank??>
                     <td class="c_t txt_e" title="${member.tank.name_i18n}"
