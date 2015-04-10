@@ -32,16 +32,27 @@ public class BattleMapper extends DefaultMapper {
         source.put("map", maps.get(mapId));
         source.put("battleDate", formatDate((String) source.get("battleDate")));
         source.put("medals", mapMedals((List) source.get("medals")));
+        mapTeam((List) source.get("allies"));
+        mapTeam((List) source.get("enemies"));
         return new Doc(source);
     }
 
-    private List mapMedals(List ids) {
+    private List<Doc> mapMedals(List ids) {
         List<Doc> result = new ArrayList<>();
         for (Object id : ids) {
             String idString = (String) id;
             result.add(medals.get(idString));
         }
         return result;
+    }
+
+    private void mapTeam(List team) {
+        if (team != null)
+            for (Object member : team) {
+                Map memberMap = (Map) member;
+                String tank = (String) memberMap.get("tank");
+                memberMap.put("tank", tanks.get(tank));
+            }
     }
 
     private String formatDate(String battleDate) {

@@ -50,10 +50,9 @@ abstract class AbstractDoc implements ToXContent {
 
     private void toXContent(XContentBuilder builder, AbstractDoc doc) throws IOException {
         builder.startObject();
-        for (Object key : doc.source.keySet()) {
-            String keyString = (String) key;
-            builder.field(keyString);
-            toXContent(builder, doc.get(keyString));
+        for (String key : doc.source.keySet()) {
+            builder.field(key);
+            toXContent(builder, doc.get(key));
         }
         builder.endObject();
     }

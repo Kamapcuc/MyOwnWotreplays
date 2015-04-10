@@ -3,9 +3,6 @@ package ru.kamapcuc.myownwotreplays.elastic;
 import org.springframework.context.i18n.LocaleContextHolder;
 import ru.kamapcuc.myownwotreplays.Config;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 public class Doc extends AbstractDoc {
@@ -34,17 +31,10 @@ public class Doc extends AbstractDoc {
             return langMap.get(Config.DEFAULT_LOCALE.getLanguage());
     }
 
-    private String formatDate(Date value) {
-        DateFormat localizedFormat = new SimpleDateFormat("dd MMM yyyy kk:mm", LocaleContextHolder.getLocale());
-        return localizedFormat.format(value);
-    }
-
     public Object get(String paramName) {
         Object value = super.get(paramName);
         if (paramName.endsWith("_i18n"))
             return getLocalized((Map) value);
-        else if (value instanceof Date)
-            return formatDate((Date) value);
         else
             return value;
     }
