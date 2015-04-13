@@ -23,7 +23,7 @@
             <div class="wtst">
                 <div class="b-tabs-wrap clearfix">
                     <dl class="b-tabs">
-                        <dt id="wtst_self" class="b-tabs__label">${translate.result_self}</dt>
+                        <dt id="wtst_self" class="b-tabs__label">${translate.result_tab_self}</dt>
                         <dd class="b-tabs__tab b-tabs__tab-active">
                             <div class="b-tabs__tab-in combat_effect">
                                 <div class="wtst_head wtst_head__${battle.result}">
@@ -136,7 +136,7 @@
                                     </div>
                                 </div>
                                 <div class="wtst_half wtst_half__right">
-                                    <div class="wtst-title__panel wtst-title__gradient">${translate.result_efficiency}</div>
+                                    <div class="wtst-title__panel wtst-title__gradient">${translate.result_self_efficiency}</div>
                                     <table class="c_table">
                                         <tbody>
                                             <#list battle.battleEfficiency as playerHarm>
@@ -175,7 +175,7 @@
 
                                                     <#assign assistedDamage = playerHarm.damageAssistedTrack + playerHarm.damageAssistedRadio />
                                                     <#if assistedDamage != 0>
-                                                        <td class="ce ce_da" title="${translate.result_self_help}: ${assistedDamage}"></td>
+                                                        <td class="ce ce_da" title="${translate.result_self_assist}: ${assistedDamage}"></td>
                                                     <#else>
                                                         <td class="ce ce_da" style="opacity: 0.2"></td>
                                                     </#if>
@@ -193,7 +193,7 @@
                             </div>
                         </dd>
 
-                        <dt id="wtst_team" class="b-tabs__label active">${translate.result_team}</dt>
+                        <dt id="wtst_team" class="b-tabs__label active">${translate.result_tab_team}</dt>
                         <dd class="b-tabs__tab wtst_team active">
                             <div class="b-tabs__tab-in">
                                 <div class="wtst_half wtst_half__left">
@@ -211,89 +211,89 @@
                             </div>
                         </dd>
 
-                        <dt id="wtst_report" class="b-tabs__label">${translate.result_detail}</dt>
+                        <dt id="wtst_report" class="b-tabs__label">${translate.result_tab_detail}</dt>
                         <dd class="b-tabs__tab">
                             <div class="b-tabs__tab-in">
                                 <div class="wtst-column wtst-column__overall">
-                                    <div class="wtst-title__panel">Статистика</div>
+                                    <div class="wtst-title__panel">${translate.result_statistics}</div>
                                     <div class="wtst-tbl_frame">
                                         <table class="wtst-tbl">
                                             <tbody>
                                             <tr>
-                                                <td>Произведено выстрелов</td>
+                                                <td>${translate.result_stats_shots}</td>
                                                 <td>54</td>
                                             </tr>
                                             <tr class="t_sub">
-                                                <td class="wtst-tbl_lbl ">прямых попаданий</td>
+                                                <td class="wtst-tbl_lbl ">${translate.result_stats_hits}</td>
                                                 <td>39</td>
                                             </tr>
                                             <tr class="t_sub">
-                                                <td>осколочно-фугасных повреждений</td>
+                                                <td>${translate.result_stats_bomb}</td>
                                                 <td class="t_null">0</td>
                                             </tr>
                                             <tr class="t_sub">
-                                                <td>пробитий</td>
+                                                <td>${translate.result_stats_pierce}</td>
                                                 <td>33</td>
                                             </tr>
                                             <tr>
-                                                <td>Нанесено урона</td>
+                                                <td>${translate.result_stats_damage}</td>
                                                 <td>3683</td>
                                             </tr>
                                             <tr>
-                                                <td>Получено попаданий</td>
+                                                <td>${translate.result_stats_received}</td>
                                                 <td>4</td>
                                             </tr>
 
                                             <tr class="t_sub">
-                                                <td>пробитий</td>
+                                                <td>${translate.result_stats_taken}</td>
                                                 <td>4</td>
                                             </tr>
 
                                             <tr class="t_sub">
-                                                <td>не нанесших урон</td>
+                                                <td>${translate.result_stats_avoid}</td>
                                                 <td class="t_null">0</td>
                                             </tr>
 
                                             <tr>
-                                                <td>Получено попаданий осколками</td>
+                                                <td>${translate.result_stats_fragments}</td>
                                                 <td class="t_null">0</td>
                                             </tr>
 
                                             <tr>
-                                                <td>Урон, заблокированный броней</td>
+                                                <td>${translate.result_stats_armor}</td>
                                                 <td class="t_null">0</td>
                                             </tr>
 
                                             <tr>
-                                                <td>Урон союзникам (уничтожено/повреждений)</td>
+                                                <td>${translate.result_stats_friendly}</td>
                                                 <td class="t_null">0/0</td>
                                             </tr>
                                             <tr>
-                                                <td>Обнаружено машин противника</td>
+                                                <td>${translate.result_stats_spotted}</td>
                                                 <td>1</td>
                                             </tr>
                                             <tr>
-                                                <td>Повреждено машин противника</td>
+                                                <td>${translate.result_stats_damaged}</td>
                                                 <td>12</td>
                                             </tr>
                                             <tr>
-                                                <td>Уничтожено машин противника</td>
+                                                <td>${translate.result_stats_frags}</td>
                                                 <td>10</td>
                                             </tr>
                                             <tr>
-                                                <td>Урон по вашим разведданным</td>
+                                                <td>${translate.result_stats_assist}</td>
                                                 <td>137</td>
                                             </tr>
                                             <tr>
-                                                <td>Очки захвата базы</td>
+                                                <td>${translate.result_stats_capture}</td>
                                                 <td>100</td>
                                             </tr>
                                             <tr>
-                                                <td>Очки защиты базы</td>
+                                                <td>${translate.result_stats_defence}</td>
                                                 <td>98</td>
                                             </tr>
                                             <tr>
-                                                <td>Пройдено километров</td>
+                                                <td>${tanslate.result_stats_distance}</td>
                                                 <td>4,37</td>
                                             </tr>
                                             </tbody>
@@ -301,8 +301,12 @@
                                     </div>
                                 </div>
                                 <div class="wtst-column wtst-column__stats">
-                                    <div class="wtst-title__panel">Кредиты <span
-                                            class="wtst-title__premium">С премиумом</span></div>
+                                    <div class="wtst-title__panel">
+                                        Кредиты
+                                        <span class="wtst-title__premium">
+                                            С премиумом
+                                        </span>
+                                    </div>
                                     <div class="wtst-tbl_frame">
                                         <table class="wtst-tbl">
                                             <tbody>
