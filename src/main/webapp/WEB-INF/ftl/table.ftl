@@ -2,12 +2,12 @@
 <table class="c_table wtst_team_table">
     <thead>
         <tr>
-            <th class="th_sq header" title="Взвод"></th>
-            <th class="th_n header"  title="Игрок"></th>
-            <th class="th_t header"  title="Танк"></th>
-            <th class="th_d header"  title="Урон"></th>
-            <th class="th_k header"  title="Уничтожил танков"></th>
-            <th class="th_xp header" title="Опыт"></th>
+            <th class="th_sq header" title="${translate.result_table_header_platoon}"></th>
+            <th class="th_n header"  title="${translate.result_table_header_player}"></th>
+            <th class="th_t header"  title="${translate.result_table_header_tank}"></th>
+            <th class="th_d header"  title="${translate.result_table_header_damage}"></th>
+            <th class="th_k header"  title="${translate.result_table_header_frags}"></th>
+            <th class="th_xp header" title="${translate.result_table_header_experience}"></th>
             <th class="th_a header"></th>
         </tr>
     </thead>

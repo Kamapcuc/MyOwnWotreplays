@@ -166,7 +166,7 @@
                                                     </#if>
 
                                                     <#if playerHarm.crits != 0>
-                                                        <td class="ce ce_ch" title="${translate.result_self_crits}: ${playerHarm.crits}">
+                                                        <td class="ce ce_ch" title="${translate.result_self_critical}: ${playerHarm.crits}">
                                                             <div class="ce_c">${playerHarm.crits}</div>
                                                         </td>
                                                     <#else>
@@ -197,13 +197,13 @@
                         <dd class="b-tabs__tab wtst_team active">
                             <div class="b-tabs__tab-in">
                                 <div class="wtst_half wtst_half__left">
-                                    <h2>Наши</h2>
+                                    <h2>${translate.result_table_allies}</h2>
                                     <@memberTable team=battle.allies/>
                                     <div class="wtst_popup wtst_popup__user"></div>
                                 </div>
 
                                 <div class="wtst_half wtst_half__right">
-                                    <h2>Враги</h2>
+                                    <h2>${translate.result_table_enemies}</h2>
                                     <@memberTable team=battle.enemies/>
                                     <div class="wtst_popup wtst_popup__user"></div>
                                 </div>
@@ -293,7 +293,7 @@
                                                 <td>98</td>
                                             </tr>
                                             <tr>
-                                                <td>${tanslate.result_stats_distance}</td>
+                                                <td>${translate.result_stats_distance}</td>
                                                 <td>4,37</td>
                                             </tr>
                                             </tbody>
@@ -302,16 +302,16 @@
                                 </div>
                                 <div class="wtst-column wtst-column__stats">
                                     <div class="wtst-title__panel">
-                                        Кредиты
+                                        ${translate.result_credits}
                                         <span class="wtst-title__premium">
-                                            С премиумом
+                                            ${translate.result_premium}
                                         </span>
                                     </div>
                                     <div class="wtst-tbl_frame">
                                         <table class="wtst-tbl">
                                             <tbody>
                                             <tr>
-                                                <td>Начислено за бой</td>
+                                                <td>${translate.result_credits_received}</td>
                                                 <td class="r_cr t_null ">36&nbsp;805</td>
                                                 <td class="t_div"></td>
                                                 <td class="t_ss"></td>
@@ -329,7 +329,7 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td>Штраф за урон союзникам</td>
+                                                <td>${translate.result_credits_penalty}</td>
                                                 <td class="r_cr   t_null">0</td>
                                                 <td class="t_div"></td>
                                                 <td class="t_ss"></td>
@@ -338,7 +338,7 @@
                                                 <td class="t_div"></td>
                                             </tr>
                                             <tr>
-                                                <td>Компенсация за урон от союзников</td>
+                                                <td>${translate.result_credits_compensation}</td>
                                                 <td class="r_cr t_null">0</td>
                                                 <td class="t_div"></td>
                                                 <td class="t_ss"></td>
@@ -356,7 +356,7 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td>Автоматический ремонт техники</td>
+                                                <td>${translate.result_credits_repair}</td>
                                                 <td class="t_neg r_cr t_null">-3&nbsp;790</td>
                                                 <td class="t_div"></td>
                                                 <td class="t_ss"></td>
@@ -365,7 +365,7 @@
                                                 <td class="t_div"></td>
                                             </tr>
                                             <tr>
-                                                <td>Автопополнение боекомплекта</td>
+                                                <td>${translate.result_credits_ammunition}</td>
                                                 <td class="t_neg r_cr t_null">-47&nbsp;340</td>
                                                 <td class="r_g t_null">0</td>
                                                 <td class="t_ss"></td>
@@ -374,7 +374,7 @@
                                                 <td class="r_g ">0</td>
                                             </tr>
                                             <tr>
-                                                <td>Автопополнение снаряжения</td>
+                                                <td>${translate.result_credits_consumables}</td>
                                                 <td class="r_cr t_neg  t_null">-3&nbsp;000</td>
                                                 <td class="r_g t_null">0</td>
                                                 <td class="t_ss"></td>
@@ -392,7 +392,7 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td class="wtst-tbl_lbl__summary">Итого:</td>
+                                                <td class="wtst-tbl_lbl__summary">${translate.result_total}:</td>
                                                 <td class="t_neg r_cr t_null">-17&nbsp;325</td>
                                                 <td class="r_g t_null">0</td>
                                                 <td class="t_ss"></td>
@@ -406,33 +406,33 @@
                                 </div>
                                 <div class="wtst-column_divider"></div>
                                 <div class="wtst-column wtst-column__overall">
-                                    <div class="wtst-title__panel">Время</div>
+                                    <div class="wtst-title__panel">${translate.result_time}</div>
                                     <div class="wtst-tbl_frame">
                                         <table class="wtst-tbl">
                                             <tbody>
                                             <tr>
-                                                <td>Начало боя</td>
+                                                <td>${translate.result_time_start}</td>
                                                 <td>07:28</td>
                                             </tr>
                                             <tr>
-                                                <td>Продолжительность боя</td>
-                                                <td>14 мин 50 с</td>
+                                                <td>${translate.result_time_duration}</td>
+                                                <td>14  50 </td>
                                             </tr>
                                             <tr>
-                                                <td>Время в бою до уничтожения</td>
-                                                <td>14 мин 49 с</td>
+                                                <td>${translate.result_time_death}</td>
+                                                <td>14 49 </td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                                 <div class="wtst-column wtst-column__stats">
-                                    <div class="wtst-title__panel">Опыт</div>
+                                    <div class="wtst-title__panel">${translate.result_xp}</div>
                                     <div class="wtst-tbl_frame">
                                         <table class="wtst-tbl">
                                             <tbody>
                                             <tr>
-                                                <td>Начислено за бой</td>
+                                                <td>${translate.result_xp_received}</td>
                                                 <td class="r_xp t_null">1719</td>
                                                 <td class="r_fxp t_null">85</td>
                                                 <td class="t_ss">&nbsp;</td>
@@ -452,7 +452,7 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td>Штраф за урон союзникам</td>
+                                                <td>${translate.result_xp_penalty}</td>
                                                 <td class="r_xp t_null">0</td>
                                                 <td class="t_div"></td>
                                                 <td class="t_ss"></td>
@@ -470,7 +470,7 @@
                                                 <td></td>
                                             </tr>
                                             <tr>
-                                                <td class="wtst-tbl_lbl__summary">Итого:</td>
+                                                <td class="wtst-tbl_lbl__summary">${translate.result_total}:</td>
                                                 <td class="r_xp t_null">1719</td>
                                                 <td class="t_div t_null"></td>
                                                 <td class="t_ss"></td>
@@ -492,21 +492,21 @@
             <!-- b-tabs < -->
             <ul class="b-replay__info b-replay__added-info clearfix b-list">
                 <li class="b-list__item">
-                    <span class="b-label">Дата:</span>
+                    <span class="b-label">${translate.result_date}:</span>
                     ${battle.battleDate}
                 </li>
                 <li class="b-list__item">
-                    <span class="b-label">Версия:</span>
+                    <span class="b-label">${translate.result_version}:</span>
                     ${battle.version}
                 </li>
                 <li class="b-list__item">
-                    <span class="b-label">Тип боя:</span> Случайный бой
+                    <span class="b-label">${translate.result_battle_type}:</span> ??????
                 </li>
                 <li class="b-list__item b-replay__img-wrap">
                     <img src="/resources/img/maps/plan/${battle.map.id}.jpg" alt=""
                          class="b-replay__img">
                     <span class="b-replay__img-descr">
-                        <span class="b-label">Респ: </span>${battle.respawn}
+                        <span class="b-label">${translate.result_spawn}: </span>${battle.respawn}
                     </span>
                 </li>
             </ul>
