@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>1.4.4</version>
+            <version>1.7.3</version>
         </dependency>
 
         <dependency>
@@ -61,6 +61,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
             <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20150729</version>
         </dependency>
 
         <dependency>

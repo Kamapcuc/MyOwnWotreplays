@@ -11,10 +11,11 @@ import java.util.*;
 
 public class ReplaysParser {
 
-    private long version = 0;
-    Integer playerTeam = 1;
+    private final long version;
     private final Map startInfo;
     private final List endInfo;
+
+    Integer playerTeam = 1;
     private String playerName;
     private Map<String, Map<String, Object>> players = new HashMap<>();
     private Map<String, Object> document = new HashMap<>();
@@ -25,21 +26,23 @@ public class ReplaysParser {
     private final static SimpleDateFormat DATE_PARSER = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
 
     public ReplaysParser(Map startInfo, List endInfo) {
-        parseVersion(startInfo.get("clientVersionFromExe").toString());
+        this.version = parseVersion(startInfo.get("clientVersionFromExe").toString());
         this.startInfo = startInfo;
         this.endInfo = endInfo;
     }
 
-    private void parseVersion(String clientVersion) {
+    private int parseVersion(String clientVersion) {
+        int result = 0;
         String[] digits = clientVersion.split("(,| |\\.)+");
         document.put("version", JOINER.join(digits));
         for (int i = 0; i < digits.length; i++) {
             try {
-                version += Integer.valueOf(digits[i]) * Math.pow(100, 3 - i);
+                result += Integer.valueOf(digits[i]) * Math.pow(100, 3 - i);
             } catch (NumberFormatException e) {
-                System.out.println(String.format("Failed to parse client version \"%s\"", clientVersion));
+                throw new RuntimeException(String.format("Failed to parse client version \"%s\"", clientVersion), e);
             }
         }
+        return result;
     }
 
     public Map<String, Object> buildDoc() {

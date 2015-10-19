@@ -18,14 +18,15 @@ import java.util.regex.Pattern;
 
 public class LocaleInterceptor extends HandlerInterceptorAdapter {
 
-    private final static Pattern languagePattern = Pattern.compile("^/([a-z]{2})/.+$");
+    private final static Pattern languagePattern = Pattern.compile("^/([a-z]{2})/(.+)$");
 
     private final static Map<String, Doc> supportedLanguages = TypesMeta.REPOSITORIES.get(Config.LANGUAGE_TYPE_NAME);
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws ServletException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+                             Object handler) throws ServletException {
         Locale locale;
-        String lang = getLang(request);
+        String lang = parseUrl(request)[0];
         if (lang == null)
             locale = request.getLocale();
         else
@@ -36,19 +37,21 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
         return true;
     }
 
-    private String getLang(HttpServletRequest request) {
+    private String[] parseUrl(HttpServletRequest request) {
         String path = request.getRequestURI().substring(request.getContextPath().length());
         Matcher matcher = languagePattern.matcher(path);
         if (matcher.find())
-            return matcher.group(1);
-        return null;
+            return new String[]{matcher.group(1), matcher.group(2)};
+        return new String[]{null, path};
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) throws Exception {
         ModelMap model = modelAndView.getModelMap();
         model.put("languages", getSortedLanguages());
         model.put("translate", new Translator());
+        model.put("url", parseUrl(request)[1] + '?' + request.getQueryString());
         model.put("path", Config.getReplaysPath());
     }
 

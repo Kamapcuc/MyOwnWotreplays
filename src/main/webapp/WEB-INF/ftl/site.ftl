@@ -20,7 +20,7 @@
                         </li>
                         <#list languages[1..languages?size - 1] as lang>
                             <li>
-                                <a href="/${lang.id}/search.do">
+                                <a href="/${lang.id}/${url}">
                                     <img src="/resources/img/flags/new/lang-${lang._id}.gif"/>&nbsp;${lang.name}
                                 </a>
                             </li>
