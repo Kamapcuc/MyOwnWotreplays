@@ -42,7 +42,7 @@ public class Indexer implements Runnable {
                 if (doc != null) {
                     IndexRequestBuilder indexRequest = client.prepareIndex(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME);
                     indexRequest.setId(file.getName());
-                    indexRequest.setSource(doc.toString());
+                    indexRequest.setSource(doc);
                     indexRequest.setParent((String) doc.get("tank"));
                     doc.remove("tank");
                     indexRequest.execute();

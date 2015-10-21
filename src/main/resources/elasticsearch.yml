@@ -1,5 +1,5 @@
-cluster.name: "MyOwnWotreplays"
+cluster.name: MyOwnWotreplays
 node:
-  name: "SingleNode"
+  name: SingleNode
   local: true
   master: true
