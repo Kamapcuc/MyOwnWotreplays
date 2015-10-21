@@ -69,8 +69,6 @@
   </notepads>
   <order>
   <hop> <from>Languages</from><to>Build urls</to><enabled>Y</enabled> </hop>
-  <hop> <from>Build urls</from><to>Maps</to><enabled>Y</enabled> </hop>
-  <hop> <from>Build urls</from><to>Tanks</to><enabled>Y</enabled> </hop>
   <hop> <from>Maps</from><to>Parse data</to><enabled>Y</enabled> </hop>
   <hop> <from>Parse data</from><to>Sort rows</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows</from><to>Concat</to><enabled>Y</enabled> </hop>
@@ -92,12 +90,9 @@
   <hop> <from>Select values</from><to>Save map</to><enabled>Y</enabled> </hop>
   <hop> <from>Missing maps</from><to>Save map</to><enabled>Y</enabled> </hop>
   <hop> <from>Build source 3</from><to>Save tank</to><enabled>Y</enabled> </hop>
-  <hop> <from>Grab images</from><to>Concat img</to><enabled>N</enabled> </hop>
-  <hop> <from>Build urls</from><to>Achievements</to><enabled>Y</enabled> </hop>
   <hop> <from>Achievements</from><to>Parse data 3</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows 5</from><to>Concat 5</to><enabled>Y</enabled> </hop>
   <hop> <from>Parse data 3</from><to>Sort rows 5</to><enabled>Y</enabled> </hop>
-  <hop> <from>Concat 5</from><to>Grab images</to><enabled>N</enabled> </hop>
   <hop> <from>Concat 5</from><to>Build source 5</to><enabled>Y</enabled> </hop>
   <hop> <from>Build source 5</from><to>Save medal</to><enabled>Y</enabled> </hop>
   <hop> <from>Concat 6</from><to>Build source 6</to><enabled>Y</enabled> </hop>
@@ -106,6 +101,14 @@
   <hop> <from>Build source 6</from><to>Select values 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Select values 2</from><to>Save section</to><enabled>Y</enabled> </hop>
   <hop> <from>My section</from><to>Save section</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build urls</from><to>Wait</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build urls</from><to>Wait 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Wait</from><to>Delay row</to><enabled>Y</enabled> </hop>
+  <hop> <from>Delay row</from><to>Maps</to><enabled>Y</enabled> </hop>
+  <hop> <from>Wait 2</from><to>Delay row 3</to><enabled>Y</enabled> </hop>
+  <hop> <from>Delay row 3</from><to>Achievements</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build urls</from><to>Delay row 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>Delay row 2</from><to>Tanks</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Achievements</name>
@@ -719,83 +722,6 @@
     </step>
 
   <step>
-    <name>Concat img</name>
-    <type>GroupBy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <all_rows>N</all_rows>
-      <ignore_aggregate>N</ignore_aggregate>
-      <field_ignore/>
-      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
-      <prefix>grp</prefix>
-      <add_linenr>N</add_linenr>
-      <linenr_fieldname/>
-      <give_back_row>N</give_back_row>
-      <group>
-      </group>
-      <fields>
-        <field>
-          <aggregate>image2</aggregate>
-          <subject>image2</subject>
-          <type>CONCAT_STRING</type>
-          <valuefield> </valuefield>
-        </field>
-        <field>
-          <aggregate>imageSmall2</aggregate>
-          <subject>imageSmall2</subject>
-          <type>CONCAT_STRING</type>
-          <valuefield> </valuefield>
-        </field>
-      </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>832</xloc>
-      <yloc>992</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Grab images</name>
-    <type>ScriptValueMod</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var image2 &#x3d; &#x27;&#x3c;img src&#x3d;&#x22;&#x27; &#x2b; image_big &#x2b; &#x27;&#x22;&#x3e;&#x3c;&#x2f;img&#x3e;&#x5c;r&#x5c;n&#x27;&#x3b;&#xd;&#xa;var imageSmall2 &#x3d; &#x27;&#x3c;img src&#x3d;&#x22;&#x27; &#x2b; image &#x2b; &#x27;&#x22;&#x3e;&#x3c;&#x2f;img&#x3e;&#x5c;r&#x5c;n&#x27;&#x3b;&#xd;&#xa;&#x2f;&#x2f;var imageContour2 &#x3d; &#x27;&#x3c;img src&#x3d;&#x22;&#x27; &#x2b; imageContour &#x2b; &#x27;&#x22;&#x3e;&#x3c;&#x2f;img&#x3e;&#x5c;r&#x5c;n&#x27;&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>image2</name>
-        <rename>image2</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>imageSmall2</name>
-        <rename>imageSmall2</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>736</xloc>
-      <yloc>992</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Languages</name>
     <type>DataGrid</type>
     <description/>
@@ -1274,7 +1200,6 @@
       <timeoutUnit>SECONDS</timeoutUnit>
       <isJson>N</isJson>
       <idField>lang</idField>
-      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1383,6 +1308,7 @@
       <isJson>Y</isJson>
       <jsonField>source</jsonField>
       <idField>numericId</idField>
+      <parentInField/>
       <overwriteIfExists>N</overwriteIfExists>
       <useOutput>N</useOutput>
       <stopOnError>Y</stopOnError>
@@ -1735,7 +1661,7 @@
       <free_memory/>
       <compress>N</compress>
       <compress_variable/>
-      <unique_rows>N</unique_rows>
+      <unique_rows>Y</unique_rows>
     <fields>
       <field>
         <name>classId</name>
@@ -1867,6 +1793,118 @@
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>352</xloc>
+      <yloc>608</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Wait</name>
+    <type>BlockUntilStepsFinish</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <steps>
+      <step>
+        <name>Tanks</name>
+        <CopyNr>0</CopyNr>
+        </step>
+      </steps>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>224</xloc>
+      <yloc>544</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Wait 2</name>
+    <type>BlockUntilStepsFinish</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <steps>
+      <step>
+        <name>Tanks</name>
+        <CopyNr>0</CopyNr>
+        </step>
+      <step>
+        <name>Maps</name>
+        <CopyNr>0</CopyNr>
+        </step>
+      </steps>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>224</xloc>
+      <yloc>672</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Delay row</name>
+    <type>Delay</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <timeout>5</timeout>
+    <scaletime>seconds</scaletime>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Delay row 3</name>
+    <type>Delay</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <timeout>5</timeout>
+    <scaletime>seconds</scaletime>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>736</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Delay row 2</name>
+    <type>Delay</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <timeout>5</timeout>
+    <scaletime>seconds</scaletime>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>256</xloc>
       <yloc>608</yloc>
       <draw>Y</draw>
       </GUI>
