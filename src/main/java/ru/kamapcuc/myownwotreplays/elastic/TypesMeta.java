@@ -19,7 +19,7 @@ public class TypesMeta {
             Config.MEDAL_TYPE_NAME
     };
 
-    public final static HashMap<String, Map<String, Doc2>> REPOSITORIES = new HashMap<>();
+    public final static HashMap<String, Map<String, Doc>> REPOSITORIES = new HashMap<>();
 
     static {
         ElasticClient client = ElasticClient.getInstance();
@@ -29,8 +29,8 @@ public class TypesMeta {
             searchRequest.setSize(10_000);
             searchRequest.setTypes(repositoryType);
             SearchResult searchResult = client.search(searchRequest);
-            LinkedHashMap<String, Doc2> map = new LinkedHashMap<>();
-            for (Doc2 doc : searchResult.getDocs()) {
+            LinkedHashMap<String, Doc> map = new LinkedHashMap<>();
+            for (Doc doc : searchResult.getDocs()) {
                 map.put(doc.getId(), doc);
             }
             REPOSITORIES.put(repositoryType, map);

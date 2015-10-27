@@ -50,18 +50,18 @@ public class ElasticClient {
     public SearchResult search(SearchRequestBuilder searchRequest) {
         SearchResponse response = searchRequest.execute().actionGet();
         SearchHits hits = response.getHits();
-        List<Doc2> result = new ArrayList<>();
+        List<Doc> result = new ArrayList<>();
         for (SearchHit hit : hits) {
 
             SearchHitField parentField = hit.getFields().get(PARENT_FIELD);
             String parent = (parentField == null)? null : parentField.getValue();
-            result.add(new Doc2(hit.getId(), parent, hit.getSource()));
+            result.add(new Doc(hit.getId(), parent, hit.getSource()));
         }
         FacetResult facets = new FacetResult(response.getAggregations());
         return new SearchResult(hits.totalHits(), result, facets);
     }
 
-    public Doc2 get(String index, String type, String id) {
+    public Doc get(String index, String type, String id) {
         GetRequestBuilder getRequest = client.prepareGet();
         getRequest.setIndex(index);
         getRequest.setType(type);
@@ -71,7 +71,7 @@ public class ElasticClient {
         GetResponse response = getRequest.execute().actionGet();
         GetField parentField = response.getFields().get(PARENT_FIELD);
         Object parent = (parentField == null)? null : parentField.getValue();
-        return new Doc2(response.getId(), parent, response.getSource());
+        return new Doc(response.getId(), parent, response.getSource());
     }
 
     private static Client createNode() {

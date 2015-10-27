@@ -6,7 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import ru.kamapcuc.myownwotreplays.Config;
-import ru.kamapcuc.myownwotreplays.elastic.Doc2;
+import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.TypesMeta;
 
 import javax.servlet.ServletException;
@@ -20,7 +20,7 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 
     private final static Pattern languagePattern = Pattern.compile("^/([a-z]{2})/(.+)$");
 
-    private final static Map<String, Doc2> supportedLanguages = TypesMeta.REPOSITORIES.get(Config.LANGUAGE_TYPE_NAME);
+    private final static Map<String, Doc> supportedLanguages = TypesMeta.REPOSITORIES.get(Config.LANGUAGE_TYPE_NAME);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -55,9 +55,9 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
         model.put("path", Config.getReplaysPath());
     }
 
-    private List<Doc2> getSortedLanguages() {
+    private List<Doc> getSortedLanguages() {
         String selected = LocaleContextHolder.getLocale().getLanguage();
-        List<Doc2> result = new ArrayList<>(supportedLanguages.values());
+        List<Doc> result = new ArrayList<>(supportedLanguages.values());
         Collections.sort(result, (l1, l2) -> {
             if (selected.equals(l2.getId()))
                 return 1;

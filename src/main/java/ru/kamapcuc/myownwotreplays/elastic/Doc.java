@@ -7,12 +7,12 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Doc2 extends JSONObject {
+public class Doc extends JSONObject {
 
     private final String id;
     private final Object parent;
 
-    public Doc2(String id, Object parent, Map<String, Object> source) {
+    public Doc(String id, Object parent, Map<String, Object> source) {
         super();
         this.id = id;
         this.parent = parent;

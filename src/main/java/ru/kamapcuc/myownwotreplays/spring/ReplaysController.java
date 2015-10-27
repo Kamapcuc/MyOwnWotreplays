@@ -8,7 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kamapcuc.myownwotreplays.Config;
-import ru.kamapcuc.myownwotreplays.elastic.Doc2;
+import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.search.ReplaysRequest;
@@ -41,7 +41,7 @@ public class ReplaysController {
     public String view(HttpServletRequest httpRequest, ModelMap model) {
         String id = httpRequest.getParameter("id");
         if (id != null) {
-            Doc2 battle = client.get(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME, id);
+            Doc battle = client.get(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME, id);
             model.put("battle", battle);
         }
         return "view";

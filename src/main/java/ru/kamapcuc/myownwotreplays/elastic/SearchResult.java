@@ -10,16 +10,16 @@ import java.util.List;
 public class SearchResult {
 
     private final long total;
-    private final List<Doc2> docs;
+    private final List<Doc> docs;
     private final FacetResult facets;
 
-    public SearchResult(long total, List<Doc2> hits, FacetResult facets) {
+    public SearchResult(long total, List<Doc> hits, FacetResult facets) {
         this.total = total;
         this.docs = hits;
         this.facets = facets;
     }
 
-    public List<Doc2> getDocs() {
+    public List<Doc> getDocs() {
         return docs;
     }
 
