@@ -3,6 +3,7 @@ package ru.kamapcuc.myownwotreplays.spring;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public class Translator {
@@ -12,7 +13,7 @@ public class Translator {
     static {
         messageSource = new ResourceBundleMessageSource();
         messageSource.setBasename("messages");
-        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
     }
 
     private final Locale locale;

@@ -1,15 +1,12 @@
 package ru.kamapcuc.myownwotreplays.elastic;
 
 import org.elasticsearch.action.search.SearchRequestBuilder;
-import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import ru.kamapcuc.myownwotreplays.Config;
-import ru.kamapcuc.myownwotreplays.elastic.mappers.HitMapper;
-import ru.kamapcuc.myownwotreplays.elastic.mappers.Mapper;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class TypesMeta {
 
@@ -22,7 +19,7 @@ public class TypesMeta {
             Config.MEDAL_TYPE_NAME
     };
 
-    public final static HashMap<String, DocMap> REPOSITORIES = new HashMap<>();
+    public final static HashMap<String, Map<String, Doc2>> REPOSITORIES = new HashMap<>();
 
     static {
         ElasticClient client = ElasticClient.getInstance();
@@ -31,18 +28,13 @@ public class TypesMeta {
             searchRequest.setQuery(new MatchAllQueryBuilder());
             searchRequest.setSize(10_000);
             searchRequest.setTypes(repositoryType);
-            SearchResponse searchResponse = client.search(searchRequest);
-            SearchResult searchResult = mapResponse(searchResponse, HitMapper.DEFAULT_MAPPER);
-            REPOSITORIES.put(repositoryType, searchResult.getDocs());
+            SearchResult searchResult = client.search(searchRequest);
+            LinkedHashMap<String, Doc2> map = new LinkedHashMap<>();
+            for (Doc2 doc : searchResult.getDocs()) {
+                map.put(doc.getId(), doc);
+            }
+            REPOSITORIES.put(repositoryType, map);
         }
     }
 
-    private static SearchResult mapResponse(SearchResponse searchResponse, Mapper mapper) {
-        SearchHits hits = searchResponse.getHits();
-        DocMap result = new DocMap();
-        for (SearchHit hit : hits)
-            result.put(hit.getId(), mapper.mapHit(hit));
-        FacetResult facets = new FacetResult(searchResponse.getAggregations());
-        return new SearchResult(hits.totalHits(), result, facets);
-    }
 }

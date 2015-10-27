@@ -16,12 +16,12 @@
                 <div class="header-menu clearfix">
                     <ul class="language-switcher closed">
                         <li>
-                            <a><img src="/resources/img/flags/new/lang-${languages[0]._id}.gif"/>&nbsp;${languages[0].name}▼</a>
+                            <a><img src="/resources/img/flags/new/lang-${languages[0].id}.gif"/>&nbsp;${languages[0].name}▼</a>
                         </li>
                         <#list languages[1..languages?size - 1] as lang>
                             <li>
                                 <a href="/${lang.id}/${url}">
-                                    <img src="/resources/img/flags/new/lang-${lang._id}.gif"/>&nbsp;${lang.name}
+                                    <img src="/resources/img/flags/new/lang-${lang.id}.gif"/>&nbsp;${lang.name}
                                 </a>
                             </li>
                         </#list>

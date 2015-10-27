@@ -7,12 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.Config;
+import ru.kamapcuc.myownwotreplays.elastic.Doc2;
+import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
+import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.search.ReplaysRequest;
 import ru.kamapcuc.myownwotreplays.search.SortType;
-import ru.kamapcuc.myownwotreplays.search.WrappedClient;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,7 +24,7 @@ import java.util.Map;
 @Controller
 public class ReplaysController {
 
-    private final static WrappedClient client = new WrappedClient();
+    private final static ElasticClient client = ElasticClient.getInstance();
 
     @RequestMapping({"/", "**/search.do"})
     public String search(HttpServletRequest httpRequest, ModelMap model) {
@@ -41,7 +41,7 @@ public class ReplaysController {
     public String view(HttpServletRequest httpRequest, ModelMap model) {
         String id = httpRequest.getParameter("id");
         if (id != null) {
-            Doc battle = client.get(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME, id);
+            Doc2 battle = client.get(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME, id);
             model.put("battle", battle);
         }
         return "view";

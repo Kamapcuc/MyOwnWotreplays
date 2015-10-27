@@ -1,15 +1,15 @@
 package ru.kamapcuc.myownwotreplays.search.facets;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.elastic.DocMap;
+import ru.kamapcuc.myownwotreplays.elastic.Doc2;
 import ru.kamapcuc.myownwotreplays.elastic.TypesMeta;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class RepositoryFacetBuilder extends FieldFacetBuilder {
 
-    private final DocMap values;
+    private final Map<String, Doc2> values;
 
     public RepositoryFacetBuilder(String field, String code, String repository) {
         super(field, code);
@@ -18,7 +18,7 @@ public class RepositoryFacetBuilder extends FieldFacetBuilder {
 
     @Override
     protected void toXContentValues(XContentBuilder builder) throws IOException {
-        for (Doc value : values.values())
+        for (Doc2 value : values.values())
             builder.field(value.getId(), value.get("name_i18n"));
     }
 

@@ -21,7 +21,6 @@ import java.util.Map;
 public class ReplaysRequest {
 
     private final static ElasticClient client = ElasticClient.getInstance();
-    private final static WrappedClient wrappedClient = new WrappedClient();
 
     private final Map<String, String> params;
     private final List<Facet> facets = new ArrayList<>();
@@ -48,11 +47,11 @@ public class ReplaysRequest {
             AggregationBuilder aggregation = facet.getFacet(facets);
             searchRequest.addAggregation(aggregation);
         });
-        return wrappedClient.search(searchRequest);
+        return client.search(searchRequest);
     }
 
     public SearchResult paginate() {
-        return wrappedClient.search(searchRequest);
+        return client.search(searchRequest);
     }
 
     private void parsePagination() {

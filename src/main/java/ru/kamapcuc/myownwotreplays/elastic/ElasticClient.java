@@ -8,15 +8,24 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.inject.Singleton;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
+import org.elasticsearch.index.get.GetField;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHitField;
+import org.elasticsearch.search.SearchHits;
 import ru.kamapcuc.myownwotreplays.Config;
 
-@Singleton
+import java.util.ArrayList;
+import java.util.List;
+
 public class ElasticClient {
+
+    public final static String ID_FIELD = "_id";
+    public final static String PARENT_FIELD = "_parent";
+    public final static String SOURCE_FIELD = "_source";
 
     private final Client client;
 
@@ -29,8 +38,8 @@ public class ElasticClient {
 
     public SearchRequestBuilder prepareSearch() {
         SearchRequestBuilder searchRequest = client.prepareSearch(Config.REPLAYS_INDEX_NAME);
-        searchRequest.addField(Doc.SOURCE_FIELD);
-        searchRequest.addField(Doc.PARENT_FIELD);
+        searchRequest.addField(SOURCE_FIELD);
+        searchRequest.addField(PARENT_FIELD);
         return searchRequest;
     }
 
@@ -38,18 +47,31 @@ public class ElasticClient {
         return client.prepareIndex(index, type);
     }
 
-    public SearchResponse search(SearchRequestBuilder searchRequest) {
-        return searchRequest.execute().actionGet();
+    public SearchResult search(SearchRequestBuilder searchRequest) {
+        SearchResponse response = searchRequest.execute().actionGet();
+        SearchHits hits = response.getHits();
+        List<Doc2> result = new ArrayList<>();
+        for (SearchHit hit : hits) {
+
+            SearchHitField parentField = hit.getFields().get(PARENT_FIELD);
+            String parent = (parentField == null)? null : parentField.getValue();
+            result.add(new Doc2(hit.getId(), parent, hit.getSource()));
+        }
+        FacetResult facets = new FacetResult(response.getAggregations());
+        return new SearchResult(hits.totalHits(), result, facets);
     }
 
-    public GetResponse get(String index, String type, String id) {
+    public Doc2 get(String index, String type, String id) {
         GetRequestBuilder getRequest = client.prepareGet();
         getRequest.setIndex(index);
         getRequest.setType(type);
         getRequest.setId(id);
-        getRequest.setRouting("0");
-        getRequest.setFields(Doc.SOURCE_FIELD, Doc.PARENT_FIELD);
-        return getRequest.execute().actionGet();
+        getRequest.setRouting("0"); //TODO
+        getRequest.setFields(SOURCE_FIELD, PARENT_FIELD);
+        GetResponse response = getRequest.execute().actionGet();
+        GetField parentField = response.getFields().get(PARENT_FIELD);
+        Object parent = (parentField == null)? null : parentField.getValue();
+        return new Doc2(response.getId(), parent, response.getSource());
     }
 
     private static Client createNode() {

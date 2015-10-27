@@ -43,8 +43,8 @@ public class Indexer implements Runnable {
                     IndexRequestBuilder indexRequest = client.prepareIndex(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME);
                     indexRequest.setId(file.getName());
                     indexRequest.setSource(doc);
-                    indexRequest.setParent((String) doc.get("tank"));
-                    doc.remove("tank");
+//                    indexRequest.setParent((String) doc.get("tank"));
+//                    doc.remove("tank");
                     indexRequest.execute();
                 } else
                     System.out.println(String.format("Failed to parse %s", file.getName()));
