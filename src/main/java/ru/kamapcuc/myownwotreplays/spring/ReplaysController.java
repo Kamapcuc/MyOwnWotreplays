@@ -11,7 +11,7 @@ import ru.kamapcuc.myownwotreplays.Config;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
-import ru.kamapcuc.myownwotreplays.search.ReplaysRequest;
+import ru.kamapcuc.myownwotreplays.search.ReplaysRequestBuilder;
 import ru.kamapcuc.myownwotreplays.search.SortType;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
 
@@ -30,8 +30,8 @@ public class ReplaysController {
     public String search(HttpServletRequest httpRequest, ModelMap model) {
         model.put("battlesData", searchInternal(httpRequest));
         model.put("sortTypes", SortType.values());
-        model.put("defaultSort", SortType.DEFAULT_SORT);
-        model.put("defaultOrder", SortType.DEFAULT_ORDER);
+        model.put("defaultSort", Config.DEFAULT_SORT);
+        model.put("defaultOrder", Config.DEFAULT_ORDER);
         model.put("facetsData", getFacetsData());
         model.put("paginationSize", Config.PAGINATION_SIZE);
         return "search";
@@ -41,7 +41,7 @@ public class ReplaysController {
     public String view(HttpServletRequest httpRequest, ModelMap model) {
         String id = httpRequest.getParameter("id");
         if (id != null) {
-            Doc battle = client.get(Config.REPLAYS_INDEX_NAME, Config.BATTLE_TYPE_NAME, id);
+            Doc battle = client.get(Config.BATTLE_TYPE_NAME, id);
             model.put("battle", battle);
         }
         return "view";
@@ -56,14 +56,14 @@ public class ReplaysController {
     @ResponseBody
     @RequestMapping("**/paginate.do")
     public String paginationAjax(HttpServletRequest httpRequest) {
-        ReplaysRequest requestBuilder = new ReplaysRequest(castParams(httpRequest));
-        SearchResult searchResult = requestBuilder.paginate();
+        ReplaysRequestBuilder requestBuilder = new ReplaysRequestBuilder(castParams(httpRequest));
+        SearchResult searchResult = client.search(Config.BATTLE_TYPE_NAME, requestBuilder.paginate());
         return searchResult.stringify();
     }
 
     private String searchInternal(HttpServletRequest httpRequest) {
-        ReplaysRequest requestBuilder = new ReplaysRequest(castParams(httpRequest));
-        SearchResult searchResult = requestBuilder.fullSearch();
+        ReplaysRequestBuilder requestBuilder = new ReplaysRequestBuilder(castParams(httpRequest));
+        SearchResult searchResult = client.search(Config.BATTLE_TYPE_NAME, requestBuilder.fullSearch());
         return searchResult.stringify();
     }
 
@@ -71,7 +71,7 @@ public class ReplaysController {
         try {
             XContentBuilder builder = XContentFactory.jsonBuilder();
             builder.startObject();
-            for (FacetBuilder facet : ReplaysRequest.FACET_BUILDERS)
+            for (FacetBuilder facet : ReplaysRequestBuilder.FACET_BUILDERS)
                 facet.toXContent(builder, ToXContent.EMPTY_PARAMS);
             builder.close();
             return builder.string();

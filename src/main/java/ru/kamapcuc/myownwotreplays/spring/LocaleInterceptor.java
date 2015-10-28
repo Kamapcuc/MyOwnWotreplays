@@ -7,7 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import ru.kamapcuc.myownwotreplays.Config;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.elastic.TypesMeta;
+import ru.kamapcuc.myownwotreplays.elastic.Repository;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 
     private final static Pattern languagePattern = Pattern.compile("^/([a-z]{2})/(.+)$");
 
-    private final static Map<String, Doc> supportedLanguages = TypesMeta.REPOSITORIES.get(Config.LANGUAGE_TYPE_NAME);
+    private final static Map<String, Doc> supportedLanguages = Repository.getDocs(Config.LANGUAGE_TYPE_NAME);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,

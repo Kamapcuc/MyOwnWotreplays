@@ -3,7 +3,7 @@ package ru.kamapcuc.myownwotreplays.parser;
 import org.elasticsearch.common.base.Joiner;
 import ru.kamapcuc.myownwotreplays.Config;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.elastic.TypesMeta;
+import ru.kamapcuc.myownwotreplays.elastic.Repository;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -19,8 +19,7 @@ public class ReplaysParser {
     private String playerName;
     private Map<String, Map<String, Object>> players = new HashMap<>();
     private Map<String, Object> document = new HashMap<>();
-    private final static Map<String, Doc> tanksData = TypesMeta.REPOSITORIES.get(Config.TANK_TYPE_NAME);
-    private final static Map<String, Doc> medals_rep = TypesMeta.REPOSITORIES.get(Config.MEDAL_TYPE_NAME);
+    private final static Map<String, Doc> tanksData = Repository.getDocs(Config.TANK_TYPE_NAME);
 
     private final static Joiner JOINER = Joiner.on(".").skipNulls();
     private final static SimpleDateFormat DATE_PARSER = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");

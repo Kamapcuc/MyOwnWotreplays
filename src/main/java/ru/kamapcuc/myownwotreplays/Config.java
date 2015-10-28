@@ -1,5 +1,8 @@
 package ru.kamapcuc.myownwotreplays;
 
+import org.elasticsearch.search.sort.SortOrder;
+import ru.kamapcuc.myownwotreplays.search.SortType;
+
 import java.util.Locale;
 
 public class Config {
@@ -8,7 +11,10 @@ public class Config {
 
     public final static int PAGINATION_SIZE = 9;
 
-    public final static String REPLAYS_INDEX_NAME = "replays";
+    public final static SortType DEFAULT_SORT = SortType.DATE;
+    public final static SortOrder DEFAULT_ORDER = SortOrder.DESC;
+
+    public final static String INDEX_NAME = "replays";
 
     public final static String BATTLE_TYPE_NAME = "battle";
     public final static String TANK_TYPE_NAME = "tank";

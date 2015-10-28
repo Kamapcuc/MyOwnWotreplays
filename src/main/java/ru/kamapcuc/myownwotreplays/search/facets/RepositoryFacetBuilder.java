@@ -2,7 +2,7 @@ package ru.kamapcuc.myownwotreplays.search.facets;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
-import ru.kamapcuc.myownwotreplays.elastic.TypesMeta;
+import ru.kamapcuc.myownwotreplays.elastic.Repository;
 
 import java.io.IOException;
 import java.util.Map;
@@ -13,7 +13,7 @@ public class RepositoryFacetBuilder extends FieldFacetBuilder {
 
     public RepositoryFacetBuilder(String field, String code, String repository) {
         super(field, code);
-        values = TypesMeta.REPOSITORIES.get(repository);
+        values = Repository.getDocs(repository);
     }
 
     @Override
