@@ -11,12 +11,17 @@ public class Repository extends LinkedHashMap<String, Doc> {
 
     private static final Map<String, Repository> repositories = new ConcurrentHashMap<>();
 
+    private static final SearchSourceBuilder getAllQuery;
+
+    static {
+        getAllQuery = new SearchSourceBuilder();
+        getAllQuery.query(new MatchAllQueryBuilder());
+        getAllQuery.size(10_000);
+    }
+
     private Repository(String typeName) {
-        SearchSourceBuilder source = new SearchSourceBuilder();
-        source.query(new MatchAllQueryBuilder());
-        source.size(10_000);
-        SearchResult searchResult = ElasticClient.getInstance().search(typeName, source);
-        searchResult.getDocs().forEach(doc -> put(doc.getId(), doc));
+        SearchResult searchResult = ElasticClient.getInstance().search(typeName, getAllQuery);
+        searchResult.getDocs().forEach(doc -> this.put(doc.getId(), doc));
     }
 
     public static Repository getDocs(String typeName) {

@@ -9,23 +9,23 @@ import java.util.Map;
 
 public class Doc extends JSONObject {
 
-    private final String id;
-    private final Object parent;
-
+    /**
+     * Hack for override JSONObject.map::get to receive localized serialization
+     */
     public Doc(String id, Object parent, Map<String, Object> source) {
         super();
-        this.id = id;
-        this.parent = parent;
         try {
             Field f = JSONObject.class.getDeclaredField("map");
             f.setAccessible(true);
             f.set(this, new Source(source));
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException ignored) {
         }
+        put(ElasticClient.ID_FIELD, id);
+        put(ElasticClient.PARENT_FIELD, parent);
     }
 
     public String getId() {
-        return id;
+        return (String) get(ElasticClient.ID_FIELD);
     }
 
     private class Source extends HashMap<String, Object> {

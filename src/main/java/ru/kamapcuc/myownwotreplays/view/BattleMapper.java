@@ -22,17 +22,19 @@ public class BattleMapper {
     private final Map<String, Doc> maps = Repository.getDocs(Config.MAP_TYPE_NAME);
     private final Map<String, Doc> medals = Repository.getDocs(Config.MEDAL_TYPE_NAME);
 
-    protected Doc mapHit(String id, Object parent, Map<String, Object> source) {
+    public Doc mapHit(Doc battle) {
 //        source.put(Doc.ID_FIELD, id);
 //        String tankId = (String) parent;
 //        source.put("tank", tanks.get(tankId));
-        String mapId = (String) source.get("map");
-        source.put("map", maps.get(mapId));
-        source.put("battleDate", formatDate((String) source.get("battleDate")));
-        source.put("medals", mapMedals((List) source.get("medals")));
-        mapTeam((List) source.get("allies"));
-        mapTeam((List) source.get("enemies"));
-        return new Doc(id, parent, source);
+        String mapId = (String) battle.get("map");
+        battle.put("map", maps.get(mapId));
+        battle.put("battleDate", formatDate((String) battle.get("battleDate")));
+        battle.put("medals", mapMedals((List) battle.get("medals")));
+        if (battle.has("allies")) {
+            mapTeam((List) battle.get("allies"));
+            mapTeam((List) battle.get("enemies"));
+        }
+        return battle;
     }
 
     private List<Doc> mapMedals(List ids) {
@@ -47,7 +49,7 @@ public class BattleMapper {
     private void mapTeam(List team) {
         if (team != null)
             for (Object member : team) {
-                Map<String, Object> memberMap = (Map) member;
+                Map memberMap = (Map) member;
                 String tank = (String) memberMap.get("tank");
                 memberMap.put("tank", tanks.get(tank));
             }

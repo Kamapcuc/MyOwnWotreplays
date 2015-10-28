@@ -1,17 +1,16 @@
 package ru.kamapcuc.myownwotreplays.elastic;
 
-import org.elasticsearch.common.xcontent.ToXContent;
-import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.filter.Filter;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 
-import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class FacetResult implements ToXContent {
+public class FacetResult {
 
     private final List<Aggregation> list;
 
@@ -22,29 +21,25 @@ public class FacetResult implements ToXContent {
             list = aggregations.asList();
     }
 
-    private void facetToXContent(XContentBuilder builder, Aggregation facet) throws IOException {
+    private Object getFacetValue(Aggregation facet) {
+        Map<String, Object> result = new HashMap<>();
         if (facet instanceof Terms) {
             Terms termsFacet = (Terms) facet;
             for (Terms.Bucket bucket : termsFacet.getBuckets())
-                builder.field(bucket.getKey(), bucket.getDocCount());
+                result.put(bucket.getKey(), bucket.getDocCount());
         } else if (facet instanceof Filter) {
             Filter filteredFacet = (Filter) facet;
             Aggregation innerFacet = filteredFacet.getAggregations().asList().get(0);
-            facetToXContent(builder, innerFacet);
+            return getFacetValue(innerFacet);
         }
+        return result;
     }
 
-    @Override
-    public XContentBuilder toXContent(XContentBuilder builder, Params params) throws IOException {
-        builder.startObject();
-        for (Aggregation facet : list) {
-            builder.field(facet.getName());
-            builder.startObject();
-            facetToXContent(builder, facet);
-            builder.endObject();
-        }
-        builder.endObject();
-        return builder;
+    public Map<String, Object> getValues() {
+        Map<String, Object> result = new HashMap<>();
+        for (Aggregation aggregation : list)
+            result.put(aggregation.getName(), getFacetValue(aggregation));
+        return result;
     }
 
 }

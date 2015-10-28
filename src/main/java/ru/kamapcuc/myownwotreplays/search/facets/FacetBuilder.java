@@ -3,8 +3,8 @@ package ru.kamapcuc.myownwotreplays.search.facets;
 import org.elasticsearch.common.xcontent.ToXContent;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Map;
 
 public abstract class FacetBuilder implements ToXContent {
 
@@ -20,7 +20,7 @@ public abstract class FacetBuilder implements ToXContent {
 
     public abstract String getType();
     public abstract String getName();
-    public abstract Facet getFacet(Map<String, String> params);
+    public abstract Facet getFacet(HttpServletRequest params);
 
     protected abstract void toXContentInner(XContentBuilder builder) throws IOException;
 

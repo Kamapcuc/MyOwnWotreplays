@@ -5,7 +5,6 @@ import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
@@ -23,7 +22,8 @@ import java.util.List;
 
 public class ElasticClient {
 
-    private final static String PARENT_FIELD = "_parent";
+    public final static String ID_FIELD = "_id";
+    public final static String PARENT_FIELD = "_parent";
     private final static String SOURCE_FIELD = "_source";
 
     private final Client client;
@@ -33,13 +33,6 @@ public class ElasticClient {
         ClusterHealthRequest health = new ClusterHealthRequest();
         health.waitForYellowStatus();
         client.admin().cluster().health(health).actionGet();
-    }
-
-    public SearchRequestBuilder prepareSearch() {
-        SearchRequestBuilder searchRequest = client.prepareSearch(Config.INDEX_NAME);
-        searchRequest.addField(PARENT_FIELD);
-        searchRequest.addField(SOURCE_FIELD);
-        return searchRequest;
     }
 
     public IndexRequestBuilder prepareIndex(String type) {

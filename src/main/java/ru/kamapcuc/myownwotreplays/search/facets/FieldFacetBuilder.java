@@ -3,8 +3,8 @@ package ru.kamapcuc.myownwotreplays.search.facets;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import ru.kamapcuc.myownwotreplays.spring.Translator;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Map;
 
 public abstract class FieldFacetBuilder extends FacetBuilder {
 
@@ -26,11 +26,9 @@ public abstract class FieldFacetBuilder extends FacetBuilder {
     }
 
     @Override
-    public Facet getFacet(Map<String, String> params) {
-        String[] selectedValues = null;
-        if (params.containsKey(getId()))
-            selectedValues = params.get(getId()).split(",");
-        return new FieldFacet(this, selectedValues);
+    public Facet getFacet(HttpServletRequest params) {
+        String selectedValues = params.getParameter(getId());
+        return new FieldFacet(this, (selectedValues == null)? null : selectedValues.split(","));
     }
 
     @Override

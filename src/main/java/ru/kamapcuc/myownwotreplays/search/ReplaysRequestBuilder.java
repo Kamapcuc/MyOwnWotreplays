@@ -8,21 +8,18 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import ru.kamapcuc.myownwotreplays.Config;
-import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 import ru.kamapcuc.myownwotreplays.search.facets.Facet;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
 import ru.kamapcuc.myownwotreplays.search.facets.RepositoryFacetBuilder;
 import ru.kamapcuc.myownwotreplays.search.facets.TankLevelFacetBuilder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ReplaysRequestBuilder {
 
-    private final static ElasticClient client = ElasticClient.getInstance();
-
-    private final Map<String, String> params;
+    private final HttpServletRequest params;
     private final List<Facet> facets = new ArrayList<>();
 
     public final static FacetBuilder[] FACET_BUILDERS = new FacetBuilder[]{
@@ -32,16 +29,16 @@ public class ReplaysRequestBuilder {
             new TankLevelFacetBuilder("tankLevel", "facet_tank_level")
     };
 
-    public ReplaysRequestBuilder(Map<String, String> params) {
+    public ReplaysRequestBuilder(HttpServletRequest params) {
         this.params = params;
         for (FacetBuilder facetBuilder : FACET_BUILDERS)
             facets.add(facetBuilder.getFacet(this.params));
     }
 
     private SortBuilder getSort() {
-        String sortValue = params.get("sortType");
-        String orderValue = params.get("sortOrder");
-        SortType sort = (sortValue == null)? Config.DEFAULT_SORT : SortType.valueOf(orderValue);
+        String sortValue = params.getParameter("sortType");
+        String orderValue = params.getParameter("sortOrder");
+        SortType sort = (sortValue == null)? Config.DEFAULT_SORT : SortType.valueOf(sortValue);
         SortOrder order = (orderValue == null)? Config.DEFAULT_ORDER : SortOrder.valueOf(orderValue);
 
         SortBuilder result = sort.getSortBuilder();
@@ -50,9 +47,10 @@ public class ReplaysRequestBuilder {
     }
 
     private int getFrom() {
-        if (params.containsKey("page")) {
+        String page = params.getParameter("page");
+        if (page != null) {
             try {
-                int pageNum = Integer.valueOf(params.get("page"));
+                int pageNum = Integer.valueOf(page);
                 return (pageNum - 1) * Config.PAGINATION_SIZE;
             } catch (NumberFormatException ignored) {
             }

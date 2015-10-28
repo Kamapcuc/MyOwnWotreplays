@@ -14,12 +14,10 @@ import ru.kamapcuc.myownwotreplays.elastic.SearchResult;
 import ru.kamapcuc.myownwotreplays.search.ReplaysRequestBuilder;
 import ru.kamapcuc.myownwotreplays.search.SortType;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
+import ru.kamapcuc.myownwotreplays.view.BattleMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 public class ReplaysController {
@@ -56,15 +54,17 @@ public class ReplaysController {
     @ResponseBody
     @RequestMapping("**/paginate.do")
     public String paginationAjax(HttpServletRequest httpRequest) {
-        ReplaysRequestBuilder requestBuilder = new ReplaysRequestBuilder(castParams(httpRequest));
+        ReplaysRequestBuilder requestBuilder = new ReplaysRequestBuilder(httpRequest);
         SearchResult searchResult = client.search(Config.BATTLE_TYPE_NAME, requestBuilder.paginate());
-        return searchResult.stringify();
+        return searchResult.toString();
     }
 
     private String searchInternal(HttpServletRequest httpRequest) {
-        ReplaysRequestBuilder requestBuilder = new ReplaysRequestBuilder(castParams(httpRequest));
+        ReplaysRequestBuilder requestBuilder = new ReplaysRequestBuilder(httpRequest);
         SearchResult searchResult = client.search(Config.BATTLE_TYPE_NAME, requestBuilder.fullSearch());
-        return searchResult.stringify();
+        BattleMapper battleMapper = new BattleMapper();
+        searchResult.getDocs().forEach(battleMapper::mapHit);
+        return searchResult.toString();
     }
 
     private String getFacetsData() {
@@ -78,15 +78,6 @@ public class ReplaysController {
         } catch (IOException e) {
             return null;
         }
-    }
-
-    public static Map<String, String> castParams(HttpServletRequest httpRequest) {
-        Map<String, String> result = new HashMap<>();
-        for (Object keyO : Collections.list(httpRequest.getParameterNames())) {
-            String key = (String) keyO;
-            result.put(key, httpRequest.getParameter(key));
-        }
-        return result;
     }
 
 }
