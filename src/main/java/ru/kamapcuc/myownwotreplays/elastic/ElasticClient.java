@@ -13,7 +13,7 @@ import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHitField;
 import org.elasticsearch.search.SearchHits;
-import ru.kamapcuc.myownwotreplays.Consts;
+import ru.kamapcuc.myownwotreplays.base.Consts;
 
 import java.util.ArrayList;
 import java.util.List;

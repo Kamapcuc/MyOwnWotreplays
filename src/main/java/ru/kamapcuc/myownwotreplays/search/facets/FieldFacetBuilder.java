@@ -1,7 +1,7 @@
 package ru.kamapcuc.myownwotreplays.search.facets;
 
 import org.elasticsearch.common.xcontent.XContentBuilder;
-import ru.kamapcuc.myownwotreplays.spring.Translator;
+import ru.kamapcuc.myownwotreplays.base.Translator;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;

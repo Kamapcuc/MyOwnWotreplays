@@ -1,4 +1,4 @@
-package ru.kamapcuc.myownwotreplays;
+package ru.kamapcuc.myownwotreplays.base;
 
 import org.elasticsearch.search.sort.SortOrder;
 import ru.kamapcuc.myownwotreplays.search.SortType;

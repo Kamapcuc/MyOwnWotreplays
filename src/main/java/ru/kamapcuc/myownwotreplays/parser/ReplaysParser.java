@@ -1,7 +1,7 @@
 package ru.kamapcuc.myownwotreplays.parser;
 
 import org.elasticsearch.common.base.Joiner;
-import ru.kamapcuc.myownwotreplays.Consts;
+import ru.kamapcuc.myownwotreplays.base.Consts;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.Repository;
 

@@ -6,9 +6,8 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
-import ru.kamapcuc.myownwotreplays.spring.Translator;
-
-import javax.servlet.http.HttpServletRequest;
+import ru.kamapcuc.myownwotreplays.base.Parameters;
+import ru.kamapcuc.myownwotreplays.base.Translator;
 
 public abstract class FieldFacet extends Facet {
 
@@ -37,10 +36,10 @@ public abstract class FieldFacet extends Facet {
     }
 
     @Override
-    public FilterBuilder getFilter(HttpServletRequest params) {
-        String param = params.getParameter(getId());
-        if (param != null)
-            return new TermsFilterBuilder(field, param.split(","));
+    public FilterBuilder getFilter(Parameters params) {
+        String selectedValues = params.getParameter(getId());
+        if (selectedValues != null)
+            return new TermsFilterBuilder(field, selectedValues.split(","));
         else
             return null;
     }

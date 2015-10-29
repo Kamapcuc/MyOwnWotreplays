@@ -1,4 +1,4 @@
-package ru.kamapcuc.myownwotreplays.spring;
+package ru.kamapcuc.myownwotreplays.base;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;

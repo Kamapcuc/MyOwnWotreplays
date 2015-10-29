@@ -8,7 +8,6 @@ public class GetAllRequest extends Request {
     private final String type;
 
     public GetAllRequest(String type) {
-        super(null);
         this.type = type;
     }
 

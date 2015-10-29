@@ -2,7 +2,7 @@ package ru.kamapcuc.myownwotreplays.parser;
 
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
-import ru.kamapcuc.myownwotreplays.Consts;
+import ru.kamapcuc.myownwotreplays.base.Consts;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
 import java.io.File;

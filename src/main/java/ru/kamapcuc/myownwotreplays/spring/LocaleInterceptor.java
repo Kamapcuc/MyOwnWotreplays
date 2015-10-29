@@ -5,7 +5,8 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import ru.kamapcuc.myownwotreplays.Consts;
+import ru.kamapcuc.myownwotreplays.base.Consts;
+import ru.kamapcuc.myownwotreplays.base.Translator;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.Repository;
 

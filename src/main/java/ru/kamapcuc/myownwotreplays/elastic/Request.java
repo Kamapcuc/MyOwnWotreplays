@@ -5,21 +5,18 @@ import org.elasticsearch.index.query.AndFilterBuilder;
 import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import ru.kamapcuc.myownwotreplays.Consts;
+import ru.kamapcuc.myownwotreplays.base.Consts;
+import ru.kamapcuc.myownwotreplays.base.Parameters;
 import ru.kamapcuc.myownwotreplays.elastic.facets.Facet;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Supplier;
 
-public abstract class Request {
+public abstract class Request implements Parameters {
 
-    private final HttpServletRequest params;
-
-    public Request(HttpServletRequest params) {
-        this.params = params;
+    public Request() {
     }
 
     protected abstract String getType();
@@ -55,10 +52,6 @@ public abstract class Request {
         return new FacetContainer();
     }
 
-    protected final String getParameter(String name) {
-        return params.getParameter(name);
-    }
-
     protected class FacetContainer extends ArrayList<Facet> implements Supplier<FilterBuilder> {
 
         public FacetContainer() {
@@ -72,7 +65,7 @@ public abstract class Request {
         public FilterBuilder get() {
             List<FilterBuilder> filters = new ArrayList<>();
             for (Facet facet : this) {
-                FilterBuilder filter = facet.getFilter(Request.this.params);
+                FilterBuilder filter = facet.getFilter(Request.this);
                 if (filter != null)
                     filters.add(filter);
             }

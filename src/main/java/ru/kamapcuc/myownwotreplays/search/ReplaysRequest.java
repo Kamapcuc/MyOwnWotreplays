@@ -5,7 +5,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
-import ru.kamapcuc.myownwotreplays.Consts;
+import ru.kamapcuc.myownwotreplays.base.Consts;
 import ru.kamapcuc.myownwotreplays.elastic.Request;
 import ru.kamapcuc.myownwotreplays.elastic.facets.RepositoryFacet;
 
@@ -13,14 +13,20 @@ import javax.servlet.http.HttpServletRequest;
 
 public class ReplaysRequest extends Request {
 
+    private final HttpServletRequest params;
     private final Request.FacetContainer facets;
 
     public ReplaysRequest(HttpServletRequest params) {
-        super(params);
+        this.params = params;
         facets = new Request.FacetContainer();
         facets.add(new RepositoryFacet("tankNation", "facet_tank_nation", Consts.NATION_TYPE_NAME));
         facets.add(new RepositoryFacet("tankClass", "facet_tank_class", Consts.CLASS_TYPE_NAME));
         facets.add(new RepositoryFacet("map", "facet_map", Consts.MAP_TYPE_NAME));
+    }
+
+    @Override
+    public String getParameter(String name) {
+        return params.getParameter(name);
     }
 
     @Override

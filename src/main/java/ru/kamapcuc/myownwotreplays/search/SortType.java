@@ -2,7 +2,7 @@ package ru.kamapcuc.myownwotreplays.search;
 
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
-import ru.kamapcuc.myownwotreplays.spring.Translator;
+import ru.kamapcuc.myownwotreplays.base.Translator;
 
 public enum SortType {
 

@@ -6,8 +6,8 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.filter.Filter;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
+import ru.kamapcuc.myownwotreplays.base.Parameters;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.function.Supplier;
 
 public abstract class Facet {
@@ -16,7 +16,7 @@ public abstract class Facet {
     public abstract Class getType();
     public abstract String getDisplayName();
     public abstract Object getValues();
-    public abstract FilterBuilder getFilter(HttpServletRequest params);
+    public abstract FilterBuilder getFilter(Parameters params);
 
     public Object getResult(Aggregations aggregations) {
         Aggregation agg = aggregations.get(getId());

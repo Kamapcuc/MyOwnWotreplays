@@ -1,6 +1,6 @@
 package ru.kamapcuc.myownwotreplays.search;
 
-import ru.kamapcuc.myownwotreplays.Consts;
+import ru.kamapcuc.myownwotreplays.base.Consts;
 import ru.kamapcuc.myownwotreplays.search.facets.FacetBuilder;
 import ru.kamapcuc.myownwotreplays.search.facets.RepositoryFacetBuilder;
 import ru.kamapcuc.myownwotreplays.search.facets.TankLevelFacetBuilder;
