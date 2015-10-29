@@ -4,7 +4,6 @@ import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.action.get.GetRequestBuilder;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
-import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.ImmutableSettings;
@@ -14,8 +13,7 @@ import org.elasticsearch.node.NodeBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHitField;
 import org.elasticsearch.search.SearchHits;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
-import ru.kamapcuc.myownwotreplays.Config;
+import ru.kamapcuc.myownwotreplays.Consts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,17 +34,11 @@ public class ElasticClient {
     }
 
     public IndexRequestBuilder prepareIndex(String type) {
-        return client.prepareIndex(Config.INDEX_NAME, type);
+        return client.prepareIndex(Consts.INDEX_NAME, type);
     }
 
-    public SearchResult search(String type, SearchSourceBuilder source) {
-        source.fields(PARENT_FIELD, SOURCE_FIELD);
-        SearchRequest result = new SearchRequest();
-        result.indices(Config.INDEX_NAME);
-        result.types(type);
-        result.source(source);
-
-        SearchResponse response = client.search(result).actionGet();
+    public SearchResult search(Request request) {
+        SearchResponse response = client.search(request.getRequest()).actionGet();
         SearchHits hits = response.getHits();
         List<Doc> docs = new ArrayList<>();
         for (SearchHit hit : hits) {
@@ -60,7 +52,7 @@ public class ElasticClient {
 
     public Doc get(String type, String id) {
         GetRequestBuilder getRequest = client.prepareGet();
-        getRequest.setIndex(Config.INDEX_NAME);
+        getRequest.setIndex(Consts.INDEX_NAME);
         getRequest.setType(type);
         getRequest.setId(id);
         getRequest.setRouting("0"); //TODO
@@ -74,7 +66,7 @@ public class ElasticClient {
     private static Client createNode() {
         ImmutableSettings.Builder settings = ImmutableSettings.settingsBuilder();
         settings.loadFromClasspath("/elasticsearch.yml");
-        settings.put("path.data", Config.getElasticDataPath());
+        settings.put("path.data", Consts.getElasticDataPath());
         NodeBuilder nodebuilder = new NodeBuilder();
         nodebuilder.settings(settings.build());
         Node node = nodebuilder.node();

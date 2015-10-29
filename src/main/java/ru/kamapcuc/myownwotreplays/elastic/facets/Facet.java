@@ -1,6 +1,5 @@
 package ru.kamapcuc.myownwotreplays.elastic.facets;
 
-import org.elasticsearch.index.query.AndFilterBuilder;
 import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -9,8 +8,7 @@ import org.elasticsearch.search.aggregations.bucket.filter.Filter;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Supplier;
 
 public abstract class Facet {
 
@@ -29,26 +27,17 @@ public abstract class Facet {
         return null;
     }
 
-    private List<FilterBuilder> filters = new ArrayList<>();
-
-    public void addFilter(FilterBuilder filter) {
-        filters.add(filter);
-    }
-
     protected abstract AggregationBuilder getOwnAggregation();
 
-    public AggregationBuilder getAggregation() {
-        if (filters.size() > 0) {
-            AndFilterBuilder andFilter = new AndFilterBuilder();
-            filters.forEach(andFilter::add);
-
+    public AggregationBuilder getAggregation(Supplier<FilterBuilder> other) {
+        FilterBuilder filter = other.get();
+        if (filter != null) {
             FilterAggregationBuilder filteredFacet = new FilterAggregationBuilder(getId());
             filteredFacet.subAggregation(getOwnAggregation());
-            filteredFacet.filter(andFilter);
+            filteredFacet.filter(filter);
             return filteredFacet;
         } else
             return getOwnAggregation();
     }
-
 
 }

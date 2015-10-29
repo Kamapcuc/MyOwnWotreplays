@@ -5,7 +5,12 @@ import ru.kamapcuc.myownwotreplays.search.SortType;
 
 import java.util.Locale;
 
-public class Config {
+public class Consts {
+
+    public final static String ID_FIELD = "_id";
+    public final static String UID_FIELD = "_uid";
+    public final static String PARENT_FIELD = "_parent";
+    public final static String SOURCE_FIELD = "_source";
 
     public final static Locale DEFAULT_LOCALE = Locale.ENGLISH;
 

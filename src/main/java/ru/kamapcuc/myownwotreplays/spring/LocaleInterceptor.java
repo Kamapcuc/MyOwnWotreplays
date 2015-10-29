@@ -5,7 +5,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-import ru.kamapcuc.myownwotreplays.Config;
+import ru.kamapcuc.myownwotreplays.Consts;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.Repository;
 
@@ -20,7 +20,7 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
 
     private final static Pattern languagePattern = Pattern.compile("^/([a-z]{2})/(.+)$");
 
-    private final static Map<String, Doc> supportedLanguages = Repository.getDocs(Config.LANGUAGE_TYPE_NAME);
+    private final static Map<String, Doc> supportedLanguages = Repository.getDocs(Consts.LANGUAGE_TYPE_NAME);
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
@@ -32,7 +32,7 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
         else
             locale = LocaleUtils.parse(lang);
         if (!supportedLanguages.containsKey(locale.getLanguage()))
-            locale = Config.DEFAULT_LOCALE;
+            locale = Consts.DEFAULT_LOCALE;
         LocaleContextHolder.setLocale(locale, true);
         return true;
     }
@@ -52,7 +52,7 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
         model.put("languages", getSortedLanguages());
         model.put("translate", new Translator());
         model.put("url", parseUrl(request)[1] + '?' + request.getQueryString());
-        model.put("path", Config.getReplaysPath());
+        model.put("path", Consts.getReplaysPath());
     }
 
     private List<Doc> getSortedLanguages() {

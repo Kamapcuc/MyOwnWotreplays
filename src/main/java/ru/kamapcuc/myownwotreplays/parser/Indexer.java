@@ -2,7 +2,7 @@ package ru.kamapcuc.myownwotreplays.parser;
 
 
 import org.elasticsearch.action.index.IndexRequestBuilder;
-import ru.kamapcuc.myownwotreplays.Config;
+import ru.kamapcuc.myownwotreplays.Consts;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
 
 import java.io.File;
@@ -21,7 +21,7 @@ public class Indexer implements Runnable {
     private FileParser parser = new FileParser();
 
     private Indexer() {
-        File[] allReplays = new File(Config.getReplaysPath()).listFiles();
+        File[] allReplays = new File(Consts.getReplaysPath()).listFiles();
         if (allReplays == null) {
             filesToIndex = Stream.empty();
             total = 0;
@@ -40,7 +40,7 @@ public class Indexer implements Runnable {
                     && !"temp.wotreplay".equals(file.getName())) {
                 Map<String, Object> doc = parser.parse(file);
                 if (doc != null) {
-                    IndexRequestBuilder indexRequest = client.prepareIndex(Config.BATTLE_TYPE_NAME);
+                    IndexRequestBuilder indexRequest = client.prepareIndex(Consts.BATTLE_TYPE_NAME);
                     indexRequest.setId(file.getName());
                     indexRequest.setSource(doc);
 //                    indexRequest.setParent((String) doc.get("tank"));

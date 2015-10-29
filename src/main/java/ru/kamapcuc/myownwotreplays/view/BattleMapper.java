@@ -3,7 +3,7 @@ package ru.kamapcuc.myownwotreplays.view;
 import org.elasticsearch.common.joda.time.format.DateTimeFormatter;
 import org.elasticsearch.common.joda.time.format.ISODateTimeFormat;
 import org.springframework.context.i18n.LocaleContextHolder;
-import ru.kamapcuc.myownwotreplays.Config;
+import ru.kamapcuc.myownwotreplays.Consts;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.Repository;
 
@@ -18,9 +18,9 @@ public class BattleMapper {
 
     private final DateTimeFormatter dateParser = ISODateTimeFormat.dateOptionalTimeParser();
 
-    private final Map<String, Doc> tanks = Repository.getDocs(Config.TANK_TYPE_NAME);
-    private final Map<String, Doc> maps = Repository.getDocs(Config.MAP_TYPE_NAME);
-    private final Map<String, Doc> medals = Repository.getDocs(Config.MEDAL_TYPE_NAME);
+    private final Map<String, Doc> tanks = Repository.getDocs(Consts.TANK_TYPE_NAME);
+    private final Map<String, Doc> maps = Repository.getDocs(Consts.MAP_TYPE_NAME);
+    private final Map<String, Doc> medals = Repository.getDocs(Consts.MEDAL_TYPE_NAME);
 
     public Doc mapHit(Doc battle) {
 //        source.put(Doc.ID_FIELD, id);
