@@ -5,13 +5,12 @@ import org.elasticsearch.index.query.AndFilterBuilder;
 import org.elasticsearch.index.query.FilterBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.json.JSONObject;
 import ru.kamapcuc.myownwotreplays.base.Consts;
 import ru.kamapcuc.myownwotreplays.base.Parameters;
 import ru.kamapcuc.myownwotreplays.elastic.facets.Facet;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.function.Supplier;
 
 public abstract class Request implements Parameters {
@@ -48,11 +47,11 @@ public abstract class Request implements Parameters {
         return result;
     }
 
-    protected FacetContainer getFacets() {
+    public FacetContainer getFacets() {
         return new FacetContainer();
     }
 
-    protected class FacetContainer extends ArrayList<Facet> implements Supplier<FilterBuilder> {
+    public class FacetContainer extends ArrayList<Facet> implements Supplier<FilterBuilder> {
 
         public FacetContainer() {
         }
@@ -70,12 +69,22 @@ public abstract class Request implements Parameters {
                     filters.add(filter);
             }
 
-            if (filters.size() > 0) {
-                AndFilterBuilder andFilter = new AndFilterBuilder();
-                filters.forEach(andFilter::add);
-                return andFilter;
-            } else
-                return null;
+            switch (filters.size()) {
+                case 0:
+                    return null;
+                case 1:
+                    return filters.get(0);
+                default:
+                    AndFilterBuilder andFilter = new AndFilterBuilder();
+                    filters.forEach(andFilter::add);
+                    return andFilter;
+            }
+        }
+
+        public String getInfo() {
+            JSONObject info = new JSONObject();
+            this.forEach(facet -> info.put(facet.getId(), facet.getInfo()));
+            return info.toString();
         }
 
     }

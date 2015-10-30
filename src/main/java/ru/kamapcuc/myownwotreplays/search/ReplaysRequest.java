@@ -30,7 +30,7 @@ public class ReplaysRequest extends Request {
     }
 
     @Override
-    protected Request.FacetContainer getFacets() {
+    public Request.FacetContainer getFacets() {
         return facets;
     }
 

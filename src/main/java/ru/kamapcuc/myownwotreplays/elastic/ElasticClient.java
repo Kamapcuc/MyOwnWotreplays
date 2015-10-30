@@ -10,19 +10,9 @@ import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.index.get.GetField;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
-import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHitField;
-import org.elasticsearch.search.SearchHits;
 import ru.kamapcuc.myownwotreplays.base.Consts;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class ElasticClient {
-
-    public final static String ID_FIELD = "_id";
-    public final static String PARENT_FIELD = "_parent";
-    private final static String SOURCE_FIELD = "_source";
 
     private final Client client;
 
@@ -39,15 +29,7 @@ public class ElasticClient {
 
     public SearchResult search(Request request) {
         SearchResponse response = client.search(request.getRequest()).actionGet();
-        SearchHits hits = response.getHits();
-        List<Doc> docs = new ArrayList<>();
-        for (SearchHit hit : hits) {
-            SearchHitField parentField = hit.getFields().get(PARENT_FIELD);
-            String parent = (parentField == null) ? null : parentField.getValue();
-            docs.add(new Doc(hit.getId(), parent, hit.getSource()));
-        }
-        FacetResult facets = new FacetResult(response.getAggregations());
-        return new SearchResult(hits.totalHits(), docs, facets);
+        return new SearchResult(response, request.getFacets());
     }
 
     public Doc get(String type, String id) {
@@ -56,9 +38,9 @@ public class ElasticClient {
         getRequest.setType(type);
         getRequest.setId(id);
         getRequest.setRouting("0"); //TODO
-        getRequest.setFields(SOURCE_FIELD, PARENT_FIELD);
+        getRequest.setFields(Consts.SOURCE_FIELD, Consts.PARENT_FIELD);
         GetResponse response = getRequest.execute().actionGet();
-        GetField parentField = response.getFields().get(PARENT_FIELD);
+        GetField parentField = response.getFields().get(Consts.PARENT_FIELD);
         Object parent = (parentField == null) ? null : parentField.getValue();
         return new Doc(response.getId(), parent, response.getSource());
     }

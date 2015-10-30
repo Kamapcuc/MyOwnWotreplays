@@ -2,16 +2,17 @@ package ru.kamapcuc.myownwotreplays.elastic;
 
 import org.json.JSONObject;
 import org.springframework.context.i18n.LocaleContextHolder;
+import ru.kamapcuc.myownwotreplays.base.Consts;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Hack for override JSONObject.map::get to receive localized serialization
+ */
 public class Doc extends JSONObject {
 
-    /**
-     * Hack for override JSONObject.map::get to receive localized serialization
-     */
     public Doc(String id, Object parent, Map<String, Object> source) {
         super();
         try {
@@ -20,12 +21,12 @@ public class Doc extends JSONObject {
             f.set(this, new Source(source));
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException ignored) {
         }
-        put(ElasticClient.ID_FIELD, id);
-        put(ElasticClient.PARENT_FIELD, parent);
+        put(Consts.ID_FIELD, id);
+        put(Consts.PARENT_FIELD, parent);
     }
 
     public String getId() {
-        return (String) get(ElasticClient.ID_FIELD);
+        return (String) get(Consts.ID_FIELD);
     }
 
     private class Source extends HashMap<String, Object> {
