@@ -14,25 +14,23 @@ import java.util.Map;
 
 public class SearchResult {
 
-    private List<Doc> docs = null;
+    private final List<Doc> docs;
     private final SearchResponse response;
     private final List<Facet> facets;
 
     public SearchResult(SearchResponse response, List<Facet> facets) {
         this.response = response;
         this.facets = facets;
+        List<Doc> tmp = new ArrayList<>(); //TODO
+        for (SearchHit hit : response.getHits()) {
+            SearchHitField parentField = hit.getFields().get(Consts.PARENT_FIELD);
+            String parent = (parentField == null) ? null : parentField.getValue();
+            tmp.add(new Doc(hit.getId(), parent, hit.getSource()));
+        }
+        this.docs = tmp;
     }
 
     public List<Doc> getDocs() {
-        if (docs == null) { //TODO
-            List<Doc> tmp = new ArrayList<>();
-            for (SearchHit hit : response.getHits()) {
-                SearchHitField parentField = hit.getFields().get(Consts.PARENT_FIELD);
-                String parent = (parentField == null) ? null : parentField.getValue();
-                tmp.add(new Doc(hit.getId(), parent, hit.getSource()));
-            }
-            docs = tmp;
-        }
         return docs;
     }
 

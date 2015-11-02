@@ -2,10 +2,8 @@ package ru.kamapcuc.myownwotreplays.elastic.facets;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.TermsQueryBuilder;
-import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
-import org.elasticsearch.search.aggregations.bucket.filter.Filter;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 import ru.kamapcuc.myownwotreplays.base.Parameters;
@@ -51,12 +49,7 @@ public abstract class FieldFacet extends Facet {
 
     @Override
     public Object getResult(Aggregations aggregations) {
-        Aggregation aggregation = aggregations.get(getId());
-        if (aggregation instanceof Filter) {
-            Filter filteredFacet = (Filter) aggregation;
-            aggregation = filteredFacet.getAggregations().get(getId());
-        }
-        Terms termsFacet = (Terms) aggregation;
+        Terms termsFacet = (Terms) getOwnAggregationResult(aggregations);
         Map<String, Object> result = new HashMap<>();
         for (Terms.Bucket bucket : termsFacet.getBuckets())
             result.put(bucket.getKeyAsString(), bucket.getDocCount());
