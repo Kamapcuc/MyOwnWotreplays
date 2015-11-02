@@ -1,6 +1,6 @@
 package ru.kamapcuc.myownwotreplays.elastic.facets;
 
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
@@ -16,13 +16,13 @@ public abstract class Facet {
     public abstract String getType();
     public abstract String getDisplayName();
     public abstract Object getValues();
-    public abstract FilterBuilder getFilter(Parameters params);
+    public abstract QueryBuilder getFilter(Parameters params);
     public abstract Object getResult(Aggregations aggregations);
 
     protected abstract AggregationBuilder getOwnAggregation();
 
-    public AggregationBuilder getAggregation(Supplier<FilterBuilder> otherFacets) {
-        FilterBuilder filter = otherFacets.get();
+    public AggregationBuilder getAggregation(Supplier<QueryBuilder> otherFacets) {
+        QueryBuilder filter = otherFacets.get();
         if (filter != null) {
             FilterAggregationBuilder filteredFacet = new FilterAggregationBuilder(getId());
             filteredFacet.subAggregation(getOwnAggregation());

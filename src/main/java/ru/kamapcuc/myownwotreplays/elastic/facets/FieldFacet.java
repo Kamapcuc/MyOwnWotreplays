@@ -1,7 +1,7 @@
 package ru.kamapcuc.myownwotreplays.elastic.facets;
 
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.TermsFilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.TermsQueryBuilder;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
@@ -41,10 +41,10 @@ public abstract class FieldFacet extends Facet {
     }
 
     @Override
-    public FilterBuilder getFilter(Parameters params) {
+    public QueryBuilder getFilter(Parameters params) {
         String selectedValues = params.getParameter(getId());
         if (selectedValues != null)
-            return new TermsFilterBuilder(field, selectedValues.split(","));
+            return new TermsQueryBuilder(field, selectedValues.split(","));
         else
             return null;
     }
@@ -56,7 +56,7 @@ public abstract class FieldFacet extends Facet {
             Map<String, Object> result = new HashMap<>();
             Terms termsFacet = (Terms) aggregation;
             for (Terms.Bucket bucket : termsFacet.getBuckets())
-                result.put(bucket.getKey(), bucket.getDocCount());
+                result.put(bucket.getKeyAsString(), bucket.getDocCount());
             return result;
         } else {
             Filter filteredFacet = (Filter) aggregation;

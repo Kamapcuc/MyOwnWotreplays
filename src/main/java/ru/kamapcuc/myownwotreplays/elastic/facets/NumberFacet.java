@@ -1,7 +1,5 @@
 package ru.kamapcuc.myownwotreplays.elastic.facets;
 
-import com.google.common.collect.Range;
-
 import java.util.LinkedHashMap;
 
 public class NumberFacet extends FieldFacet {
@@ -11,7 +9,7 @@ public class NumberFacet extends FieldFacet {
     public NumberFacet(String field, String code, int[] values) {
         super(field, code);
         this.values = values;
-        Range.closedOpen(0, 10).boxed().collect(Collectors.toList())
+//        Range.closedOpen(0, 10).boxed().collect(Collectors.toList())
     }
 
     @Override

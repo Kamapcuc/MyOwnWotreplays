@@ -1,7 +1,7 @@
 package ru.kamapcuc.myownwotreplays.search.facets;
 
-import org.elasticsearch.index.query.FilterBuilder;
-import org.elasticsearch.index.query.TermsFilterBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.TermsQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
 
@@ -20,9 +20,9 @@ public class FieldFacet extends Facet {
         return field;
     }
 
-    public FilterBuilder getFilter() {
+    public QueryBuilder getFilter() {
         if (selectedValues != null)
-            return new TermsFilterBuilder(field, selectedValues);
+            return new TermsQueryBuilder(field, selectedValues);
         else
             return null;
     }

@@ -1,8 +1,8 @@
 package ru.kamapcuc.myownwotreplays.elastic;
 
 import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.index.query.AndFilterBuilder;
-import org.elasticsearch.index.query.FilterBuilder;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.json.JSONObject;
@@ -10,7 +10,9 @@ import ru.kamapcuc.myownwotreplays.base.Consts;
 import ru.kamapcuc.myownwotreplays.base.Parameters;
 import ru.kamapcuc.myownwotreplays.elastic.facets.Facet;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.function.Supplier;
 
 public abstract class Request implements Parameters {
@@ -51,7 +53,7 @@ public abstract class Request implements Parameters {
         return new FacetContainer();
     }
 
-    public class FacetContainer extends ArrayList<Facet> implements Supplier<FilterBuilder> {
+    public class FacetContainer extends ArrayList<Facet> implements Supplier<QueryBuilder> {
 
         public FacetContainer() {
         }
@@ -61,10 +63,10 @@ public abstract class Request implements Parameters {
         }
 
         @Override
-        public FilterBuilder get() {
-            List<FilterBuilder> filters = new ArrayList<>();
+        public QueryBuilder get() {
+            List<QueryBuilder> filters = new ArrayList<>();
             for (Facet facet : this) {
-                FilterBuilder filter = facet.getFilter(Request.this);
+                QueryBuilder filter = facet.getFilter(Request.this);
                 if (filter != null)
                     filters.add(filter);
             }
@@ -75,8 +77,8 @@ public abstract class Request implements Parameters {
                 case 1:
                     return filters.get(0);
                 default:
-                    AndFilterBuilder andFilter = new AndFilterBuilder();
-                    filters.forEach(andFilter::add);
+                    BoolQueryBuilder andFilter = new BoolQueryBuilder();
+                    filters.forEach(andFilter::must);
                     return andFilter;
             }
         }

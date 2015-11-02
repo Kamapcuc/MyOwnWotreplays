@@ -1,6 +1,5 @@
 package ru.kamapcuc.myownwotreplays.parser;
 
-import org.elasticsearch.common.base.Joiner;
 import ru.kamapcuc.myownwotreplays.base.Consts;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.Repository;
@@ -21,7 +20,6 @@ public class ReplaysParser {
     private Map<String, Object> document = new HashMap<>();
     private final static Map<String, Doc> tanksData = Repository.getDocs(Consts.TANK_TYPE_NAME);
 
-    private final static Joiner JOINER = Joiner.on(".").skipNulls();
     private final static SimpleDateFormat DATE_PARSER = new SimpleDateFormat("dd.MM.yyyy kk:mm:ss");
 
     public ReplaysParser(Map startInfo, List endInfo) {
@@ -33,7 +31,7 @@ public class ReplaysParser {
     private int parseVersion(String clientVersion) {
         int result = 0;
         String[] digits = clientVersion.split("(,| |\\.)+");
-        document.put("version", JOINER.join(digits));
+        document.put("version", String.join(".", digits));
         for (int i = 0; i < digits.length; i++) {
             try {
                 result += Integer.valueOf(digits[i]) * Math.pow(100, 3 - i);

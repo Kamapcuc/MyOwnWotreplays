@@ -6,7 +6,7 @@ import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.common.settings.ImmutableSettings;
+import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.get.GetField;
 import org.elasticsearch.node.Node;
 import org.elasticsearch.node.NodeBuilder;
@@ -46,8 +46,8 @@ public class ElasticClient {
     }
 
     private static Client createNode() {
-        ImmutableSettings.Builder settings = ImmutableSettings.settingsBuilder();
-        settings.loadFromClasspath("/elasticsearch.yml");
+        Settings.Builder settings = Settings.settingsBuilder();
+        settings.loadFromSource("/elasticsearch.yml");
         settings.put("path.data", Consts.getElasticDataPath());
         NodeBuilder nodebuilder = new NodeBuilder();
         nodebuilder.settings(settings.build());
