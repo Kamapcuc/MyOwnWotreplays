@@ -136,13 +136,7 @@
 
         for (var facetKey in facetsData) {
             var facetData = facetsData[facetKey];
-            var facet = new window[facetData.type](facetKey, facetData);
-
-//            switch (facetData.type) {
-//                case 'field':
-//                    facet = new FieldFacet(facetKey, facetData);
-//                    break;
-//            }
+            var facet = new window[facetData['_prototype']](facetKey, facetData);
             this.facets.push(facet);
         }
         window.addEventListener('popstate', $.proxy(this.applyHistoryState, this));

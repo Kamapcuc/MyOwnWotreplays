@@ -14,6 +14,8 @@ import ru.kamapcuc.myownwotreplays.base.Consts;
 
 public class ElasticClient {
 
+    private final static String SETTINGS = "/elasticsearch.yml";
+
     private final Client client;
 
     private ElasticClient() {
@@ -45,12 +47,18 @@ public class ElasticClient {
         return new Doc(response.getId(), parent, response.getSource());
     }
 
-    private static Client createNode() {
+    private Settings getSettings() {
         Settings.Builder settings = Settings.settingsBuilder();
-        settings.loadFromSource("/elasticsearch.yml");
-        settings.put("path.data", Consts.getElasticDataPath());
+        settings.loadFromStream(SETTINGS, ElasticClient.class.getResourceAsStream(SETTINGS));
+        String path = Consts.getElasticDataPath();
+        settings.put("path.data", path);
+        settings.put("path.home", path);
+        return settings.build();
+    }
+
+    private Client createNode() {
         NodeBuilder nodebuilder = new NodeBuilder();
-        nodebuilder.settings(settings.build());
+        nodebuilder.settings(getSettings());
         Node node = nodebuilder.node();
         node.start();
         return node.client();

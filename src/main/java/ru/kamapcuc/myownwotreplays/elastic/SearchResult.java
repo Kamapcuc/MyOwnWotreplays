@@ -14,6 +14,7 @@ import java.util.Map;
 
 public class SearchResult {
 
+    private List<Doc> docs = null;
     private final SearchResponse response;
     private final List<Facet> facets;
 
@@ -23,18 +24,21 @@ public class SearchResult {
     }
 
     public List<Doc> getDocs() {
-        List<Doc> docs = new ArrayList<>();
-        for (SearchHit hit : response.getHits()) {
-            SearchHitField parentField = hit.getFields().get(Consts.PARENT_FIELD);
-            String parent = (parentField == null) ? null : parentField.getValue();
-            docs.add(new Doc(hit.getId(), parent, hit.getSource()));
+        if (docs == null) { //TODO
+            List<Doc> tmp = new ArrayList<>();
+            for (SearchHit hit : response.getHits()) {
+                SearchHitField parentField = hit.getFields().get(Consts.PARENT_FIELD);
+                String parent = (parentField == null) ? null : parentField.getValue();
+                tmp.add(new Doc(hit.getId(), parent, hit.getSource()));
+            }
+            docs = tmp;
         }
         return docs;
     }
 
     private Map<String, Object> getFacets() {
         Map<String, Object> map = new HashMap<>();
-        for(Facet facet : facets)
+        for (Facet facet : facets)
             map.put(facet.getId(), facet.getResult(response.getAggregations()));
         return map;
     }

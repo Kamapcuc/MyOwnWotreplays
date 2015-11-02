@@ -80,27 +80,18 @@
   <hop> <from>Sort rows 3</from><to>Concat 3</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows 2</from><to>Concat 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows 4</from><to>Concat 4</to><enabled>Y</enabled> </hop>
-  <hop> <from>Build source 2</from><to>Save nation</to><enabled>Y</enabled> </hop>
-  <hop> <from>Build source 4</from><to>Save class</to><enabled>Y</enabled> </hop>
   <hop> <from>Concat 2</from><to>Build source 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Concat 3</from><to>Build source 3</to><enabled>Y</enabled> </hop>
   <hop> <from>Concat 4</from><to>Build source 4</to><enabled>Y</enabled> </hop>
-  <hop> <from>Languages</from><to>Save language</to><enabled>Y</enabled> </hop>
   <hop> <from>Build source</from><to>Select values</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>Save map</to><enabled>Y</enabled> </hop>
-  <hop> <from>Missing maps</from><to>Save map</to><enabled>Y</enabled> </hop>
-  <hop> <from>Build source 3</from><to>Save tank</to><enabled>Y</enabled> </hop>
   <hop> <from>Achievements</from><to>Parse data 3</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows 5</from><to>Concat 5</to><enabled>Y</enabled> </hop>
   <hop> <from>Parse data 3</from><to>Sort rows 5</to><enabled>Y</enabled> </hop>
   <hop> <from>Concat 5</from><to>Build source 5</to><enabled>Y</enabled> </hop>
-  <hop> <from>Build source 5</from><to>Save medal</to><enabled>Y</enabled> </hop>
   <hop> <from>Concat 6</from><to>Build source 6</to><enabled>Y</enabled> </hop>
   <hop> <from>Sort rows 6</from><to>Concat 6</to><enabled>Y</enabled> </hop>
   <hop> <from>Parse data 3</from><to>Sort rows 6</to><enabled>Y</enabled> </hop>
   <hop> <from>Build source 6</from><to>Select values 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values 2</from><to>Save section</to><enabled>Y</enabled> </hop>
-  <hop> <from>My section</from><to>Save section</to><enabled>Y</enabled> </hop>
   <hop> <from>Build urls</from><to>Wait</to><enabled>Y</enabled> </hop>
   <hop> <from>Build urls</from><to>Wait 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Wait</from><to>Delay row</to><enabled>Y</enabled> </hop>
@@ -109,6 +100,16 @@
   <hop> <from>Delay row 3</from><to>Achievements</to><enabled>Y</enabled> </hop>
   <hop> <from>Build urls</from><to>Delay row 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Delay row 2</from><to>Tanks</to><enabled>Y</enabled> </hop>
+  <hop> <from>Languages</from><to>Build lang</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build lang</from><to>Save lang</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values</from><to>Save map</to><enabled>Y</enabled> </hop>
+  <hop> <from>Missing maps</from><to>Save map</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build source 2</from><to>Save nation</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build source 3</from><to>Save tank</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build source 4</from><to>Save class</to><enabled>Y</enabled> </hop>
+  <hop> <from>Build source 5</from><to>Save medal</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values 2</from><to>Save section</to><enabled>Y</enabled> </hop>
+  <hop> <from>My section</from><to>Save section</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Achievements</name>
@@ -153,6 +154,41 @@
     </step>
 
   <step>
+    <name>Build lang</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var langUrl &#x3d; &#x27;http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;language&#x2f;&#x27; &#x2b; lang&#x3b;&#xd;&#xa;&#xd;&#xa;var obj &#x3d; &#x7b;&#xd;&#xa;	name &#x3a; langName,&#xd;&#xa;	order &#x3a; num&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langStr &#x3d; JSON.stringify&#x28;obj&#x29;&#x3b;&#xd;&#xa;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>langUrl</name>
+        <rename>langUrl</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>langStr</name>
+        <rename>langStr</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>160</xloc>
+      <yloc>416</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Build source</name>
     <type>ScriptValueMod</type>
     <description/>
@@ -166,8 +202,14 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var mapObj &#x3d; &#x7b;&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	mapObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;mapObj&#x29;&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
+        <jsScript_script>var url &#x3d; &#x27;http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;map&#x2f;&#x27; &#x2b; id&#x3b;&#xd;&#xa;&#xd;&#xa;var mapObj &#x3d; &#x7b;&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	mapObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;mapObj&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>url</name>
+        <rename>url</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>source</name>
         <rename>source</rename>
         <type>String</type>
         <length>-1</length>
@@ -195,8 +237,14 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var nationObj &#x3d; &#x7b;&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; nationName.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	nationObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;nationObj&#x29;&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
+        <jsScript_script>var url &#x3d; &#x27;http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;nation&#x2f;&#x27; &#x2b; nationId&#x3b;&#xd;&#xa;&#xd;&#xa;var nationObj &#x3d; &#x7b;&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; nationName.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	nationObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;nationObj&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>url</name>
+        <rename>url</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>source</name>
         <rename>source</rename>
         <type>String</type>
         <length>-1</length>
@@ -224,11 +272,17 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Build source</jsScript_name>
-        <jsScript_script>var tankObj &#x3d; &#x7b;&#xd;&#xa;	level &#x3a; level,&#xd;&#xa;	nation &#x3a; nationId,&#xd;&#xa;	class &#x3a; classId,&#xd;&#xa;	premium &#x3a; premium,&#xd;&#xa;	image &#x3a; image.substring&#x28;urlLength&#x29;,&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	shortName_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var shortNameArr &#x3d; shortName.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	tankObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	tankObj.shortName_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; shortNameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;tankObj&#x29;&#x3b;</jsScript_script>
+        <jsScript_script>var url &#x3d; &#x27;http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;tank&#x2f;&#x27; &#x2b; id&#x3b;&#xd;&#xa;&#xd;&#xa;var tankObj &#x3d; &#x7b;&#xd;&#xa;	level &#x3a; level,&#xd;&#xa;	nation &#x3a; nationId,&#xd;&#xa;	class &#x3a; classId,&#xd;&#xa;	premium &#x3a; premium,&#xd;&#xa;	image &#x3a; image.substring&#x28;urlLength&#x29;,&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	shortName_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var shortNameArr &#x3d; shortName.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	tankObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	tankObj.shortName_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; shortNameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;tankObj&#x29;&#x3b;</jsScript_script>
       </jsScript>      <jsScript>        <jsScript_type>1</jsScript_type>
         <jsScript_name>Consts</jsScript_name>
         <jsScript_script>var urlLength &#x3d; &#x22;http&#x3a;&#x2f;&#x2f;worldoftanks.com&#x2f;static&#x2f;2.18.1&#x2f;encyclopedia&#x2f;tankopedia&#x2f;vehicle&#x2f;&#x22;.length&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>url</name>
+        <rename>url</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>source</name>
         <rename>source</rename>
         <type>String</type>
         <length>-1</length>
@@ -256,8 +310,14 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var classObj &#x3d; &#x7b;&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; className.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	classObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;classObj&#x29;&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
+        <jsScript_script>var url &#x3d; &#x27;http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;class&#x2f;&#x27; &#x2b; classId&#x3b;&#xd;&#xa;&#xd;&#xa;var classObj &#x3d; &#x7b;&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; className.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	classObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;classObj&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>url</name>
+        <rename>url</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>source</name>
         <rename>source</rename>
         <type>String</type>
         <length>-1</length>
@@ -285,18 +345,18 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Build source</jsScript_name>
-        <jsScript_script>var section &#x3d; sectionId&#x3b;&#xd;&#xa;if &#x28;id.indexOf&#x28;&#x27;markOfMastery&#x27;&#x29; &#x3d;&#x3d; 0&#x29;&#xd;&#xa;	section &#x3d; &#x27;mastery&#x27;&#x3b;&#xd;&#xa;&#xd;&#xa;var achievementObj &#x3d; &#x7b;&#xd;&#xa;	section &#x3a; section,&#xd;&#xa;	order &#x3a; order,&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	description_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	condition_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	heroInfo_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	image &#x3a; image&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var descriptionArr &#x3d; description.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var conditionArr &#x3d; condition.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var heroInfoArr &#x3d; &#x28;heroInfo &#x21;&#x3d; &#x22;&#x22;&#x29;&#x3f; heroInfo.split&#x28;&#x27;&#x5e;&#x27;&#x29; &#x3a; &#x5b;&#x5d;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	achievementObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.condition_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; descriptionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.description_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; conditionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.heroInfo_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; heroInfoArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;achievementObj&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;if &#x28;&#x21;MEDAL_MAP&#x5b;id&#x5d;&#x29;&#xd;&#xa;	trans_Status &#x3d; SKIP_TRANSFORMATION&#x3b;&#xd;&#xa;else&#xd;&#xa;	trans_Status &#x3d; CONTINUE_TRANSFORMATION&#x3b;&#xd;&#xa;&#xd;&#xa;var numericId &#x3d; &#x27;&#x27; &#x2b; MEDAL_MAP&#x5b;id&#x5d;&#x3b;&#xd;&#xa;</jsScript_script>
+        <jsScript_script>var section &#x3d; sectionId&#x3b;&#xd;&#xa;if &#x28;id.indexOf&#x28;&#x27;markOfMastery&#x27;&#x29; &#x3d;&#x3d; 0&#x29;&#xd;&#xa;	section &#x3d; &#x27;mastery&#x27;&#x3b;&#xd;&#xa;&#xd;&#xa;var achievementObj &#x3d; &#x7b;&#xd;&#xa;	section &#x3a; section,&#xd;&#xa;	order &#x3a; order,&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	description_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	condition_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	heroInfo_i18n &#x3a; &#x7b;&#x7d;,&#xd;&#xa;	image &#x3a; image&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; name.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var descriptionArr &#x3d; description.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var conditionArr &#x3d; condition.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var heroInfoArr &#x3d; &#x28;heroInfo &#x21;&#x3d; &#x22;&#x22;&#x29;&#x3f; heroInfo.split&#x28;&#x27;&#x5e;&#x27;&#x29; &#x3a; &#x5b;&#x5d;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	achievementObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.condition_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; descriptionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.description_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; conditionArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;	achievementObj.heroInfo_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; heroInfoArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;achievementObj&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;if &#x28;&#x21;MEDAL_MAP&#x5b;id&#x5d;&#x29;&#xd;&#xa;	trans_Status &#x3d; SKIP_TRANSFORMATION&#x3b;&#xd;&#xa;else&#xd;&#xa;	trans_Status &#x3d; CONTINUE_TRANSFORMATION&#x3b;&#xd;&#xa;&#xd;&#xa;var numericId &#x3d; &#x27;&#x27; &#x2b; MEDAL_MAP&#x5b;id&#x5d;&#x3b;&#xd;&#xa;var url &#x3d; &#x27;http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;medal&#x2f;&#x27; &#x2b; numericId&#x3b;</jsScript_script>
       </jsScript>      <jsScript>        <jsScript_type>1</jsScript_type>
         <jsScript_name>Item_0</jsScript_name>
         <jsScript_script>var MEDAL_MAP &#x3d; &#x7b;&#xd;&#xa;	armoredFist &#x3a; 236,&#xd;&#xa;	arsonist &#x3a; 525,&#xd;&#xa;	bombardier &#x3a; 147,&#xd;&#xa;	bonecrusher &#x3a; 526,&#xd;&#xa;	charmed &#x3a; 527,&#xd;&#xa;	defender &#x3a; 37,&#xd;&#xa;	demolition &#x3a; 524,&#xd;&#xa;	duelist &#x3a; 523,&#xd;&#xa;	even &#x3a; 528,&#xd;&#xa;	evileye &#x3a; 72,&#xd;&#xa;	fighter &#x3a; 522,&#xd;&#xa;	geniusForWarMedal &#x3a; 232,&#xd;&#xa;	godOfWar &#x3a; 286,&#xd;&#xa;	heroesOfRassenay &#x3a; 110,&#xd;&#xa;	histBattle3_historyLessons &#x3a; 306,&#xd;&#xa;	huntsman &#x3a; 148,&#xd;&#xa;	impenetrable &#x3a; 517,&#xd;&#xa;	invader &#x3a; 35,&#xd;&#xa;	ironMan &#x3a; 151,&#xd;&#xa;	kamikaze &#x3a; 64,&#xd;&#xa;	kingOfTheHill &#x3a; 233,&#xd;&#xa;	luckyDevil &#x3a; 152,&#xd;&#xa;	mainGun &#x3a; 228,&#xd;&#xa;	markOfMastery1 &#x3a; 1,&#xd;&#xa;	markOfMastery2 &#x3a; 2,&#xd;&#xa;	markOfMastery3 &#x3a; 3,&#xd;&#xa;	markOfMastery4 &#x3a; 4,&#xd;&#xa;	medalAntiSpgFire &#x3a; 297,&#xd;&#xa;	medalBillotte &#x3a; 54,&#xd;&#xa;	medalBrothersInArms &#x3a; 143,&#xd;&#xa;	medalBrunoPietro &#x3a; 75,&#xd;&#xa;	medalBurda &#x3a; 53,&#xd;&#xa;	medalCoolBlood &#x3a; 299,&#xd;&#xa;	medalCrucialContribution &#x3a; 144,&#xd;&#xa;	medalDeLanglade &#x3a; 145,&#xd;&#xa;	medalDumitru &#x3a; 78,&#xd;&#xa;	medalFadin &#x3a; 56,&#xd;&#xa;	medalGore &#x3a; 298,&#xd;&#xa;	medalHalonen &#x3a; 52,&#xd;&#xa;	medalKolobanov &#x3a; 55,&#xd;&#xa;	medalLafayettePool &#x3a; 74,&#xd;&#xa;	medalLehvaslaiho &#x3a; 106,&#xd;&#xa;	medalMonolith &#x3a; 296,&#xd;&#xa;	medalNikolas &#x3a; 107,&#xd;&#xa;	medalOrlik &#x3a; 50,&#xd;&#xa;	medalOskin &#x3a; 51,&#xd;&#xa;	medalPascucci &#x3a; 77,&#xd;&#xa;	medalRadleyWalters &#x3a; 73,&#xd;&#xa;	medalStark &#x3a; 300,&#xd;&#xa;	medalTarczay &#x3a; 76,&#xd;&#xa;	noMansLand &#x3a; 479,&#xd;&#xa;	raider &#x3a; 61,&#xd;&#xa;	scout &#x3a; 40,&#xd;&#xa;	shootToKill &#x3a; 521,&#xd;&#xa;	sniper2 &#x3a; 227,&#xd;&#xa;	sturdy &#x3a; 150,&#xd;&#xa;	steelwall &#x3a; 38,&#xd;&#xa;	supporter &#x3a; 39,&#xd;&#xa;	tacticalBreakthrough &#x3a; 237,&#xd;&#xa;	warrior &#x3a; 34,&#xd;&#xa;	willToWinSpirit &#x3a; 289,&#xd;&#xa;	wolfAmongSheepMedal &#x3a; 230&#xd;&#xa;&#x7d;&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
-        <rename>source</rename>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>url</name>
+        <rename>url</rename>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
         <replace>N</replace>
-      </field>      <field>        <name>numericId</name>
-        <rename>numericId</rename>
+      </field>      <field>        <name>source</name>
+        <rename>source</rename>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -323,8 +383,14 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var sectionObj &#x3d; &#x7b;&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; sectionName.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	sectionObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;sectionObj&#x29;&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>source</name>
+        <jsScript_script>var url &#x3d; &#x27;http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;medalSection&#x2f;&#x27; &#x2b; sectionId&#x3b;&#xd;&#xa;var sectionObj &#x3d; &#x7b;&#xd;&#xa;	name_i18n &#x3a; &#x7b;&#x7d;&#xd;&#xa;&#x7d;&#x3b;&#xd;&#xa;&#xd;&#xa;var langArr &#x3d; lang.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;var nameArr &#x3d; sectionName.split&#x28;&#x27;&#x5e;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;for &#x28;var index in langArr&#x29; &#x7b;&#xd;&#xa;	sectionObj.name_i18n&#x5b;langArr&#x5b;index&#x5d;&#x5d; &#x3d; nameArr&#x5b;index&#x5d;&#x3b;&#xd;&#xa;&#x7d;&#xd;&#xa;var source &#x3d; JSON.stringify&#x28;sectionObj&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>url</name>
+        <rename>url</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>source</name>
         <rename>source</rename>
         <type>String</type>
         <length>-1</length>
@@ -722,6 +788,66 @@
     </step>
 
   <step>
+    <name>Delay row</name>
+    <type>Delay</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <timeout>5</timeout>
+    <scaletime>seconds</scaletime>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Delay row 2</name>
+    <type>Delay</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <timeout>5</timeout>
+    <scaletime>seconds</scaletime>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>256</xloc>
+      <yloc>608</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Delay row 3</name>
+    <type>Delay</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <timeout>5</timeout>
+    <scaletime>seconds</scaletime>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>288</xloc>
+      <yloc>736</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
     <name>Languages</name>
     <type>DataGrid</type>
     <description/>
@@ -859,7 +985,7 @@
            </partitioning>
     <fields>
       <field>
-        <name>id</name>
+        <name>url</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -880,13 +1006,13 @@
       </field>
     </fields>
     <data>
-      <line> <item>42_north_america</item><item>&#x7b;&#x22;name_i18n&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Port&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x41f;&#x43e;&#x440;&#x442;&#x22;,&#x22;pl&#x22;&#x3a;&#x22;Port&#x22;,&#x22;de&#x22;&#x3a;&#x22;Port&#x22;,&#x22;fr&#x22;&#x3a;&#x22;Port&#x22;,&#x22;es&#x22;&#x3a;&#x22;Puerto&#x22;,&#x22;zh&#x22;&#x3a;&#x22;&#x6e2f;&#x22;,&#x22;tr&#x22;&#x3a;&#x22;Liman&#x22;,&#x22;cs&#x22;&#x3a;&#x22;P&#x159;&#xed;stav&#x22;,&#x22;th&#x22;&#x3a;&#x22;&#xe1e;&#xe2d;&#xe23;&#xe4c;&#xe15;&#xe35;&#xe22;&#x22;,&#x22;vi&#x22;&#x3a;&#x22;H&#x1ea3;i c&#x1ea3;ng&#x22;,&#x22;ko&#x22;&#x3a;&#x22;&#xd3ec;&#xd2b8;&#x22;&#x7d;&#x7d;</item> </line>
-      <line> <item>85_winter</item><item>&#x7b;&#x22;name_i18n&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Severogorsk&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x421;&#x435;&#x432;&#x435;&#x440;&#x43e;&#x433;&#x43e;&#x440;&#x441;&#x43a;&#x22;&#x7d;&#x7d;</item> </line>
+      <line> <item>http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;map&#x2f;42_north_america</item><item>&#x7b;&#x22;name_i18n&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Port&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x41f;&#x43e;&#x440;&#x442;&#x22;,&#x22;pl&#x22;&#x3a;&#x22;Port&#x22;,&#x22;de&#x22;&#x3a;&#x22;Port&#x22;,&#x22;fr&#x22;&#x3a;&#x22;Port&#x22;,&#x22;es&#x22;&#x3a;&#x22;Puerto&#x22;,&#x22;zh&#x22;&#x3a;&#x22;&#x6e2f;&#x22;,&#x22;tr&#x22;&#x3a;&#x22;Liman&#x22;,&#x22;cs&#x22;&#x3a;&#x22;P&#x159;&#xed;stav&#x22;,&#x22;th&#x22;&#x3a;&#x22;&#xe1e;&#xe2d;&#xe23;&#xe4c;&#xe15;&#xe35;&#xe22;&#x22;,&#x22;vi&#x22;&#x3a;&#x22;H&#x1ea3;i c&#x1ea3;ng&#x22;,&#x22;ko&#x22;&#x3a;&#x22;&#xd3ec;&#xd2b8;&#x22;&#x7d;&#x7d;</item> </line>
+      <line> <item>http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;map&#x2f;85_winter</item><item>&#x7b;&#x22;name_i18n&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Severogorsk&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x421;&#x435;&#x432;&#x435;&#x440;&#x43e;&#x433;&#x43e;&#x440;&#x441;&#x43a;&#x22;&#x7d;&#x7d;</item> </line>
     </data>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1056</xloc>
-      <yloc>416</yloc>
+      <xloc>832</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -903,7 +1029,7 @@
            </partitioning>
     <fields>
       <field>
-        <name>sectionId</name>
+        <name>url</name>
         <type>String</type>
         <format/>
         <currency/>
@@ -924,12 +1050,12 @@
       </field>
     </fields>
     <data>
-      <line> <item>mastery</item><item>&#x7b;&#x22;name_i18n&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Mastery Badge&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x417;&#x43d;&#x430;&#x43a; &#x43a;&#x43b;&#x430;&#x441;&#x441;&#x43d;&#x43e;&#x441;&#x442;&#x438;&#x22;,&#x22;pl&#x22;&#x3a;&#x22;Odznaka mistrzowska&#x22;,&#x22;de&#x22;&#x3a;&#x22;&#xdc;berlegenheitsabz&#x22;,&#x22;fr&#x22;&#x3a;&#x22;Insigne de ma&#xee;trise&#x22;,&#x22;es&#x22;&#x3a;&#x22;Insignia de Maestr&#xed;a&#x22;,&#x22;zh&#x22;&#x3a;&#x22;&#x6218;&#x6597;&#x5609;&#x5956;&#x22;,&#x22;tr&#x22;&#x3a;&#x22;Ustal&#x131;k Br&#xf6;vesi&#x22;,&#x22;cs&#x22;&#x3a;&#x22;Vzorn&#xfd; tankista&#x22;,&#x22;th&#x22;&#x3a;&#x22;&#xe15;&#xe23;&#xe32;&#xe04;&#xe27;&#xe32;&#xe21;&#xe40;&#xe0a;&#xe35;&#xe48;&#xe22;&#xe27;&#xe0a;&#xe32;&#xe0d;&#x22;,&#x22;vi&#x22;&#x3a;&#x22;C&#x1ea5;p &#x111;&#x1ed9; Master&#x22;,&#x22;ko&#x22;&#x3a;&#x22;&#xc219;&#xb828;&#xc758; &#xc99d;&#xd45c;&#x22;&#x7d;&#x7d;</item> </line>
+      <line> <item>http&#x3a;&#x2f;&#x2f;localhost&#x3a;9200&#x2f;replays&#x2f;medalSection&#x2f;mastery</item><item>&#x7b;&#x22;name_i18n&#x22;&#x3a;&#x7b;&#x22;en&#x22;&#x3a;&#x22;Mastery Badge&#x22;,&#x22;ru&#x22;&#x3a;&#x22;&#x417;&#x43d;&#x430;&#x43a; &#x43a;&#x43b;&#x430;&#x441;&#x441;&#x43d;&#x43e;&#x441;&#x442;&#x438;&#x22;,&#x22;pl&#x22;&#x3a;&#x22;Odznaka mistrzowska&#x22;,&#x22;de&#x22;&#x3a;&#x22;&#xdc;berlegenheitsabz&#x22;,&#x22;fr&#x22;&#x3a;&#x22;Insigne de ma&#xee;trise&#x22;,&#x22;es&#x22;&#x3a;&#x22;Insignia de Maestr&#xed;a&#x22;,&#x22;zh&#x22;&#x3a;&#x22;&#x6218;&#x6597;&#x5609;&#x5956;&#x22;,&#x22;tr&#x22;&#x3a;&#x22;Ustal&#x131;k Br&#xf6;vesi&#x22;,&#x22;cs&#x22;&#x3a;&#x22;Vzorn&#xfd; tankista&#x22;,&#x22;th&#x22;&#x3a;&#x22;&#xe15;&#xe23;&#xe32;&#xe04;&#xe27;&#xe32;&#xe21;&#xe40;&#xe0a;&#xe35;&#xe48;&#xe22;&#xe27;&#xe0a;&#xe32;&#xe0d;&#x22;,&#x22;vi&#x22;&#x3a;&#x22;C&#x1ea5;p &#x111;&#x1ed9; Master&#x22;,&#x22;ko&#x22;&#x3a;&#x22;&#xc219;&#xb828;&#xc758; &#xc99d;&#xd45c;&#x22;&#x7d;&#x7d;</item> </line>
     </data>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1056</xloc>
-      <yloc>896</yloc>
+      <xloc>832</xloc>
+      <yloc>992</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1134,7 +1260,7 @@
 
   <step>
     <name>Save class</name>
-    <type>ElasticSearchBulk</type>
+    <type>HTTPPOST</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -1142,36 +1268,23 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <general>
-      <index>replays</index>
-      <type>class</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>100</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>Y</isJson>
-      <jsonField>source</jsonField>
-      <idField>classId</idField>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
+    <postafile>N</postafile>
+    <encoding>UTF-8</encoding>
+    <url/>
+    <urlInField>Y</urlInField>
+    <urlField>url</urlField>
+    <requestEntity>source</requestEntity>
+    <httpLogin/>
+    <httpPassword>Encrypted </httpPassword>
+    <proxyHost/>
+    <proxyPort/>
+    <lookup>
+      </lookup>
+    <result>
+      <name>result</name>
+      <code/>
+      <response_time/>
+      </result>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>928</xloc>
@@ -1181,8 +1294,8 @@
     </step>
 
   <step>
-    <name>Save language</name>
-    <type>ElasticSearchBulk</type>
+    <name>Save lang</name>
+    <type>HTTPPOST</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -1190,58 +1303,34 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <general>
-      <index>replays</index>
-      <type>language</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>50000</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>N</isJson>
-      <idField>lang</idField>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-      <field>
-        <columnName>flag</columnName>
-        <targetName>flag</targetName>
-      </field>
-      <field>
-        <columnName>langName</columnName>
-        <targetName>name</targetName>
-      </field>
-      <field>
-        <columnName>num</columnName>
-        <targetName>order</targetName>
-      </field>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
+    <postafile>N</postafile>
+    <encoding>UTF-8</encoding>
+    <url/>
+    <urlInField>Y</urlInField>
+    <urlField>langUrl</urlField>
+    <requestEntity>langStr</requestEntity>
+    <httpLogin/>
+    <httpPassword>Encrypted </httpPassword>
+    <proxyHost/>
+    <proxyPort/>
+    <lookup>
+      </lookup>
+    <result>
+      <name>result</name>
+      <code/>
+      <response_time/>
+      </result>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>160</xloc>
-      <yloc>416</yloc>
+      <xloc>256</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
     <name>Save map</name>
-    <type>ElasticSearchBulk</type>
+    <type>HTTPPOST</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -1249,36 +1338,23 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <general>
-      <index>replays</index>
-      <type>map</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>100</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>Y</isJson>
-      <jsonField>source</jsonField>
-      <idField>id</idField>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
+    <postafile>N</postafile>
+    <encoding>UTF-8</encoding>
+    <url/>
+    <urlInField>Y</urlInField>
+    <urlField>url</urlField>
+    <requestEntity>source</requestEntity>
+    <httpLogin/>
+    <httpPassword>Encrypted </httpPassword>
+    <proxyHost/>
+    <proxyPort/>
+    <lookup>
+      </lookup>
+    <result>
+      <name>result</name>
+      <code/>
+      <response_time/>
+      </result>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>928</xloc>
@@ -1289,7 +1365,7 @@
 
   <step>
     <name>Save medal</name>
-    <type>ElasticSearchBulk</type>
+    <type>HTTPPOST</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -1297,37 +1373,23 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <general>
-      <index>replays</index>
-      <type>medal</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>100</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>Y</isJson>
-      <jsonField>source</jsonField>
-      <idField>numericId</idField>
-      <parentInField/>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
+    <postafile>N</postafile>
+    <encoding>UTF-8</encoding>
+    <url/>
+    <urlInField>Y</urlInField>
+    <urlField>url</urlField>
+    <requestEntity>source</requestEntity>
+    <httpLogin/>
+    <httpPassword>Encrypted </httpPassword>
+    <proxyHost/>
+    <proxyPort/>
+    <lookup>
+      </lookup>
+    <result>
+      <name>result</name>
+      <code/>
+      <response_time/>
+      </result>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>928</xloc>
@@ -1337,56 +1399,8 @@
     </step>
 
   <step>
-    <name>Save nation</name>
-    <type>ElasticSearchBulk</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <general>
-      <index>replays</index>
-      <type>nation</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>100</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>Y</isJson>
-      <jsonField>source</jsonField>
-      <idField>nationId</idField>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>928</xloc>
-      <yloc>512</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Save section</name>
-    <type>ElasticSearchBulk</type>
+    <type>HTTPPOST</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -1394,36 +1408,23 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <general>
-      <index>replays</index>
-      <type>medalSection</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>100</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>Y</isJson>
-      <jsonField>source</jsonField>
-      <idField>sectionId</idField>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
+    <postafile>N</postafile>
+    <encoding>UTF-8</encoding>
+    <url/>
+    <urlInField>Y</urlInField>
+    <urlField>url</urlField>
+    <requestEntity>source</requestEntity>
+    <httpLogin/>
+    <httpPassword>Encrypted </httpPassword>
+    <proxyHost/>
+    <proxyPort/>
+    <lookup>
+      </lookup>
+    <result>
+      <name>result</name>
+      <code/>
+      <response_time/>
+      </result>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>928</xloc>
@@ -1433,8 +1434,8 @@
     </step>
 
   <step>
-    <name>Save tank</name>
-    <type>ElasticSearchBulk</type>
+    <name>Save nation</name>
+    <type>HTTPPOST</type>
     <description/>
     <distribute>Y</distribute>
     <copies>1</copies>
@@ -1442,36 +1443,58 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <general>
-      <index>replays</index>
-      <type>tank</type>
-      <operationType>INSERT</operationType>
-      <script/>
-      <batchSize>100</batchSize>
-      <timeout/>
-      <timeoutUnit>SECONDS</timeoutUnit>
-      <isJson>Y</isJson>
-      <jsonField>source</jsonField>
-      <idField>id</idField>
-      <overwriteIfExists>N</overwriteIfExists>
-      <useOutput>N</useOutput>
-      <stopOnError>Y</stopOnError>
-      <docAsUpsert>N</docAsUpsert>
-    </general>
-    <fields>
-    </fields>
-    <servers>
-      <server>
-        <address>localhost</address>
-        <port>9300</port>
-      </server>
-    </servers>
-    <settings>
-      <setting>
-        <name>client.transport.ignore_cluster_name</name>
-        <value>true</value>
-      </setting>
-    </settings>
+    <postafile>N</postafile>
+    <encoding>UTF-8</encoding>
+    <url/>
+    <urlInField>Y</urlInField>
+    <urlField>url</urlField>
+    <requestEntity>source</requestEntity>
+    <httpLogin/>
+    <httpPassword>Encrypted </httpPassword>
+    <proxyHost/>
+    <proxyPort/>
+    <lookup>
+      </lookup>
+    <result>
+      <name>result</name>
+      <code/>
+      <response_time/>
+      </result>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>928</xloc>
+      <yloc>512</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Save tank</name>
+    <type>HTTPPOST</type>
+    <description/>
+    <distribute>Y</distribute>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <postafile>N</postafile>
+    <encoding>UTF-8</encoding>
+    <url/>
+    <urlInField>Y</urlInField>
+    <urlField>url</urlField>
+    <requestEntity>source</requestEntity>
+    <httpLogin/>
+    <httpPassword>Encrypted </httpPassword>
+    <proxyHost/>
+    <proxyPort/>
+    <lookup>
+      </lookup>
+    <result>
+      <name>result</name>
+      <code/>
+      <response_time/>
+      </result>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>928</xloc>
@@ -1490,7 +1513,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>id</name>
+    <fields>      <field>        <name>url</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
@@ -1517,7 +1540,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>sectionId</name>
+    <fields>      <field>        <name>url</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
@@ -1846,66 +1869,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>224</xloc>
       <yloc>672</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Delay row</name>
-    <type>Delay</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <timeout>5</timeout>
-    <scaletime>seconds</scaletime>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>288</xloc>
-      <yloc>480</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Delay row 3</name>
-    <type>Delay</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <timeout>5</timeout>
-    <scaletime>seconds</scaletime>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>288</xloc>
-      <yloc>736</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Delay row 2</name>
-    <type>Delay</type>
-    <description/>
-    <distribute>Y</distribute>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <timeout>5</timeout>
-    <scaletime>seconds</scaletime>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>256</xloc>
-      <yloc>608</yloc>
       <draw>Y</draw>
       </GUI>
     </step>

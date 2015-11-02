@@ -22,9 +22,8 @@ public class BattleMapper {
     private final Map<String, Doc> medals = Repository.getDocs(Consts.MEDAL_TYPE_NAME);
 
     public Doc mapHit(Doc battle) {
-//        source.put(Doc.ID_FIELD, id);
-//        String tankId = (String) parent;
-//        source.put("tank", tanks.get(tankId));
+        String tankId = (String) battle.get("tank");
+        battle.put("tank", tanks.get(tankId));
         String mapId = (String) battle.get("map");
         battle.put("map", maps.get(mapId));
         battle.put("battleDate", formatDate((String) battle.get("battleDate")));

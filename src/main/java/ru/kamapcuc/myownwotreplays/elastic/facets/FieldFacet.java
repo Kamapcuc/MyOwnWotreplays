@@ -31,7 +31,7 @@ public abstract class FieldFacet extends Facet {
     }
 
     @Override
-    public String getType() {
+    public String getPrototype() {
         return "FieldFacet";
     }
 
@@ -52,17 +52,15 @@ public abstract class FieldFacet extends Facet {
     @Override
     public Object getResult(Aggregations aggregations) {
         Aggregation aggregation = aggregations.get(getId());
-        if (aggregation instanceof Terms) {
-            Map<String, Object> result = new HashMap<>();
-            Terms termsFacet = (Terms) aggregation;
-            for (Terms.Bucket bucket : termsFacet.getBuckets())
-                result.put(bucket.getKeyAsString(), bucket.getDocCount());
-            return result;
-        } else {
+        if (aggregation instanceof Filter) {
             Filter filteredFacet = (Filter) aggregation;
-            Aggregations inner = filteredFacet.getAggregations();
-            return getResult(inner);
+            aggregation = filteredFacet.getAggregations().get(getId());
         }
+        Terms termsFacet = (Terms) aggregation;
+        Map<String, Object> result = new HashMap<>();
+        for (Terms.Bucket bucket : termsFacet.getBuckets())
+            result.put(bucket.getKeyAsString(), bucket.getDocCount());
+        return result;
     }
 
     @Override

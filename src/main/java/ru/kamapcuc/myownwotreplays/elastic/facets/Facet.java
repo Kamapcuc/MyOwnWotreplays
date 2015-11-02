@@ -13,7 +13,7 @@ import java.util.function.Supplier;
 public abstract class Facet {
 
     public abstract String getId();
-    public abstract String getType();
+    public abstract String getPrototype();
     public abstract String getDisplayName();
     public abstract Object getValues();
     public abstract QueryBuilder getFilter(Parameters params);
@@ -34,7 +34,7 @@ public abstract class Facet {
 
     public final Object getInfo(){
         Map<String, Object> info = new HashMap<>();
-        info.put("type", getType());
+        info.put("_prototype", getPrototype());
         info.put("name", getDisplayName());
         info.put("values", getValues());
         return info;
