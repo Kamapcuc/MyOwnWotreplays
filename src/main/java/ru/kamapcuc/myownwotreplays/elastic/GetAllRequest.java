@@ -23,4 +23,5 @@ public class GetAllRequest extends Request {
         query.size(10_000);
         return query;
     }
+
 }

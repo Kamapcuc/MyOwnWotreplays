@@ -31,7 +31,7 @@ public class ElasticClient {
 
     public SearchResult search(Request request) {
         SearchResponse response = client.search(request.getRequest()).actionGet();
-        return new SearchResult(response, request.getFacets());
+        return new SearchResult(response, request.getFacetsContainer());
     }
 
     public Doc get(String type, String id) {

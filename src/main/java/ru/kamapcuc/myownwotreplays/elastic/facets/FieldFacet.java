@@ -57,7 +57,7 @@ public abstract class FieldFacet extends Facet {
     }
 
     @Override
-    protected AggregationBuilder getOwnAggregation() {
+    public AggregationBuilder getAggregation() {
         TermsBuilder facet = new TermsBuilder(getId());
         facet.field(field);
         facet.size(1000);

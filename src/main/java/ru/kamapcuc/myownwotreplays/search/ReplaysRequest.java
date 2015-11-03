@@ -6,11 +6,14 @@ import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import ru.kamapcuc.myownwotreplays.base.Consts;
+import ru.kamapcuc.myownwotreplays.elastic.FacetContainer;
 import ru.kamapcuc.myownwotreplays.elastic.Request;
+import ru.kamapcuc.myownwotreplays.elastic.facets.Facet;
 import ru.kamapcuc.myownwotreplays.elastic.facets.FixedValuesFacet;
 import ru.kamapcuc.myownwotreplays.elastic.facets.RepositoryFacet;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -18,16 +21,20 @@ import java.util.stream.IntStream;
 public class ReplaysRequest extends Request {
 
     private final HttpServletRequest params;
-    private final Request.FacetContainer facets;
+    private final static FacetContainer FACETS;
+
+    static {
+        List<Facet> facetsList = new ArrayList<>();
+        facetsList.add(new RepositoryFacet("tankNation", "facet_tank_nation", Consts.NATION_TYPE_NAME));
+        facetsList.add(new RepositoryFacet("tankClass", "facet_tank_class", Consts.CLASS_TYPE_NAME));
+        facetsList.add(new RepositoryFacet("map", "facet_map", Consts.MAP_TYPE_NAME));
+        List<Integer> tankLevels = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toList());
+        facetsList.add(new FixedValuesFacet("tankLevel", "facet_tank_level", tankLevels));
+        FACETS = new FacetContainer(facetsList);
+    }
 
     public ReplaysRequest(HttpServletRequest params) {
         this.params = params;
-        facets = new Request.FacetContainer();
-        facets.add(new RepositoryFacet("tankNation", "facet_tank_nation", Consts.NATION_TYPE_NAME));
-        facets.add(new RepositoryFacet("tankClass", "facet_tank_class", Consts.CLASS_TYPE_NAME));
-        facets.add(new RepositoryFacet("map", "facet_map", Consts.MAP_TYPE_NAME));
-        List<Integer> levels = IntStream.rangeClosed(1, 10).boxed().collect(Collectors.toList());
-        facets.add(new FixedValuesFacet("tankLevel", "facet_tank_level", levels));
     }
 
     @Override
@@ -36,8 +43,8 @@ public class ReplaysRequest extends Request {
     }
 
     @Override
-    public Request.FacetContainer getFacets() {
-        return facets;
+    public FacetContainer getFacetsContainer() {
+        return FACETS;
     }
 
     @Override

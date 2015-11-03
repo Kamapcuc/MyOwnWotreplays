@@ -21,18 +21,7 @@ public abstract class Facet {
     public abstract QueryBuilder getFilter(Parameters params);
     public abstract Object getResult(Aggregations aggregations);
 
-    protected abstract AggregationBuilder getOwnAggregation();
-
-    public AggregationBuilder getAggregation(Supplier<QueryBuilder> otherFacets) {
-        QueryBuilder filter = otherFacets.get();
-        if (filter != null) {
-            FilterAggregationBuilder filteredFacet = new FilterAggregationBuilder(getId());
-            filteredFacet.subAggregation(getOwnAggregation());
-            filteredFacet.filter(filter);
-            return filteredFacet;
-        } else
-            return getOwnAggregation();
-    }
+    public abstract AggregationBuilder getAggregation();
 
     protected final Aggregation getOwnAggregationResult(Aggregations aggregations) {
         Aggregation aggregation = aggregations.get(getId());

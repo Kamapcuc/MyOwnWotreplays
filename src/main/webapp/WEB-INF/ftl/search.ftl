@@ -3,7 +3,7 @@
 <@site>
 
 <div class="main clearfix">
-    <div class="progress-bar">
+    <div class="progress-bar" style="display: none">
         <span style="width: 0"></span>
     </div>
     <div class="main-menu clearfix" style="margin-bottom: 319px;">
@@ -244,7 +244,10 @@
                     clearInterval(progressTimerId);
                 } else {
                     var progress = Math.floor(data.completed / data.total * 100);
-                    $('.progress-bar span')[0].style.width = progress + '%';
+                    var progressBar = $('.progress-bar');
+                    progressBar.css('display', 'block');
+                    progressBar[0].title = 'Обработано ' + data.completed + ' из ' + data.total + 'реплеев';
+                    progressBar.find('span')[0].style.width = progress + '%';
                 }
             }
         });

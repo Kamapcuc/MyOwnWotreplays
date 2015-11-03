@@ -19,6 +19,4 @@ public class Repository extends LinkedHashMap<String, Doc> {
         return repositories.get(typeName);
     }
 
-
-
 }
