@@ -5,20 +5,23 @@ import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.filter.Filter;
-import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 import ru.kamapcuc.myownwotreplays.base.Parameters;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 public abstract class Facet {
 
     public abstract String getId();
+
     public abstract String getPrototype();
+
     public abstract String getDisplayName();
+
     public abstract Object getValues();
+
     public abstract QueryBuilder getFilter(Parameters params);
+
     public abstract Object getResult(Aggregations aggregations);
 
     public abstract AggregationBuilder getAggregation();
@@ -32,7 +35,7 @@ public abstract class Facet {
         return aggregation;
     }
 
-    public final Object getInfo(){
+    public final Object getInfo() {
         Map<String, Object> info = new HashMap<>();
         info.put("_prototype", getPrototype());
         info.put("name", getDisplayName());

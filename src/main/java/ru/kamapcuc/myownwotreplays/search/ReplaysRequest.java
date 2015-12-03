@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
 public class ReplaysRequest extends Request {
 
     private final HttpServletRequest params;
-    private final static FacetContainer FACETS;
+    public final static FacetContainer FACETS;
 
     static {
         List<Facet> facetsList = new ArrayList<>();
@@ -43,7 +43,7 @@ public class ReplaysRequest extends Request {
     }
 
     @Override
-    public FacetContainer getFacetsContainer() {
+    public FacetContainer getFacets() {
         return FACETS;
     }
 

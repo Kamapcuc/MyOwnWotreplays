@@ -25,7 +25,7 @@ public class ReplaysController {
         model.put("sortTypes", SortType.values());
         model.put("defaultSort", Consts.DEFAULT_SORT);
         model.put("defaultOrder", Consts.DEFAULT_ORDER);
-        model.put("facetsData", new ReplaysRequest(null).getFacetsContainer().getInfo()); //TODO
+        model.put("facetsData", ReplaysRequest.FACETS.getInfo());
         model.put("paginationSize", Consts.PAGINATION_SIZE);
         return "search";
     }

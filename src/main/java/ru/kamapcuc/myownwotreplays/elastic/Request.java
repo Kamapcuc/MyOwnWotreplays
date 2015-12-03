@@ -20,7 +20,7 @@ public abstract class Request implements Parameters {
     protected SearchSourceBuilder getQuery() {
         SearchSourceBuilder query = new SearchSourceBuilder();
         query.fields(Consts.PARENT_FIELD, Consts.SOURCE_FIELD);
-        FacetContainer facetContainer = getFacetsContainer();
+        FacetContainer facetContainer = getFacets();
         if (facetContainer != null) {
             query.postFilter(facetContainer.getFilter(this));
             facetContainer.getAggregations(this).forEach(query::aggregation);
@@ -28,7 +28,7 @@ public abstract class Request implements Parameters {
         return query;
     }
 
-    protected FacetContainer getFacetsContainer() {
+    protected FacetContainer getFacets() {
         return null;
     }
 
