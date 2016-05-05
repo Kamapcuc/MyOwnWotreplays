@@ -1,5 +1,6 @@
 package ru.kamapcuc.myownwotreplays.elastic;
 
+import org.elasticsearch.index.IndexSettings;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 
@@ -20,7 +21,7 @@ public class GetAllRequest extends Request {
     protected SearchSourceBuilder getQuery() {
         SearchSourceBuilder query = super.getQuery();
         query.query(new MatchAllQueryBuilder());
-        query.size(10_000);
+        query.size(IndexSettings.MAX_RESULT_WINDOW_SETTING.getDefault(null));
         return query;
     }
 

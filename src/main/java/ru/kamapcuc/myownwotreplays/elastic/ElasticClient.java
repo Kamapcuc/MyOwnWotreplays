@@ -9,7 +9,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.index.get.GetField;
 import org.elasticsearch.node.Node;
-import org.elasticsearch.node.NodeBuilder;
 import ru.kamapcuc.myownwotreplays.base.Consts;
 
 public class ElasticClient {
@@ -39,7 +38,7 @@ public class ElasticClient {
         getRequest.setIndex(Consts.INDEX_NAME);
         getRequest.setType(type);
         getRequest.setId(id);
-        getRequest.setRouting("0"); //TODO
+        getRequest.setRouting(id);
         getRequest.setFields(Consts.SOURCE_FIELD, Consts.PARENT_FIELD);
         GetResponse response = getRequest.execute().actionGet();
         GetField parentField = response.getFields().get(Consts.PARENT_FIELD);
@@ -48,7 +47,7 @@ public class ElasticClient {
     }
 
     private Settings getSettings() {
-        Settings.Builder settings = Settings.settingsBuilder();
+        Settings.Builder settings = Settings.builder();
         settings.loadFromStream(SETTINGS, ElasticClient.class.getResourceAsStream(SETTINGS));
         String path = Consts.getElasticDataPath();
         settings.put("path.data", path);
@@ -57,9 +56,9 @@ public class ElasticClient {
     }
 
     private Client createNode() {
-        NodeBuilder nodebuilder = new NodeBuilder();
-        nodebuilder.settings(getSettings());
-        Node node = nodebuilder.node();
+//        NodeBuilder nodebuilder = new NodeBuilder();
+//        nodebuilder.settings(getSettings());
+        Node node = new Node(getSettings());
         node.start();
         return node.client();
     }

@@ -21,13 +21,12 @@ public class SearchResult {
     public SearchResult(SearchResponse response, List<Facet> facets) {
         this.response = response;
         this.facets = facets;
-        List<Doc> tmp = new ArrayList<>(); //TODO
+        this.docs = new ArrayList<>();
         for (SearchHit hit : response.getHits()) {
             SearchHitField parentField = hit.getFields().get(Consts.PARENT_FIELD);
             String parent = (parentField == null) ? null : parentField.getValue();
-            tmp.add(new Doc(hit.getId(), parent, hit.getSource()));
+            docs.add(new Doc(hit.getId(), parent, hit.getSource()));
         }
-        this.docs = tmp;
     }
 
     public List<Doc> getDocs() {

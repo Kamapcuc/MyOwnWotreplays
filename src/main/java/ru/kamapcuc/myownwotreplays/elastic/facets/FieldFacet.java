@@ -2,10 +2,10 @@ package ru.kamapcuc.myownwotreplays.elastic.facets;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.TermsQueryBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.AggregatorBuilder;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsBuilder;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregatorBuilder;
 import ru.kamapcuc.myownwotreplays.base.Parameters;
 import ru.kamapcuc.myownwotreplays.base.Translator;
 
@@ -57,8 +57,8 @@ public abstract class FieldFacet extends Facet {
     }
 
     @Override
-    public AggregationBuilder getAggregation() {
-        TermsBuilder facet = new TermsBuilder(getId());
+    public AggregatorBuilder getAggregation() {
+        TermsAggregatorBuilder facet = new TermsAggregatorBuilder(getId(), null);
         facet.field(field);
         facet.size(1000);
         return facet;
