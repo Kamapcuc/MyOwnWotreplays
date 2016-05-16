@@ -1,12 +1,11 @@
 package ru.kamapcuc.myownwotreplays.spring;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.kamapcuc.myownwotreplays.base.Consts;
 import ru.kamapcuc.myownwotreplays.elastic.Doc;
 import ru.kamapcuc.myownwotreplays.elastic.ElasticClient;
@@ -57,17 +56,17 @@ public class ReplaysController {
         return searchResult.toJson();
     }
 
-    @ResponseStatus(value = HttpStatus.OK)
-    @RequestMapping(value = "**/start_replay.do", method = RequestMethod.GET)
-    public void startReplay(HttpServletRequest httpRequest) throws Exception {
+    @RequestMapping("**/start_replay.do")
+    public ResponseEntity<String> startReplay(HttpServletRequest httpRequest) throws Exception {
         try {
             String[] cmdArray = new String[2];
             cmdArray[0] = Consts.getWotExePath();
 //            cmdArray[1] = Consts.getReplaysPath() + httpRequest.getParameter("fileName");
             cmdArray[1] = httpRequest.getParameter("file_name");
             Runtime.getRuntime().exec(cmdArray);
+            return new ResponseEntity<>("Started", HttpStatus.OK);
         } catch (IOException e) {
-            System.err.println("Unable to start replay");
+            return new ResponseEntity<>("Unable to start replay", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
