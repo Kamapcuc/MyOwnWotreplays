@@ -1,4 +1,5 @@
-PUT data/tank/_mapping
+//PUT data/tank/
+_mapping =
 {
 	"tank" : {
 		"properties" : {
@@ -15,4 +16,4 @@ PUT data/tank/_mapping
 			}
 		}
 	}
-}
+};

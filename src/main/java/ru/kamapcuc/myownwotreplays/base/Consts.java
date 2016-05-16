@@ -3,6 +3,9 @@ package ru.kamapcuc.myownwotreplays.base;
 import org.elasticsearch.search.sort.SortOrder;
 import ru.kamapcuc.myownwotreplays.search.SortType;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 public class Consts {
@@ -30,11 +33,32 @@ public class Consts {
     public final static String MEDAL_TYPE_NAME = "medal";
 
     public static String getReplaysPath() {
-        return System.getProperty("replaysPath");
+        return getProperty("replaysPath", "/replays");
     }
 
     public static String getElasticDataPath() {
-        return System.getProperty("dataPath");
+        return getProperty("dataPath", "/myownWotReplays/data");
+    }
+
+    public static String getWotExePath() {
+        return getProperty("exePath", "/launcher.exe");
+    }
+
+    private static String getProperty(String propertyName, String defaultPath) {
+        String result = System.getProperty(propertyName);
+        if (result != null)
+            return result;
+        else
+            return getWotDirectoryPath() + defaultPath;
+    }
+
+    private static String getWotDirectoryPath() {
+        String path = Consts.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        try {
+            return URLDecoder.decode(path, StandardCharsets.UTF_8.name());
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

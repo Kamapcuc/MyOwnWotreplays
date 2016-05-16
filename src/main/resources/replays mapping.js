@@ -1,4 +1,5 @@
-PUT replays/battle/_mapping
+//PUT replays/battle/
+_mapping =
 {
 	"battle" : {
 		"properties" : {
@@ -34,4 +35,4 @@ PUT replays/battle/_mapping
 			}
 		}
 	}
-}
+};

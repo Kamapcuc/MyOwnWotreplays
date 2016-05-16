@@ -49,11 +49,13 @@ public class LocaleInterceptor extends HandlerInterceptorAdapter {
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-        ModelMap model = modelAndView.getModelMap();
-        model.put("languages", getSortedLanguages());
-        model.put("translate", new Translator());
-        model.put("url", parseUrl(request)[1] + '?' + request.getQueryString());
-        model.put("path", Consts.getReplaysPath());
+        if (modelAndView != null) {
+            ModelMap model = modelAndView.getModelMap();
+            model.put("languages", getSortedLanguages());
+            model.put("translate", new Translator());
+            model.put("url", parseUrl(request)[1] + '?' + request.getQueryString());
+            model.put("path", Consts.getReplaysPath());
+        }
     }
 
     private List<Doc> getSortedLanguages() {

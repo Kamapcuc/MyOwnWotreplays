@@ -40,8 +40,7 @@ public class SearchResult {
         return map;
     }
 
-    @Override
-    public String toString() {
+    public String toJson() {
         JSONObject result = new JSONObject();
         result.put("total", response.getHits().getTotalHits());
         result.put("docs", getDocs());
