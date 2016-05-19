@@ -35,22 +35,24 @@ public class Indexer implements Runnable {
 
     @Override
     public void run() {
-        filesToIndex.forEach(file -> {
-            if (!file.isDirectory() && file.getName().endsWith(".wotreplay")
-                    && !"temp.wotreplay".equals(file.getName())) {
-                Map<String, Object> doc = parser.parse(file);
-                if (doc != null) {
-                    IndexRequestBuilder indexRequest = client.prepareIndex(Consts.BATTLE_TYPE_NAME);
-                    indexRequest.setId(file.getName());
-                    indexRequest.setSource(doc);
+        filesToIndex.forEach(this::indexFile);
+    }
+
+    private void indexFile(File file) {
+        if (!file.isDirectory() && file.getName().endsWith(".wotreplay")
+                && !"temp.wotreplay".equals(file.getName())) {
+            Map<String, Object> doc = parser.parse(file);
+            if (doc != null) {
+                IndexRequestBuilder indexRequest = client.prepareIndex(Consts.BATTLE_TYPE_NAME);
+                indexRequest.setId(file.getName());
+                indexRequest.setSource(doc);
 //                    indexRequest.setParent((String) doc.get("tank"));
 //                    doc.remove("tank");
-                    indexRequest.execute();
-                } else
-                    System.out.println(String.format("Failed to parse %s", file.getName()));
-            }
-            completed++;
-        });
+                indexRequest.execute();
+            } else
+                System.out.println(String.format("Failed to parse %s", file.getName()));
+        }
+        completed++;
     }
 
     public long getCompleted() {

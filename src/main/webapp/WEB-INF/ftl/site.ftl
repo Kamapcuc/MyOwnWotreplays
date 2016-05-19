@@ -37,6 +37,7 @@
             var startReplay = function(fileName) {
                 $.ajax({
                     url: "/start_replay.do?file_name=" + fileName,
+                    dataType: "text",
                     error: function(xhr, status, error){
                         alert(error);
                     }

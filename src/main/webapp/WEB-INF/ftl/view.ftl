@@ -15,7 +15,7 @@
 
         <div class="b-replay__hat clearfix">
             <div class="b-replay__buttons">
-                <a href="http://wotreplays.ru/site/download/4563201" class="btn_l-orange">${translate.run}</a>
+                <a title="${battle._id}" onclick="startReplay('${battle._id}');" class="btn_l-orange">${translate.run}</a>
             </div>
         </div>
 
@@ -44,8 +44,8 @@
                                             </tbody>
                                         </table>
                                         <div class="wtst_head_overall">
-                                            <div class="wtst_head_credits">${battle.credits?string["###,###,###"]}</div>
-                                            <div class="wtst_head_experience">${battle.xp?string["###,###,###"]}</div>
+                                            <#--<div class="wtst_head_credits">${battle.credits?string["###,###,###"]}</div>-->
+                                            <#--<div class="wtst_head_experience">${battle.xp?string["###,###,###"]}</div>-->
                                         </div>
                                         <table class="wtst_head_awards">
                                             <tbody>
@@ -95,11 +95,11 @@
                                     </div>
                                     <div class="result_map">
                                         <div class="result_map_frame">
-                                            <img src="/resources/img/maps/thumb/${battle.map.id}.png"
-                                                 alt="${battle.map.name_i18n}">
+                                            <#--<img src="/resources/img/maps/thumb/${battle.map.id}.png"-->
+                                                 <#--alt="${battle.map.name}">-->
                                         </div>
-                                        <img class="result_map_tank" alt="${battle.tank.name_i18n}"
-                                             src="/resources/img/tanks/big/${battle.tank.image}">
+                                        <#--<img class="result_map_tank" alt="${battle.tank.name}"-->
+                                             <#--src="/resources/img/tanks/big/${battle.tank.image}">-->
 
                                         <div class="result_map_user">
                                             <div class="result_map_user_name"
@@ -107,8 +107,8 @@
                                                 [TRIKS]
                                             </div>
                                             <time class="result_map_user_timestamp">${battle.battleDate}</time>
-                                            <div class="result_map_tank_model"
-                                                 title="${battle.tank.name_i18n}">${battle.tank.name_i18n}</div>
+                                            <#--<div class="result_map_tank_model"-->
+                                                 <#--title="${battle.tank.name_i18n}">${battle.tank.name_i18n}</div>-->
                                             <div class="result_map_survive">
                                                 <!--Выжил-->
                                             </div>
@@ -124,12 +124,12 @@
                                             <tr>
                                                 <th>${translate.result_credits}</th>
                                                 <td class="r_cr ">0</td>
-                                                <td class="r_cr active ">${battle.credits?string["###,###,###"]}</td>
+                                                <#--<td class="r_cr active ">${battle.credits?string["###,###,###"]}</td>-->
                                             </tr>
                                             <tr>
                                                 <th>${translate.result_xp}</th>
                                                 <td class="r_xp ">0</td>
-                                                <td class="r_xp active">${battle.xp?string["###,###,###"]}</td>
+                                                <#--<td class="r_xp active">${battle.xp?string["###,###,###"]}</td>-->
                                             </tr>
                                             </tbody>
                                         </table>

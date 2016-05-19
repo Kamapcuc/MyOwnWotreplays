@@ -38,7 +38,7 @@ public class ReplaysController {
         String id = httpRequest.getParameter("id");
         if (id != null) {
             Doc battle = client.get(Consts.BATTLE_TYPE_NAME, id);
-            model.put("battle", battle);
+            model.put("battle", new BattleMapper().mapHit(battle));
         }
         return "view";
     }
@@ -61,7 +61,7 @@ public class ReplaysController {
         try {
             String[] cmdArray = new String[2];
             cmdArray[0] = Consts.getWotExePath();
-            cmdArray[1] = Consts.getReplaysPath() + httpRequest.getParameter("file_name");
+            cmdArray[1] = Consts.getReplaysPath() + '\\' + httpRequest.getParameter("file_name");
             Runtime.getRuntime().exec(cmdArray);
             return new ResponseEntity<>("Started", HttpStatus.OK);
         } catch (IOException e) {
