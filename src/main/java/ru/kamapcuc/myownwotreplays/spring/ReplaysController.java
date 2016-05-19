@@ -56,13 +56,12 @@ public class ReplaysController {
         return searchResult.toJson();
     }
 
-    @RequestMapping("**/start_replay.do")
+    @RequestMapping("/start_replay.do")
     public ResponseEntity<String> startReplay(HttpServletRequest httpRequest) throws Exception {
         try {
             String[] cmdArray = new String[2];
             cmdArray[0] = Consts.getWotExePath();
-//            cmdArray[1] = Consts.getReplaysPath() + httpRequest.getParameter("fileName");
-            cmdArray[1] = httpRequest.getParameter("file_name");
+            cmdArray[1] = Consts.getReplaysPath() + httpRequest.getParameter("file_name");
             Runtime.getRuntime().exec(cmdArray);
             return new ResponseEntity<>("Started", HttpStatus.OK);
         } catch (IOException e) {

@@ -32,5 +32,16 @@
             <#nested/>
 
         </body>
+
+        <script type="text/javascript">
+            var startReplay = function(fileName) {
+                $.ajax({
+                    url: "/start_replay.do?file_name=" + fileName,
+                    error: function(xhr, status, error){
+                        alert(error);
+                    }
+                });
+            };
+        </script>
     </html>
 </#macro>

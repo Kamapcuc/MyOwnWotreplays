@@ -33,11 +33,11 @@ public class Consts {
     public final static String MEDAL_TYPE_NAME = "medal";
 
     public static String getReplaysPath() {
-        return getProperty("replaysPath", "/replays");
+        return getProperty("replaysPath", "/replays/");
     }
 
     public static String getElasticDataPath() {
-        return getProperty("dataPath", "/myownWotReplays/data");
+        return getProperty("dataPath", "/myownWotReplays/data/");
     }
 
     public static String getWotExePath() {
