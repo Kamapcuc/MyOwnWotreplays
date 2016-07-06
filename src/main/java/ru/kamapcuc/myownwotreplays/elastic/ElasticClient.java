@@ -11,6 +11,8 @@ import org.elasticsearch.index.get.GetField;
 import org.elasticsearch.node.Node;
 import ru.kamapcuc.myownwotreplays.base.Consts;
 
+import java.io.IOException;
+
 public class ElasticClient {
 
     private final static String SETTINGS = "/elasticsearch.yml";
@@ -42,11 +44,11 @@ public class ElasticClient {
         getRequest.setFields(Consts.SOURCE_FIELD, Consts.PARENT_FIELD);
         GetResponse response = getRequest.execute().actionGet();
         GetField parentField = response.getFields().get(Consts.PARENT_FIELD);
-        Object parent = (parentField == null) ? null : parentField.getValue();
+        String parent = (parentField == null) ? null : (String) parentField.getValue();
         return new Doc(response.getId(), parent, response.getSource());
     }
 
-    private Settings getSettings() {
+    private Settings getSettings() throws IOException {
         Settings.Builder settings = Settings.builder();
         settings.loadFromStream(SETTINGS, ElasticClient.class.getResourceAsStream(SETTINGS));
         String path = Consts.getElasticDataPath();
@@ -58,7 +60,12 @@ public class ElasticClient {
     private Client createNode() {
 //        NodeBuilder nodebuilder = new NodeBuilder();
 //        nodebuilder.settings(getSettings());
-        Node node = new Node(getSettings());
+        Node node = null;
+        try {
+            node = new Node(getSettings());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         node.start();
         return node.client();
     }

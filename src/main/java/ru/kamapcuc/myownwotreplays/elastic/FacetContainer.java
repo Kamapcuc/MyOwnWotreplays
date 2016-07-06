@@ -2,8 +2,8 @@ package ru.kamapcuc.myownwotreplays.elastic;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.search.aggregations.AggregatorBuilder;
-import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregatorBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 import org.json.JSONObject;
 import ru.kamapcuc.myownwotreplays.base.Parameters;
 import ru.kamapcuc.myownwotreplays.elastic.facets.Facet;
@@ -38,8 +38,8 @@ public class FacetContainer extends ArrayList<Facet> {
         }
     }
 
-    public List<AggregatorBuilder> getAggregations(Parameters params) {
-        List<AggregatorBuilder> result = new ArrayList<>();
+    public List<AggregationBuilder> getAggregations(Parameters params) {
+        List<AggregationBuilder> result = new ArrayList<>();
         this.forEach(currentFacet -> {
             FacetContainer otherFacets = new FacetContainer(this);
             otherFacets.remove(currentFacet);
@@ -48,9 +48,9 @@ public class FacetContainer extends ArrayList<Facet> {
         return result;
     }
 
-    public AggregatorBuilder getAggregation(Facet facet, QueryBuilder otherFacetsFilters) {
+    public AggregationBuilder getAggregation(Facet facet, QueryBuilder otherFacetsFilters) {
         if (otherFacetsFilters != null) {
-            FilterAggregatorBuilder filteredFacet = new FilterAggregatorBuilder(facet.getId(), otherFacetsFilters);
+            FilterAggregationBuilder filteredFacet = new FilterAggregationBuilder(facet.getId(), otherFacetsFilters);
             filteredFacet.subAggregation(facet.getAggregation());
             return filteredFacet;
         } else

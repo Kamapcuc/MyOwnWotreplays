@@ -15,7 +15,7 @@ public enum SortType {
     private final String field;
     private final String code;
 
-    private SortType(String field, String code) {
+    SortType(String field, String code) {
         this.field = field;
         this.code = code;
     }

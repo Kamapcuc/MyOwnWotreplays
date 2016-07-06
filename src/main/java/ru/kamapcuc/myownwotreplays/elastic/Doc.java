@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class Doc extends JSONObject {
 
-    public Doc(String id, Object parent, Map<String, Object> source) {
+    public Doc(String id, String parent, Map<String, Object> source) {
         super();
         try {
             Field f = JSONObject.class.getDeclaredField("map");
