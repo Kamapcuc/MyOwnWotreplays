@@ -53,7 +53,7 @@
                 </td>
                 <#if member.tank??>
                     <td class="c_t txt_e" title="${member.tank.name_i18n}"
-                        style="background-image: url(/resources/img/tanks/small/${member.tank.image})">
+                        style="background-image: url(/resources/img/vehicles/small/${member.tank.image})">
                     ${member.tank.name_i18n}
                     </td>
                 <#else>
