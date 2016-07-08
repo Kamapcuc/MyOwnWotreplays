@@ -1,6 +1,4 @@
 .idea/**
-data/MyOwnWotreplays/nodes/0/_state/**
-data/MyOwnWotreplays/nodes/0/indices/.marvel-**
-data/MyOwnWotreplays/nodes/0/node.lock
+data/MyOwnWotreplays/nodes/0/**
 target/**
 *.iml

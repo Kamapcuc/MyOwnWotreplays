@@ -48,8 +48,12 @@ public class BattleMapper {
         if (team != null)
             for (Object member : team) {
                 Map memberMap = (Map) member;
-                String tank = (String) memberMap.get("tank");
-                memberMap.put("tank", tanks.get(tank));
+                String tankId = (String) memberMap.get("tank");
+                Doc tank = tanks.get(tankId);
+                if (tank == null)
+                    System.out.println(String.format("Don't found tank with id=\"%s\"", tankId));
+                else
+                    memberMap.replace("tank", tank);
             }
     }
 
